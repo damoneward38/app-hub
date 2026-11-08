@@ -5,7 +5,7 @@ Served apps scanned: 131
 ## Totals
 
 - **coming_soon**: 34
-- **ai_mock**: 15
+- **ai_mock**: 14
 - **fake_async**: 3
 - **sample_data**: 2
 - **placeholder_text**: 2
@@ -22,7 +22,6 @@ Served apps scanned: 131
 | Ezhkar Cyber Commander - 20 AI Sandbox Defense Platform | Google AI Studio | 2 |  |  |  |  |  |  | 2 |
 | REYIAT — רְאִיַּת הַמֹּחַ | Google AI Studio | 1 |  |  | 1 |  |  |  | 2 |
 | Barak ?????? � Cutting System | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
-| buildmaster | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
 | chazah data intelligence platform | Google AI Studio |  |  | 1 |  |  |  |  | 1 |
 | KOL RESONANCE | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
 | neraxis | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
@@ -38,12 +37,6 @@ Served apps scanned: 131
 Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-67-barak-cutting-system`
 
 - `ai_mock` — `assets/index-BDtgZyGd.js:252` — ).ok&&await M()}catch(_){console.error("Simulation failed:",_)}},C=g==="all"?o:o.filter(_=>_.s
-
-### buildmaster
-
-Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/12-buildmaster`
-
-- `ai_mock` — `index.html:189` — ("er","✖ FAILED at "+stages[idx].nm+" — simulated failure requested");       running=false;
 
 ### chazah data intelligence platform
 
