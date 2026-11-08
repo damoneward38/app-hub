@@ -33,7 +33,7 @@
         <a href="catalog.html">&larr; Back to catalog</a>
         <h2 id="story-title">Loading…</h2>
         <p class="meta" id="story-meta"></p>
-        <img id="story-cover" src="images/covers/placeholder-cover.png" alt="Story cover">
+        <img id="story-cover" alt="Story cover" hidden>
         <p id="story-description"></p>
         <div class="controls">
             <button class="primary" id="read-ai">Read with AI</button>
@@ -66,8 +66,9 @@
             metaEl.textContent = story.category;
             descEl.textContent = story.description;
             coverEl.alt = story.title;
+            coverEl.onerror = () => { coverEl.hidden = true; };
             coverEl.src = story.image;
-            coverEl.onerror = () => { coverEl.src = 'images/covers/placeholder-cover.png'; };
+            coverEl.hidden = false;
             document.title = story.title + ' - Gifted Eternity Story Time';
             loadStory();
         }

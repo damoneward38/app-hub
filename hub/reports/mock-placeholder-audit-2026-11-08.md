@@ -4,12 +4,12 @@ Served apps scanned: 131
 
 ## Totals
 
-- **ai_mock**: 106
-- **coming_soon**: 82
+- **ai_mock**: 105
+- **coming_soon**: 76
 - **fake_async**: 7
-- **placeholder_img**: 6
 - **placeholder_text**: 6
-- **sample_data**: 5
+- **sample_data**: 4
+- **placeholder_img**: 4
 
 ## Apps with hits
 
@@ -22,7 +22,6 @@ Served apps scanned: 131
 | Project Glass Wing | Google AI Studio | 2 | 1 |  | 10 |  |  |  | 13 |
 | ????? ????? (Ta?n?? H�zoo) - Blueprint & Cyber-Security Swarm | Google AI Studio | 7 | 1 | 1 |  |  |  |  | 9 |
 |  Ta n H zoo  | Other local exports | 7 |  | 1 |  |  |  |  | 8 |
-| kids | Other local exports |  |  |  | 6 |  | 2 |  | 8 |
 | Orgo  | Other local exports |  | 2 |  | 5 |  |  |  | 7 |
 | neurovault | Google AI Studio | 1 |  |  | 2 |  |  | 2 | 5 |
 |  SAPPHIRE OPENCLAW AI  | Other local exports | 2 |  |  |  |  |  |  | 2 |
@@ -33,10 +32,8 @@ Served apps scanned: 131
 | skyguard-cybersecurity | Other local exports | 1 |  |  |  |  | 1 |  | 2 |
 | Barak ?????? � Cutting System | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
 | buildmaster | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
-| BuildMaster | Other local exports | 1 |  |  |  |  |  |  | 1 |
 | chazah data intelligence platform | Google AI Studio |  |  | 1 |  |  |  |  | 1 |
 | Gifted Bot Store | Other local exports | 1 |  |  |  |  |  |  | 1 |
-| keira | Google AI Studio |  |  | 1 |  |  |  |  | 1 |
 | KOL RESONANCE | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
 | neraxis | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
 | NEXUS AR | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
@@ -107,12 +104,6 @@ Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/12-buildmaster`
 
 - `ai_mock` — `index.html:189` — ("er","✖ FAILED at "+stages[idx].nm+" — simulated failure requested");       running=false;
 
-### BuildMaster
-
-Path: `/Users/davidyoung/app-containers-hub/build-contexts/buildmaster`
-
-- `ai_mock` — `server.ts:249` — to the local Ollama model instead of a canned response       try {         const reply = await
-
 ### chazah data intelligence platform
 
 Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/14-chazah-data-intelligence-platform`
@@ -173,12 +164,6 @@ Path: `/Users/davidyoung/GitHub-Pull/HOMEX-INTELL`
 - `ai_mock` — `src/hooks/useHomeState.ts:342` — failed:', error);       // Fallback to simulation if backend fails       const simulated = await HomeEng
 - `ai_mock` — `src/hooks/useHomeState.ts:343` — simulation if backend fails       const simulated = await HomeEngine.getInstance().discoverBluet
 
-### keira
-
-Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/24-keira`
-
-- `sample_data` — `index.html:57` — are simulated and the vault query uses demo data" style="font-size:10px;color:#fcd34d">S
-
 ### KELI — כְּלִי הָרְפוּאָה
 
 Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-63-keli`
@@ -195,19 +180,6 @@ Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-63-keli`
 - `coming_soon` — `assets/index-CX8dIJcT.js:5387` — this.signInMethod=t}toJSON(){return sh("not implemented")}_getIdTokenResponse(e){return sh("not
 - `coming_soon` — `assets/index-CX8dIJcT.js:5387` — ted")}_getIdTokenResponse(e){return sh("not implemented")}_linkToIdToken(e,t){return sh("not im
 - `coming_soon` — `assets/index-CX8dIJcT.js:5387` — mented")}_linkToIdToken(e,t){return sh("not implemented")}_getReauthenticationResolver(e){retur
-
-### kids
-
-Path: `/Users/davidyoung/GitHub-Pull/kids`
-
-- `placeholder_img` — `story-reader.html:36` — <img id="story-cover" src="images/covers/placeholder-cover.png" alt="Story cover">         <p
-- `placeholder_img` — `story-reader.html:70` — r = () => { coverEl.src = 'images/covers/placeholder-cover.png'; };             document.titl
-- `coming_soon` — `home 5/ubuntu/dee_w_website/js/catalog.js:112` — y #' + storyId + ' - Read functionality coming soon!');     // In a full implementation, th
-- `coming_soon` — `home 5/ubuntu/dee_w_website/js/catalog.js:119` — your cart!\n\nE-commerce functionality coming soon!');     // In a full implementation, th
-- `coming_soon` — `home 2/ubuntu/dee_w_website/js/catalog.js:112` — y #' + storyId + ' - Read functionality coming soon!');     // In a full implementation, th
-- `coming_soon` — `home 2/ubuntu/dee_w_website/js/catalog.js:119` — your cart!\n\nE-commerce functionality coming soon!');     // In a full implementation, th
-- `coming_soon` — `home 4/ubuntu/dee_w_website/js/catalog.js:112` — y #' + storyId + ' - Read functionality coming soon!');     // In a full implementation, th
-- `coming_soon` — `home 4/ubuntu/dee_w_website/js/catalog.js:119` — your cart!\n\nE-commerce functionality coming soon!');     // In a full implementation, th
 
 ### KOL RESONANCE
 
