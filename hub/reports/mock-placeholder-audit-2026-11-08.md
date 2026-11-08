@@ -55,18 +55,18 @@ Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/14-chazah-data-intelligence-p
 
 Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-14-dabar`
 
-- `sample_data` — `assets/index-YvNsJ4mS.js:58` — pository. This page does not substitute sample data when the real service is offline."]}),e
-- `coming_soon` — `assets/index-YvNsJ4mS.js:76` — on and client-side payload wrapping are not implemented or verified.",howToUse:"Enter data into
-- `coming_soon` — `assets/index-YvNsJ4mS.js:76` — ",{children:"Kernel-level verification: not implemented"}),e.jsx("li",{children:"Live uplink mo
-- `coming_soon` — `assets/vendor-DWJ5Y0d1.js:19` — ut=(et=class{getEncoding(){throw Error("not implemented")}asCharSequence(){throw Error("not imp
-- `coming_soon` — `assets/vendor-DWJ5Y0d1.js:19` — emented")}asCharSequence(){throw Error("not implemented")}asBytes(){throw Error("not implemente
-- `coming_soon` — `assets/vendor-DWJ5Y0d1.js:19` — ot implemented")}asBytes(){throw Error("not implemented")}length(){throw Error("not implemented
-- `coming_soon` — `assets/vendor-DWJ5Y0d1.js:19` — not implemented")}length(){throw Error("not implemented")}isUTF8Encoding(){return this.getEncod
-- `coming_soon` — `assets/vendor-firebase-C5-A0yL2.js:646` — .toJSON())}_performRefresh(){return Tt("not implemented")}}/**  * @license  * Copyright 2020 Go
-- `coming_soon` — `assets/vendor-firebase-C5-A0yL2.js:841` — this.signInMethod=t}toJSON(){return Tt("not implemented")}_getIdTokenResponse(e){return Tt("not
-- `coming_soon` — `assets/vendor-firebase-C5-A0yL2.js:841` — ted")}_getIdTokenResponse(e){return Tt("not implemented")}_linkToIdToken(e,t){return Tt("not im
-- `coming_soon` — `assets/vendor-firebase-C5-A0yL2.js:841` — mented")}_linkToIdToken(e,t){return Tt("not implemented")}_getReauthenticationResolver(e){retur
-- `coming_soon` — `assets/vendor-firebase-C5-A0yL2.js:841` — tReauthenticationResolver(e){return Tt("not implemented")}}/**  * @license  * Copyright 2020 Go
+- `sample_data` — `assets/index-BOCvU7HR.js:58` — pository. This page does not substitute sample data when the real service is offline."]}),e
+- `coming_soon` — `assets/index-BOCvU7HR.js:79` — on and client-side payload wrapping are not implemented or verified.",howToUse:"Enter data into
+- `coming_soon` — `assets/index-BOCvU7HR.js:79` — ",{children:"Kernel-level verification: not implemented"}),e.jsx("li",{children:"Live uplink mo
+- `coming_soon` — `assets/vendor-D_Zhxc9l.js:19` — ve=(Ie=class{getEncoding(){throw Error("not implemented")}asCharSequence(){throw Error("not imp
+- `coming_soon` — `assets/vendor-D_Zhxc9l.js:19` — emented")}asCharSequence(){throw Error("not implemented")}asBytes(){throw Error("not implemente
+- `coming_soon` — `assets/vendor-D_Zhxc9l.js:19` — ot implemented")}asBytes(){throw Error("not implemented")}length(){throw Error("not implemented
+- `coming_soon` — `assets/vendor-D_Zhxc9l.js:19` — not implemented")}length(){throw Error("not implemented")}isUTF8Encoding(){return this.getEncod
+- `coming_soon` — `assets/vendor-firebase-CJDpX3CH.js:646` — .toJSON())}_performRefresh(){return Tt("not implemented")}}/**  * @license  * Copyright 2020 Go
+- `coming_soon` — `assets/vendor-firebase-CJDpX3CH.js:841` — this.signInMethod=t}toJSON(){return Tt("not implemented")}_getIdTokenResponse(e){return Tt("not
+- `coming_soon` — `assets/vendor-firebase-CJDpX3CH.js:841` — ted")}_getIdTokenResponse(e){return Tt("not implemented")}_linkToIdToken(e,t){return Tt("not im
+- `coming_soon` — `assets/vendor-firebase-CJDpX3CH.js:841` — mented")}_linkToIdToken(e,t){return Tt("not implemented")}_getReauthenticationResolver(e){retur
+- `coming_soon` — `assets/vendor-firebase-CJDpX3CH.js:841` — tReauthenticationResolver(e){return Tt("not implemented")}}/**  * @license  * Copyright 2020 Go
 
 ### Ezhkar Cyber Commander - 20 AI Sandbox Defense Platform
 
@@ -131,16 +131,16 @@ Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-80-nexus-ar`
 
 Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-66-project-glass-wing`
 
-- `coming_soon` — `assets/index-BhPsJC9S.js:893` — .toJSON())}_performRefresh(){return qr("not implemented")}}/**  * @license  * Copyright 2020 Go
-- `coming_soon` — `assets/index-BhPsJC9S.js:1088` — this.signInMethod=e}toJSON(){return qr("not implemented")}_getIdTokenResponse(t){return qr("not
-- `coming_soon` — `assets/index-BhPsJC9S.js:1088` — ted")}_getIdTokenResponse(t){return qr("not implemented")}_linkToIdToken(t,e){return qr("not im
-- `coming_soon` — `assets/index-BhPsJC9S.js:1088` — mented")}_linkToIdToken(t,e){return qr("not implemented")}_getReauthenticationResolver(t){retur
-- `coming_soon` — `assets/index-BhPsJC9S.js:1088` — tReauthenticationResolver(t){return qr("not implemented")}}/**  * @license  * Copyright 2020 Go
-- `coming_soon` — `assets/index-BhPsJC9S.js:1672` — ){throw Error("EventHandler.handleEvent not implemented")};var Pl=u.JSON.stringify,Ps=u.JSON.pa
-- `coming_soon` — `assets/index-BhPsJC9S.js:1690` — wl=(Wa=class{getEncoding(){throw Error("not implemented")}asCharSequence(){throw Error("not imp
-- `coming_soon` — `assets/index-BhPsJC9S.js:1690` — emented")}asCharSequence(){throw Error("not implemented")}asBytes(){throw Error("not implemente
-- `coming_soon` — `assets/index-BhPsJC9S.js:1690` — ot implemented")}asBytes(){throw Error("not implemented")}length(){throw Error("not implemented
-- `coming_soon` — `assets/index-BhPsJC9S.js:1690` — not implemented")}length(){throw Error("not implemented")}isUTF8Encoding(){return this.getEncod
+- `coming_soon` — `assets/index-BDSoVDF2.js:893` — .toJSON())}_performRefresh(){return qr("not implemented")}}/**  * @license  * Copyright 2020 Go
+- `coming_soon` — `assets/index-BDSoVDF2.js:1088` — this.signInMethod=e}toJSON(){return qr("not implemented")}_getIdTokenResponse(t){return qr("not
+- `coming_soon` — `assets/index-BDSoVDF2.js:1088` — ted")}_getIdTokenResponse(t){return qr("not implemented")}_linkToIdToken(t,e){return qr("not im
+- `coming_soon` — `assets/index-BDSoVDF2.js:1088` — mented")}_linkToIdToken(t,e){return qr("not implemented")}_getReauthenticationResolver(t){retur
+- `coming_soon` — `assets/index-BDSoVDF2.js:1088` — tReauthenticationResolver(t){return qr("not implemented")}}/**  * @license  * Copyright 2020 Go
+- `coming_soon` — `assets/index-BDSoVDF2.js:1672` — ){throw Error("EventHandler.handleEvent not implemented")};var Ml=u.JSON.stringify,Rs=u.JSON.pa
+- `coming_soon` — `assets/index-BDSoVDF2.js:1691` — wl=(Za=class{getEncoding(){throw Error("not implemented")}asCharSequence(){throw Error("not imp
+- `coming_soon` — `assets/index-BDSoVDF2.js:1691` — emented")}asCharSequence(){throw Error("not implemented")}asBytes(){throw Error("not implemente
+- `coming_soon` — `assets/index-BDSoVDF2.js:1691` — ot implemented")}asBytes(){throw Error("not implemented")}length(){throw Error("not implemented
+- `coming_soon` — `assets/index-BDSoVDF2.js:1691` — not implemented")}length(){throw Error("not implemented")}isUTF8Encoding(){return this.getEncod
 
 ### quantrade shomer
 

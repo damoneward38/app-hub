@@ -19,6 +19,12 @@ services:
     image: app-buildmaster:local
     container_name: app-buildmaster
     ports: ["127.0.0.1:19111:3000"]
+    environment:
+      - BUILDMASTER_TERMINAL_TOKEN=${BUILDMASTER_TERMINAL_TOKEN:-}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped
     read_only: true
     tmpfs: ["/tmp:rw,noexec,nosuid,size=64m"]
@@ -32,6 +38,13 @@ services:
     image: app-magen-raki:local
     container_name: app-magen-raki
     ports: ["127.0.0.1:19112:3000"]
+    environment:
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2}
+      - MAGEN_ADMIN_EMAIL=${MAGEN_ADMIN_EMAIL:-damoneward38@gmail.com}
+      - MAGEN_ADMIN_PASSWORD_HASH=${MAGEN_ADMIN_PASSWORD_HASH:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped
     read_only: true
     tmpfs: ["/tmp:rw,noexec,nosuid,size=64m"]

@@ -2,7 +2,9 @@ import express from "express";
 import path from "path";
 import { exec } from "child_process";
 import { promisify } from "util";
-import { stat as fsStat } from "fs/promises";
+import { stat as fsStat, statfs, readdir } from "fs/promises";
+import os from "os";
+import crypto from "crypto";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
@@ -165,30 +167,43 @@ async function startServer() {
   });
 
   // 2. System Telemetry & Metrics
-  app.get("/api/system/metrics", (_req, res) => {
+  app.get("/api/system/metrics", async (_req, res) => {
     const memory = process.memoryUsage();
     const uptimeSec = Math.floor(process.uptime());
     const hours = Math.floor(uptimeSec / 3600);
     const mins = Math.floor((uptimeSec % 3600) / 60);
     const secs = uptimeSec % 60;
-    
+    const cores = os.cpus().length || 1;
+    const load = os.loadavg()[0];
+    let disk = { used: 0, total: 0, percentage: 0 };
+    try {
+      const stats = await statfs("/app");
+      const total = stats.blocks * stats.bsize;
+      const free = stats.bavail * stats.bsize;
+      disk = {
+        used: Number(((total - free) / 1024 / 1024 / 1024).toFixed(1)),
+        total: Number((total / 1024 / 1024 / 1024).toFixed(1)),
+        percentage: total > 0 ? Math.round(((total - free) / total) * 100) : 0
+      };
+    } catch {}
+    let activeProcesses = 0;
+    try {
+      const entries = await readdir("/proc");
+      activeProcesses = entries.filter((entry) => /^\d+$/.test(entry)).length;
+    } catch {}
     res.json({
       uptime: `${hours}h ${mins}m ${secs}s`,
-      cpuUsage: Math.min(95, Math.floor(18 + Math.random() * 12)),
+      cpuUsage: Math.min(100, Math.round((load / cores) * 100)),
       ramUsage: {
-        used: Math.round(memory.heapUsed / 1024 / 1024),
-        total: Math.round(memory.heapTotal / 1024 / 1024 * 1.8),
-        percentage: Math.round((memory.heapUsed / memory.heapTotal) * 60)
+        used: Math.round(memory.rss / 1024 / 1024),
+        total: Math.round(os.totalmem() / 1024 / 1024),
+        percentage: Math.round((memory.rss / os.totalmem()) * 100)
       },
-      diskUsage: {
-        used: 14.2,
-        total: 50.0,
-        percentage: 28
-      },
+      diskUsage: disk,
       nodeVersion: process.version,
-      activeProcesses: 6,
-      ollamaStatus: "connected",
-      geminiStatus: process.env.GEMINI_API_KEY ? "active" : "standby"
+      activeProcesses,
+      ollamaStatus: process.env.OLLAMA_MODEL ? "configured" : "default",
+      geminiStatus: process.env.GEMINI_API_KEY ? "configured" : "not-configured"
     });
   });
 
@@ -343,7 +358,21 @@ Provide crisp, insightful, production-grade responses. If code is requested, pro
   });
 
   // 5. OpenClaw Cloud Terminal Execution Endpoint (real shell in the container)
-  app.post("/api/terminal/exec", async (req, res) => {
+  const terminalToken = process.env.BUILDMASTER_TERMINAL_TOKEN || "";
+  const requireTerminalAccess = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (!terminalToken) {
+      return res.status(503).json({ error: "Terminal disabled: set BUILDMASTER_TERMINAL_TOKEN on the server" });
+    }
+    const supplied = (req.header("authorization") || "").replace(/^Bearer\s+/i, "");
+    const suppliedBuffer = Buffer.from(supplied);
+    const tokenBuffer = Buffer.from(terminalToken);
+    if (suppliedBuffer.length !== tokenBuffer.length || !crypto.timingSafeEqual(suppliedBuffer, tokenBuffer)) {
+      return res.status(401).json({ error: "Unauthorized: valid terminal token required" });
+    }
+    return next();
+  };
+
+  app.post("/api/terminal/exec", requireTerminalAccess, async (req, res) => {
     const { command, cwd = "/app" } = req.body;
     if (!command || typeof command !== "string") {
       return res.status(400).json({ error: "Command string required" });

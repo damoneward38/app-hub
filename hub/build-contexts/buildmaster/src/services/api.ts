@@ -19,14 +19,14 @@ export const API = {
       return await res.json();
     } catch {
       return {
-        uptime: '2h 45m 10s',
-        cpuUsage: 24,
-        ramUsage: { used: 142, total: 512, percentage: 28 },
-        diskUsage: { used: 14.2, total: 50, percentage: 28 },
-        nodeVersion: 'v22.14.0',
-        activeProcesses: 6,
-        ollamaStatus: 'connected',
-        geminiStatus: 'active'
+        uptime: 'unavailable',
+        cpuUsage: 0,
+        ramUsage: { used: 0, total: 0, percentage: 0 },
+        diskUsage: { used: 0, total: 0, percentage: 0 },
+        nodeVersion: 'unknown',
+        activeProcesses: 0,
+        ollamaStatus: 'offline',
+        geminiStatus: 'offline'
       };
     }
   },
@@ -41,14 +41,14 @@ export const API = {
       });
       if (!res.ok) throw new Error(`Chat error: ${res.status}`);
       return await res.json();
-    } catch {
+    } catch (error: any) {
       return {
-        id: `msg-${Date.now()}`,
+        id: `err-${Date.now()}`,
         sender: persona,
-        content: `**[${persona.toUpperCase()} Response]**\nI processed your request: "${message}". All neural pipelines and OpenClaw services are operational.`,
+        content: `Local Ollama request failed: ${error?.message || 'network error'}`,
         timestamp: new Date().toISOString(),
-        tokensUsed: 120,
-        model: 'sapphire-neural'
+        tokensUsed: 0,
+        model: 'unavailable'
       };
     }
   },
@@ -56,12 +56,24 @@ export const API = {
   // 4. Terminal Command Execution
   async execCommand(command: string, cwd?: string): Promise<TerminalLog> {
     try {
+      const token = localStorage.getItem('buildmaster_terminal_token') || '';
       const res = await fetch('/api/terminal/exec', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ command, cwd })
       });
-      return await res.json();
+      const data = await res.json();
+      if (!res.ok) {
+        return {
+          id: `err-${Date.now()}`,
+          command,
+          output: data?.error || `Terminal error: HTTP ${res.status}`,
+          status: 'error',
+          timestamp: new Date().toISOString(),
+          cwd: cwd || '/app'
+        };
+      }
+      return data;
     } catch (e: any) {
       return {
         id: `err-${Date.now()}`,
