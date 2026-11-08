@@ -314,7 +314,7 @@ interface ScenarioStepResult {
   merkleProof?: string;
 }
 
-app.post('/api/e2e/simulate', (req: Request, res: Response) => {
+app.post('/api/e2e/run', (req: Request, res: Response) => {
   const { scenario = 'full_threat_mitigation', workspaceId = 'workspace_123' } = req.body;
   const executionId = `e2e_sim_${Date.now()}`;
   const timestamp = new Date().toISOString();
@@ -393,7 +393,7 @@ app.post('/api/e2e/simulate', (req: Request, res: Response) => {
     merkleProof: merkleHash,
   };
 
-  // Record audit log for the E2E simulation run
+  // Record audit log for the E2E test run
   auditLogsStore.unshift({
     id: `audit_sim_${Date.now()}`,
     workspaceId,

@@ -69,7 +69,7 @@ assertTest('server.ts contains all required REST and SSE endpoints', () => {
     '/api/telemetry/stream',
     '/api/audit',
     '/api/whitelabel',
-    '/api/e2e/simulate',
+    '/api/e2e/run',
     '/api/performance/load-test',
     '/api/security/audit-scan',
     '/api/monitoring/status',

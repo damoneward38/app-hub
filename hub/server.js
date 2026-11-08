@@ -2,11 +2,14 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { Readable } from 'node:stream';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.join(root, 'public');
 const previewRoot = process.env.PREVIEW_ROOT || path.join(root, 'previews');
 const port = Number(process.env.PORT || 8780);
+const PORTFOLIO_API_URL = (process.env.PORTFOLIO_API_URL || 'http://host.docker.internal:19113').replace(/\/$/, '');
+const PORTFOLIO_API_TOKEN = process.env.PORTFOLIO_API_TOKEN || '';
 const DEFAULT_MODEL = process.env.OLLAMA_MODEL || 'llama3.2';
 const OLLAMA_CANDIDATES = (process.env.OLLAMA_URLS || process.env.OLLAMA_URL ||
   'http://host.docker.internal:11434,http://127.0.0.1:11434')
@@ -312,7 +315,7 @@ function handlePreview(req, res, url) {
     const fallbackAllowed = !path.extname(decoded || '');
     readSafePreviewFile(appRoot, target, fallbackAllowed, (status, safeTarget, body) => {
       if (status !== 200) return send(res, status, 'text/plain; charset=utf-8', status === 403 ? 'Preview path not allowed' : 'Preview file not found');
-      return sendPreviewBody(res, req, safeTarget, body, entry.route.replace(/\/$/, ''));
+      return sendPreviewBody(res, req, safeTarget, body, entry.route.replace(/\/$/, ''), id);
     });
   });
 }
@@ -329,13 +332,19 @@ function readSafePreviewFile(appRoot, candidate, fallbackAllowed, callback) {
     });
   });
 }
-function sendPreviewBody(res, req, target, body, basePath) {
+function sendPreviewBody(res, req, target, body, basePath, appId) {
   const ext = path.extname(target).toLowerCase();
   const headers = { 'cache-control': ext === '.html' ? 'no-store' : 'public, max-age=300' };
   if (ext === '.html') {
     let html = rewriteRootAssets(body.toString('utf8'), basePath);
     if (!html.includes('/ollama-client.js')) {
       const tag = '<script src="/ollama-client.js" defer></script>';
+      html = /<\/body>/i.test(html) ? html.replace(/<\/body>/i, tag + '</body>') : html + tag;
+    }
+    if (!html.includes('/portfolio-client.js')) {
+      const meta = `<meta name="portfolio-app-id" content="${appId}"><meta name="portfolio-api-base" content="/api/backend">`;
+      html = /<head[^>]*>/i.test(html) ? html.replace(/<head[^>]*>/i, (m) => m + meta) : meta + html;
+      const tag = '<script src="/portfolio-client.js" defer></script>';
       html = /<\/body>/i.test(html) ? html.replace(/<\/body>/i, tag + '</body>') : html + tag;
     }
     body = Buffer.from(html);
@@ -348,6 +357,31 @@ function sendPreviewBody(res, req, target, body, basePath) {
   }
   res.writeHead(200, { 'content-type':mime[ext] || 'application/octet-stream', 'x-content-type-options':'nosniff', ...headers });
   res.end(body);
+}
+
+async function proxyPortfolioApi(req, res, url) {
+  const suffix = url.pathname.replace(/^\/api\/backend/, '') || '/';
+  const target = new URL(suffix + url.search, PORTFOLIO_API_URL + '/');
+  if (!['http:', 'https:'].includes(target.protocol)) return send(res, 502, 'application/json; charset=utf-8', JSON.stringify({ error: 'Invalid backend target' }));
+  const headers = { ...req.headers, host: target.host };
+  if (PORTFOLIO_API_TOKEN && !headers.authorization) headers.authorization = `Bearer ${PORTFOLIO_API_TOKEN}`;
+  try {
+    const upstream = await fetch(target, {
+      method: req.method,
+      headers,
+      body: req.method === 'GET' || req.method === 'HEAD' ? undefined : req,
+      duplex: 'half'
+    });
+    const responseHeaders = {};
+    upstream.headers.forEach((value, key) => {
+      if (!['content-encoding', 'content-length', 'transfer-encoding', 'connection'].includes(key.toLowerCase())) responseHeaders[key] = value;
+    });
+    res.writeHead(upstream.status, responseHeaders);
+    if (!upstream.body) return res.end();
+    Readable.fromWeb(upstream.body).pipe(res);
+  } catch (error) {
+    return send(res, 502, 'application/json; charset=utf-8', JSON.stringify({ error: `Backend unavailable: ${error.message}` }));
+  }
 }
 
 const server = http.createServer(async (req, res) => {
@@ -364,6 +398,9 @@ const server = http.createServer(async (req, res) => {
     url.pathname.includes(':streamGenerateContent')
   );
   if (req.method === 'OPTIONS') { res.writeHead(204, aiHeaders()); return res.end(); }
+  if (url.pathname === '/api/backend' || url.pathname.startsWith('/api/backend/')) {
+    return proxyPortfolioApi(req, res, url);
+  }
   if (req.method !== 'GET' && req.method !== 'HEAD' && !isAiPost) {
     return send(res, 405, 'text/plain; charset=utf-8', 'Method not allowed', { allow:'GET, HEAD, POST' });
   }

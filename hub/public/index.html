@@ -28,6 +28,14 @@ input{flex:1;min-width:220px}select{min-width:170px}
 .app .path{font-size:11px;color:#7180a3;word-break:break-all;margin-top:8px}
 .empty{padding:38px;text-align:center;border:1px dashed #354263;border-radius:16px;color:#aeb9d6}
 details{margin-top:38px}summary{cursor:pointer;color:#aeb9d6;font-size:14px}
+.backend{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:18px;margin:0 0 22px}
+.backend .head{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.backend h3{margin:0;font-size:15px}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:600;background:#202c4b;color:#b9c9ff}
+.badge.ok{background:#12301f;color:#9ff0c0}.badge.bad{background:#3a1620;color:#ffb4c0}
+.backend pre{background:#070c19;border:1px solid #2b385c;border-radius:10px;padding:10px;max-height:180px;overflow:auto;font-size:11px;color:#c9d4f2}
+.backend button{background:#2f5cff;border:0;color:#fff;border-radius:9px;padding:8px 11px;font:600 12px/1 Inter,system-ui,sans-serif;cursor:pointer}
+.backend button:disabled{opacity:.55;cursor:not-allowed}
 .note{font-size:12px;color:var(--muted);margin:2px 0 0}
 footer{padding:24px;text-align:center;color:#7180a3;font-size:12px}
 </style>
@@ -36,6 +44,11 @@ footer{padding:24px;text-align:center;color:#7180a3;font-size:12px}
 <header><div class="eyebrow">Private deployment workspace</div><h1>App Hub</h1><p>Every app you built in Google AI Studio, Base44, Rork AI, and Manus AI — served together from one portal.</p></header>
 <main class="wrap">
 <div class="stats" id="stats"></div>
+<section class="backend" id="backend">
+  <div class="head"><h3>Portfolio backend</h3><span class="badge" id="backend-badge">checking…</span><button id="backend-run">Run health pipeline</button></div>
+  <p class="note" id="backend-meta">Connecting to the shared TypeScript pipeline service…</p>
+  <pre id="backend-output">No pipeline run yet.</pre>
+</section>
 <div class="toolbar">
   <input id="q" placeholder="Search apps…">
   <select id="status"><option value="">All statuses</option><option>PREVIEW_RUNNING</option><option>CONTAINER_RUNNING</option><option>TOOL_OR_DUPLICATE</option></select>
@@ -92,7 +105,35 @@ function render(){
 document.querySelector("#q").addEventListener("input",render);
 document.querySelector("#status").addEventListener("change",render);
 document.querySelector("#platform").addEventListener("change",render);
-load();
+async function backendJson(path,init){const r=await fetch(path,{cache:"no-store",...init});const t=await r.text();let b;try{b=t?JSON.parse(t):null}catch{b=t}if(!r.ok)throw new Error(b&&b.error?b.error:t||r.statusText);return b}
+function renderBackend(h){
+  const badge=document.querySelector("#backend-badge"), meta=document.querySelector("#backend-meta");
+  badge.className="badge "+(h.ok?"ok":"bad");
+  badge.textContent=h.ok?"online":(h.ollama&&h.ollama.ok?"degraded":"offline");
+  meta.textContent=`${h.service} v${h.version} · ollama ${h.ollama&&h.ollama.ok?"ready":(h.ollama&&h.ollama.error)||"offline"} · ${h.storage.jobs} jobs · ${h.storage.records} records`;
+  document.querySelector("#backend-output").textContent="Capabilities: "+(h.capabilities||[]).join(", ");
+}
+async function loadBackend(){
+  try{renderBackend(await backendJson("/api/backend/health"))}
+  catch(e){const badge=document.querySelector("#backend-badge");badge.className="badge bad";badge.textContent="offline";document.querySelector("#backend-meta").textContent=e.message}
+}
+document.querySelector("#backend-run").addEventListener("click",async()=>{
+  const button=document.querySelector("#backend-run"), out=document.querySelector("#backend-output");
+  button.disabled=true;out.textContent="Queued health.check…";
+  try{
+    const {job}=await backendJson("/api/backend/api/jobs",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({appId:"portfolio-portal",type:"health.check",input:{}})});
+    const deadline=Date.now()+30000;
+    let current=job;
+    while(!current.finishedAt&&Date.now()<deadline){
+      await new Promise(r=>setTimeout(r,400));
+      current=(await backendJson(`/api/backend/api/jobs/${current.id}`)).job;
+    }
+    out.textContent=JSON.stringify(current.result||current,null,2);
+    await loadBackend();
+  }catch(e){out.textContent=e.message}
+  finally{button.disabled=false}
+});
+load();loadBackend();
 </script>
 <script src="/ollama-client.js" defer></script>
 </body>

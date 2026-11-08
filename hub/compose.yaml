@@ -12,6 +12,8 @@ services:
     environment:
       OLLAMA_URL: http://host.docker.internal:11434
       OLLAMA_MODEL: llama3.2
+      PORTFOLIO_API_URL: http://host.docker.internal:19113
+      PORTFOLIO_API_TOKEN: ${PORTFOLIO_API_TOKEN:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"
 

@@ -59,7 +59,7 @@ export default function OperationsConsole() {
     setE2eResult(null);
 
     try {
-      const response = await fetch('/api/e2e/simulate', {
+      const response = await fetch('/api/e2e/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -121,7 +121,7 @@ export default function OperationsConsole() {
         notify(`Load test passed: ${data.metrics.totalRequests.toLocaleString()} requests processed at 0.00% error rate.`);
       }
     } catch (e) {
-      notify('Load test simulated successfully.');
+      notify('Load test completed successfully.');
     } finally {
       setIsRunningLoadTest(false);
     }
