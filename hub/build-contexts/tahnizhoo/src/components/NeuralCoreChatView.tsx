@@ -181,18 +181,40 @@ I have complete, native awareness of our entire platform:
   const handleSendMessageWithTextRef = useRef<(text: string) => void>(() => {});
 
   const callRealNeuralCore = async (query: string): Promise<string> => {
-    const response = await fetch('http://127.0.0.1:8765/run', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Tahniz-Gateway': 'tahniz-hazo-local-bridge',
+    const messages = [
+      {
+        role: 'system',
+        content: 'You are the Neural Core 200 assistant for Tahnic Hazoo. Be concise. Use only platform facts; never claim a live pipeline ran unless tool output is supplied.',
       },
-      body: JSON.stringify({ message: query }),
-      signal: AbortSignal.timeout(120000),
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok || data?.ok === false) throw new Error(data?.error || `Neural Core HTTP ${response.status}`);
-    return String(data?.output ?? '');
+      { role: 'user', content: query },
+    ];
+    const injected = (window as any).OllamaAI;
+    if (injected?.chat) return String(await injected.chat(messages, { model: 'llama3.2' }));
+
+    const attempts = [
+      { url: 'http://127.0.0.1:8765/run', headers: { 'Content-Type': 'application/json', 'X-Tahniz-Gateway': 'tahniz-hazo-local-bridge' }, body: { message: query }, output: (d: any) => d?.output },
+      { url: '/api/ai/chat', headers: { 'Content-Type': 'application/json' }, body: { messages, model: 'llama3.2', stream: false }, output: (d: any) => d?.message?.content ?? d?.choices?.[0]?.message?.content },
+      { url: 'http://localhost:8780/api/ai/chat', headers: { 'Content-Type': 'application/json' }, body: { messages, model: 'llama3.2', stream: false }, output: (d: any) => d?.message?.content ?? d?.choices?.[0]?.message?.content },
+    ];
+    let lastError: unknown = new Error('Neural Core bridge unavailable');
+    for (const attempt of attempts) {
+      try {
+        const response = await fetch(attempt.url, {
+          method: 'POST',
+          headers: attempt.headers,
+          body: JSON.stringify(attempt.body),
+          signal: AbortSignal.timeout(120000),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data?.ok === false) throw new Error(data?.error || `HTTP ${response.status}`);
+        const text = String(attempt.output(data) ?? '');
+        if (text.trim()) return text.trim();
+        throw new Error('empty response');
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError instanceof Error ? lastError : new Error('Neural Core bridge unavailable');
   };
 
   // Scroll to bottom on message update
@@ -863,37 +885,36 @@ Say **"Take me to investors"**, **"Open bank enclave"**, **"Show 200 cores"**, *
   };
 
   // Pipeline Testing & Live Payload Sender
-  const handleSendPipelinePayload = (pipelineId: string) => {
+  const handleSendPipelinePayload = async (pipelineId: string) => {
+    if (testingPipelineId) return;
     setTestingPipelineId(pipelineId);
-    setTimeout(() => {
-      let output = '';
-      if (pipelineId === 'swarm-dispatch') {
-        output = 'Swarm Task Dispatched -> 20 micro-VMs in Group A executed static AST scan. Quorum reached 19/20 (95%). Zero errors.';
-      } else if (pipelineId === 'zero-egress') {
-        output = 'Packet Outbound Probe -> Kernel iptables DROP barrier hit. Outbound payload blocked. 0.00 Bytes egress confirmed.';
-      } else if (pipelineId === 'worm-ledger') {
-        output = 'WORM Event Signed -> Genesis root appended. Block #10492 hash: sha256:d8c5...31f8 validated immutable.';
-      } else if (pipelineId === 'sela-ast') {
-        output = 'SELA AST Analysis -> 42 syntax branches evaluated. 0 hardcoded secrets found. SEC 17a-4 compliance verified.';
-      } else if (pipelineId === 'tts-audio') {
-        output = 'Speech Pipeline -> Web Speech API utterance queued. Audio synthesised with 1.05 rate & 100% fidelity.';
-        speakText('Speech synthesis pipeline test completed successfully.');
-      } else if (pipelineId === 'zip-archive') {
-        output = 'ZIP Unpacker -> Recursive manifest unpack verified. 5 virtual files scanned for AST taint. Result: CLEAN.';
-      }
+    const started = performance.now();
+    try {
+      const output = await callRealNeuralCore(
+        `Review the "${pipelineId}" pipeline before it is run. List the concrete checks it must perform, the evidence required, and the failure conditions. Do not claim it has already run.`
+      );
       setTestPayloadResults((prev) => ({
         ...prev,
         [pipelineId]: {
-          status: 'PASSED',
-          latencyMs: Math.floor(Math.random() * 25) + 12,
+          status: 'COMPLETE',
+          latencyMs: Math.round(performance.now() - started),
           output,
         },
       }));
+    } catch (error) {
+      setTestPayloadResults((prev) => ({
+        ...prev,
+        [pipelineId]: {
+          status: 'ERROR',
+          latencyMs: Math.round(performance.now() - started),
+          output: error instanceof Error ? error.message : 'Local Ollama unavailable',
+        },
+      }));
+    } finally {
       setTestingPipelineId(null);
-    }, 600);
+    }
   };
 
-  // Test All 6 Pipelines at Once
   const handleTestAllPipelines = () => {
     setIsAuditingAllPipelines(true);
     const pipelineIds = ['swarm-dispatch', 'zero-egress', 'worm-ledger', 'sela-ast', 'tts-audio', 'zip-archive'];
@@ -1749,7 +1770,7 @@ ${riskScore === 'CLEAN' ? '✅ **Status: CLEAN & ZERO-EGRESS VERIFIED**' : '⚠�
                       id: 'zip-archive',
                       name: 'ZIP Archive Manifest Unpacker',
                       route: 'neural_core.archive_audit',
-                      desc: 'Simulates recursive unpacking of compressed archives and verifies file manifests.',
+                      desc: 'Reviews recursive archive unpacking and manifest verification requirements.',
                     },
                   ].map((pipeline) => {
                     const result = testPayloadResults[pipeline.id];
@@ -1775,7 +1796,7 @@ ${riskScore === 'CLEAN' ? '✅ **Status: CLEAN & ZERO-EGRESS VERIFIED**' : '⚠�
                             <div className="flex items-center justify-between">
                               <span className="font-bold flex items-center gap-1">
                                 <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                                STATUS: {result.status}
+                                AI REVIEW: {result.status}
                               </span>
                               <span>{result.latencyMs}ms latency</span>
                             </div>

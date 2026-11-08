@@ -70,7 +70,7 @@ export const PricingView: React.FC<PricingViewProps> = ({ onPlanSelected }) => {
   const [wlTurnaround, setWlTurnaround] = useState('14 Days (Fast-Track)');
   const [wlAgreedTerms, setWlAgreedTerms] = useState(false);
   const [copiedAgreement, setCopiedAgreement] = useState(false);
-  const [signedSimulated, setSignedSimulated] = useState(false);
+  const [signedDemo, setSignedDemo] = useState(false);
 
   // One-Button Checkout Simulator State
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
@@ -424,7 +424,7 @@ DATE: ${new Date().toLocaleDateString()}`;
           {dramaBlockResult && (
             <div className="p-4 rounded-xl bg-slate-950 border border-red-500/50 font-mono text-xs space-y-2 animate-in fade-in">
               <div className="flex items-center justify-between text-red-400 font-bold border-b border-red-900/40 pb-1.5">
-                <span>SIMULATED API RESPONSE: HTTP {dramaBlockResult.status} {dramaBlockResult.error}</span>
+                <span>DEMO 403 RESPONSE: HTTP {dramaBlockResult.status} {dramaBlockResult.error}</span>
                 <span className="text-[10px] text-slate-500">{dramaBlockResult.timestamp}</span>
               </div>
               <p className="text-slate-300">{dramaBlockResult.detail}</p>
@@ -627,13 +627,13 @@ DATE: ${new Date().toLocaleDateString()}`;
                   </button>
                   <button
                     onClick={() => {
-                      setSignedSimulated(true);
-                      setTimeout(() => setSignedSimulated(false), 3000);
+                      setSignedDemo(true);
+                      setTimeout(() => setSignedDemo(false), 3000);
                     }}
                     className="flex-1 py-2 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
                   >
                     <FileCheck2 className="w-3.5 h-3.5" />
-                    <span>{signedSimulated ? 'DocuSign Dispatched!' : 'Dispatch DocuSign PDF'}</span>
+                    <span>{signedDemo ? 'DocuSign Dispatched!' : 'Dispatch DocuSign PDF'}</span>
                   </button>
                 </div>
               </div>
@@ -861,7 +861,7 @@ export function verifyFeatureAccess(req, res, next) {
               <div>
                 <span className="text-white font-bold text-xs block">Test Feature-Gate in Sandbox:</span>
                 <span className="text-slate-400 text-[11px]">
-                  Simulates a request against an enterprise-gated endpoint with an expired sandbox token.
+                  Sends a request against a local demo of an enterprise-gated endpoint with an expired sandbox token.
                 </span>
               </div>
               <button
@@ -1007,7 +1007,7 @@ export function verifyFeatureAccess(req, res, next) {
                 </div>
 
                 <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs space-y-2">
-                  <span className="text-[11px] text-slate-500 uppercase block">SIMULATED ENDPOINT RESPONSE:</span>
+                  <span className="text-[11px] text-slate-500 uppercase block">DEMO ENDPOINT RESPONSE:</span>
                   <pre className="text-slate-200 text-[11px] overflow-x-auto leading-relaxed">
                     {JSON.stringify(checkoutResponse, null, 2)}
                   </pre>

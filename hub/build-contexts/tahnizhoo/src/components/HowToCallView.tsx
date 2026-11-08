@@ -294,7 +294,7 @@ export const HowToCallView: React.FC<HowToCallViewProps> = ({
         {simulatedExecution.output && (
           <div className="p-4 rounded-xl bg-slate-950 border border-emerald-900/50 space-y-2 font-mono text-xs animate-in fade-in">
             <span className="text-[10px] text-emerald-400 block font-bold">
-              SIMULATED EXECUTION RESPONSE (LOCAL OLLAMA / LOCALHOST BRIDGE):
+              LOCAL OLLAMA SANDBOX RESPONSE:
             </span>
             <pre className="text-emerald-300 whitespace-pre-wrap leading-relaxed text-[11px]">
               {simulatedExecution.output}

@@ -14,12 +14,12 @@ TEXT_EXT = {'.html', '.htm', '.js', '.mjs', '.jsx', '.ts', '.tsx', '.vue', '.sve
 MAX_BYTES = 2 * 1024 * 1024
 
 PATTERNS = [
-    ('ai_mock', re.compile(r'(?:mock|fake|dummy|canned|simulat\w*)[^\n]{0,40}(?:ai|response|reply|answer|completion|generat)|(?:ai|response|reply|answer|completion)[^\n]{0,40}(?:mock|fake|dummy|canned)', re.I)),
-    ('fake_async', re.compile(r'setTimeout[^\n]{0,120}(?:response|reply|answer|assistant)', re.I)),
-    ('sample_data', re.compile(r'(?:sample|demo|mock|dummy|fake|test)\s+(?:data|dataset|content|records|users|items)', re.I)),
+    ('ai_mock', re.compile(r'(?:\bmock\b|\bfake\b|\bdummy\b|\bcanned\b|simulat\w*)[^\n]{0,40}(?:ai|response|reply|answer|completion|generat)|(?:ai|response|reply|answer|completion)[^\n]{0,40}(?:\bmock\b|\bfake\b|\bdummy\b|\bcanned\b)', re.I)),
+    ('fake_async', re.compile(r'setTimeout[^\n]{0,180}(?:aiResponse|mock|fake|dummy|canned|simulat)', re.I)),
+    ('sample_data', re.compile(r'(?:sample|demo|mock|dummy|fake|test)\s+(?:data|dataset|content|records|users)', re.I)),
     ('coming_soon', re.compile(r'coming soon|not implemented|under construction|work in progress|\bstub\b', re.I)),
     ('lorem', re.compile(r'lorem ipsum', re.I)),
-    ('placeholder_img', re.compile(r'placeholder[^\n]{0,40}\.(?:png|svg|jpe?g|webp)|/placeholder[-_]', re.I)),
+    ('placeholder_img', re.compile(r'(?:src|url)\s*[=(]\s*[\"\']?[^\"\'\n]*placeholder[^\"\'\n]*\.(?:png|svg|jpe?g|webp)|/placeholder[-_]', re.I)),
     ('placeholder_text', re.compile(r'>\s*(?:placeholder|sample|demo|coming soon|tbd|n/a)\s*<', re.I)),
 ]
 
@@ -55,6 +55,39 @@ def served_artifacts():
     return result
 
 
+def static_served_files(path):
+    """Files actually reachable from a static export's entry HTML."""
+    selected = set()
+    html_files = []
+    for name in os.listdir(path):
+        if name.lower().endswith(('.html', '.htm')):
+            full = os.path.join(path, name)
+            html_files.append(full)
+            selected.add(full)
+    ref = re.compile(r'(?:src|href)\s*=\s*["\']([^"\'#?]+)')
+    for html in html_files:
+        try:
+            with open(html, encoding='utf-8', errors='ignore') as handle:
+                text = handle.read()
+        except OSError:
+            continue
+        for match in ref.finditer(text):
+            target = match.group(1)
+            if target.startswith(('http:', 'https:', '//', 'data:', 'mailto:', '#')):
+                continue
+            full = os.path.normpath(os.path.join(os.path.dirname(html), target))
+            if full.startswith(path) and os.path.isfile(full):
+                selected.add(full)
+    for folder in ('assets', 'static', 'js', 'css'):
+        base = os.path.join(path, folder)
+        if os.path.isdir(base):
+            for name in os.listdir(base):
+                full = os.path.join(base, name)
+                if os.path.isfile(full):
+                    selected.add(full)
+    return selected
+
+
 def scan_file(path):
     if os.path.getsize(path) > MAX_BYTES:
         return []
@@ -83,18 +116,23 @@ def main():
     for app, path in sorted(artifacts, key=lambda item: item[0].get('name', '').lower()):
         counts = {}
         samples = []
-        for base, dirs, files in os.walk(path):
-            dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-            for name in files:
-                if os.path.splitext(name)[1].lower() not in TEXT_EXT:
-                    continue
-                full = os.path.join(base, name)
-                for category, line, snippet in scan_file(full):
-                    counts[category] = counts.get(category, 0) + 1
-                    totals[category] = totals.get(category, 0) + 1
-                    if len(samples) < 12:
-                        rel = os.path.relpath(full, path)
-                        samples.append({'category': category, 'file': rel, 'line': line, 'snippet': snippet})
+        is_source = os.path.join('build-contexts', '') in path + os.sep or path.endswith(os.sep + 'build-contexts')
+        if is_source or not os.path.isfile(os.path.join(path, 'index.html')):
+            files = []
+            for base, dirs, names in os.walk(path):
+                dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+                files.extend(os.path.join(base, name) for name in names)
+        else:
+            files = sorted(static_served_files(path))
+        for full in files:
+            if os.path.splitext(full)[1].lower() not in TEXT_EXT:
+                continue
+            for category, line, snippet in scan_file(full):
+                counts[category] = counts.get(category, 0) + 1
+                totals[category] = totals.get(category, 0) + 1
+                if len(samples) < 12:
+                    rel = os.path.relpath(full, path)
+                    samples.append({'category': category, 'file': rel, 'line': line, 'snippet': snippet})
         if counts:
             rows.append({'name': app.get('name', app.get('id')), 'id': app.get('id'), 'source': app.get('source', ''), 'counts': counts})
             details.append({'name': app.get('name', app.get('id')), 'path': path, 'samples': samples})
