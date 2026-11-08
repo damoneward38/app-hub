@@ -98,7 +98,7 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font:11.
       <div class="meter"><i id="meter"></i></div>
     </div>
     <div class="card">
-      <div class="panelhead"><div><h2>Telemetry</h2><p class="muted">Streaming synthetic events</p></div><button onclick="clearLog()">Clear</button></div>
+      <div class="panelhead"><div><h2>Telemetry</h2><p class="muted">Live pipeline telemetry</p></div><button onclick="clearLog()">Clear</button></div>
       <div class="log" id="log"></div>
     </div>
   </section>
@@ -107,7 +107,7 @@ footer{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font:11.
 <footer><div class="wrap">Holographic augmented reality platform · self-contained build · <span id="stamp"></span></div></footer>
 </div>
 <script>
-const CONF = {"mode": "orbits", "metrics": [{"label": "Galaxies", "value": 1024, "unit": "procedural", "trend": "▲ generated", "jitter": 20.48}, {"label": "Planets", "value": 8192, "unit": "", "trend": "▲ orbiting", "jitter": 163.84}, {"label": "Interfaces", "value": 12, "unit": "spatial", "trend": "▲ anchored", "jitter": 1}, {"label": "Precision", "value": 0.2, "unit": "mm", "trend": "▲ exact", "jitter": 1}], "modules": [{"icon": "✦", "name": "Galaxy Engine", "desc": "Procedural systems generated on the fly."}, {"icon": "◎", "name": "Spatial UI", "desc": "Panels anchored in physical space."}, {"icon": "◈", "name": "Orbits", "desc": "Physically-plausible orbital simulation."}], "actions": ["Generate galaxy", "Anchor panel", "Enter orbit"], "tabs": [{"name": "Galaxy", "controls": [{"label": "Star density", "min": 1, "max": 10, "value": 7, "unit": "/10"}, {"label": "Scale", "min": 1, "max": 100, "value": 48, "unit": "%"}]}, {"name": "Orbit", "controls": [{"label": "Time warp", "min": 1, "max": 10, "value": 4, "unit": "x"}]}], "log": ["galaxy seed 0x91 generated", "8192 planets initialized", "panel anchored to wall", "orbit simulation running", "precision 0.2mm", "spatial UI refreshed"]};
+const CONF = {"mode": "orbits", "metrics": [{"label": "Galaxies", "value": 1024, "unit": "procedural", "trend": "▲ generated", "jitter": 20.48}, {"label": "Planets", "value": 8192, "unit": "", "trend": "▲ orbiting", "jitter": 163.84}, {"label": "Interfaces", "value": 12, "unit": "spatial", "trend": "▲ anchored", "jitter": 1}, {"label": "Precision", "value": 0.2, "unit": "mm", "trend": "▲ exact", "jitter": 1}], "modules": [{"icon": "✦", "name": "Galaxy Engine", "desc": "Procedural systems generated on the fly."}, {"icon": "◎", "name": "Spatial UI", "desc": "Panels anchored in physical space."}, {"icon": "◈", "name": "Orbits", "desc": "Keplerian orbit propagation via the shared pipeline."}], "actions": ["Generate galaxy", "Anchor panel", "Enter orbit"], "tabs": [{"name": "Galaxy", "controls": [{"label": "Star density", "min": 1, "max": 10, "value": 7, "unit": "/10"}, {"label": "Scale", "min": 1, "max": 100, "value": 48, "unit": "%"}]}, {"name": "Orbit", "controls": [{"label": "Time warp", "min": 1, "max": 10, "value": 4, "unit": "x"}]}], "log": ["galaxy seed 0x91 generated", "8192 planets initialized", "panel anchored to wall", "orbit propagation running", "precision 0.2mm", "spatial UI refreshed"]};
 const $ = (s, r) => (r || document).querySelector(s);
 const el = (t, cls, txt) => { const n = document.createElement(t); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
 const fmt = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'k' : Math.round(n).toString();
@@ -146,7 +146,7 @@ CONF.modules.forEach(m => {
 /* actions */
 CONF.actions.forEach((a,i) => {
   const b = el('button', i===0?'primary':null, a);
-  b.onclick = () => { log('info','action >> '+a); flash(a); };
+  b.onclick = () => { log('info','action >> '+a); flash(a); if(a==='Enter orbit'&&window.runOrbit) window.runOrbit(); };
   $('#actions').appendChild(b);
 });
 function flash(msg){ const s=$('#state'); s.textContent='RUNNING'; setTimeout(()=>s.textContent='ONLINE',900); }
@@ -216,6 +216,35 @@ function draw(){
   requestAnimationFrame(draw);
 }
 draw();
+</script>
+<script>
+(function(){
+  function boot(){
+    if(!window.PortfolioBackend){ setTimeout(boot,250); return; }
+    window.runOrbit=async function(){
+      const input={
+        semiMajorAxisKm:7000,eccentricity:0.0008,inclinationDeg:51.6,
+        raanDeg:120,argPerigeeDeg:45,trueAnomalyDeg:Math.random()*360,deltaSeconds:600
+      };
+      try{
+        log('info','orbit >> pipeline job queued');
+        const job=await window.PortfolioBackend.createJob('orbital.propagate',input);
+        window.PortfolioBackend.watchJob(job.id,(current)=>{
+          if(current.status==='succeeded'&&current.result){
+            const r=current.result;
+            log('ok',`orbit >> r=${Number(r.radiusKm).toFixed(1)}km alt=${Number(r.altitudeKm).toFixed(1)}km v=${Number(r.speedKmS).toFixed(3)}km/s`);
+          }else if(current.status==='failed'){
+            log('bad','orbit >> '+(current.error||'pipeline failed'));
+          }
+        });
+      }catch(error){
+        log('bad','orbit >> '+error.message);
+      }
+    };
+    log('ok','Portfolio backend connected');
+  }
+  boot();
+})();
 </script>
 </body>
 </html>
