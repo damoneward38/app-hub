@@ -1,0 +1,88 @@
+# houly-pipe — edit this once, then just run scripts/pipeline.py
+# Every path is relative to THIS file.
+
+pipeline:
+  # ---- delivery -----------------------------------------------------------
+  resolution: 3840x2160       # 4K UHD. Sources are fit-inside and letterboxed, never stretched.
+  fps: 60
+  codec: libx264              # libx265 | libaom-av1 | h264_nvenc | hevc_videotoolbox
+  crf: 18                     # lower = better. 18 is visually transparent for x264.
+  preset: medium              # veryfast for dailies, slow for the final master
+  bitrate: 50M                # ceiling only (capped CRF), not a target
+  audioBitrate: 384k
+  maxDuration: 3h40m          # hard stop; omit for "however long the timeline is"
+
+  # ---- look ---------------------------------------------------------------
+  lut: assets/color_lut.cube  # optional 3D LUT (.cube), applied before scaling
+  logo: assets/logo.png       # optional watermark, top-left
+  logoScale: 0.07             # fraction of frame height
+  logoSeconds: 20             # visible for the first N seconds; "always" to keep it
+  # subtitles: raw/merged.vtt # DISABLED 2026-09-18: brew ffmpeg 9 lacks libass (subtitles filter).
+  #                            # Re-enable after installing an ffmpeg built with libass.
+  subtitleStyle: >-
+    Alignment=2,FontName=Arial,FontSize=42,PrimaryColour=&H00FFFFFF,
+    OutlineColour=&H00000000,BorderStyle=1,Outline=2,Shadow=0,MarginV=60
+  fadeInFromBlack: 1.5        # opening fade, video + audio
+
+  # ---- output -------------------------------------------------------------
+  tmpDir: tmp
+  outputFile: out/final_render.mp4
+  preview: true
+  previewSeconds: 10
+  thumbnailAt: 00:00:05       # omit to grab 10% in
+  intermediateCrf: 16         # quality of the tmp/ scene files
+
+# Scenes play in this order. `transition` describes how a scene hands off to the
+# NEXT one; on the last scene it means "fade to black".
+#   cut | fade 2 | dissolve 1.5 | wipeleft 1 | slideup 0.8 | circleopen 1 …
+# Use `end:` or `duration:` — both accept 00:02:15, 2m15s or plain seconds.
+sceneSegments:
+  # Demo timings — 8s generated test clips (see scripts/make_demo_assets.py).
+  # Replace with real footage timings when raw/ holds the show files.
+  - id: intro
+    file: raw/intro.mp4
+    start: 00:00:00
+    duration: 5
+    transition: fade 2
+
+  - id: mid
+    file: raw/mid.mp4
+    start: 00:00:00
+    duration: 6
+    transition: cut
+
+  - id: finale
+    file: raw/finale.mp4
+    start: 00:00:00
+    duration: 4
+    transition: fade 3        # last scene → fades to black
+
+# The bridge lets the Intégrav phone app pair with this computer and drive
+# renders over the local network. Start it with: python3 scripts/bridge.py
+bridge:
+  port: 8787
+  bind: 0.0.0.0             # 127.0.0.1 to refuse everything except this machine
+
+# Optional push when a render lands, so you can walk away from the desk.
+# Create a bot with @BotFather, then message it once and read your chat id from
+# https://api.telegram.org/bot<TOKEN>/getUpdates
+notify:
+  telegram:
+    botToken: ""            # leave empty to disable
+    chatId: ""
+
+youtube:
+  upload: false               # true only when you mean it — an upload costs ~1600 quota units
+  title: "Your Epic 3-Hour Film"
+  description: |
+    From raw footage to YouTube, rendered by houly-pipe.
+
+    00:00 Intro
+    02:15 Main programme
+    48:02 Finale
+  tags: ["automated", "ffmpeg", "youtube api"]
+  privacy: "private"          # public | unlisted | private
+  categoryId: "22"            # 22 People & Blogs, 24 Entertainment, 28 Sci & Tech
+  madeForKids: false
+  clientSecrets: client_secrets.json   # OAuth *Desktop app* client — NOT a service account
+  tokenFile: token.json                # cached refresh token, created on first run

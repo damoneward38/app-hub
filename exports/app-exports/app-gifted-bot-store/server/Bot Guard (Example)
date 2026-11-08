@@ -1,0 +1,6 @@
+if (!(await hasActiveSubscription(ctx.user.id))) {
+  throw new TRPCError({
+    code: "FORBIDDEN",
+    message: "Subscription required",
+  });
+}

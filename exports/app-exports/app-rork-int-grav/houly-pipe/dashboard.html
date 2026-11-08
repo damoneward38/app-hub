@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>houly-pipe · render dashboard</title>
+<style>
+  :root {
+    --bg: #0b0b0f; --panel: #14141c; --line: #262633;
+    --text: #e8e6f0; --muted: #8b879e; --accent: #ff5d73; --ok: #3ddc97;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2.5rem 1.5rem 4rem; background: var(--bg); color: var(--text);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 0 0 .25rem; letter-spacing: -.02em; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--muted); font-family: var(--mono); font-size: .8rem; margin-bottom: 2rem; }
+  h2 { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+       color: var(--muted); margin: 2.5rem 0 .9rem; font-weight: 700; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .75rem; }
+  .stat { padding: 1rem 1.1rem; }
+  .stat b { display: block; font-family: var(--mono); font-size: 1.35rem; font-weight: 600; }
+  .stat small { color: var(--muted); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }
+  video, img.thumb { width: 100%; display: block; border-radius: 14px; border: 1px solid var(--line); background: #000; }
+  table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: .84rem; }
+  th { text-align: left; color: var(--muted); font-weight: 600; font-size: .68rem;
+       letter-spacing: .1em; text-transform: uppercase; padding: .8rem 1.1rem; }
+  td { padding: .7rem 1.1rem; border-top: 1px solid var(--line); }
+  td.id { color: var(--accent); }
+  .pill { display: inline-block; padding: .12rem .5rem; border-radius: 999px;
+          border: 1px solid var(--line); color: var(--muted); font-size: .74rem; }
+  .pill.fade { color: var(--ok); border-color: rgba(61,220,151,.35); }
+  .grid2 { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; align-items: start; }
+  .note { color: var(--muted); font-size: .85rem; }
+  .err { border-left: 3px solid var(--accent); padding: 1rem 1.1rem; }
+  code { font-family: var(--mono); color: var(--text); background: #1e1e29;
+         padding: .1rem .4rem; border-radius: 5px; }
+  .live { padding: 1.1rem; margin-bottom: 1.5rem; }
+  .live-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .live-head b { font-size: 1rem; }
+  .live-head span { font-family: var(--mono); font-size: .78rem; color: var(--muted); }
+  .track { height: 6px; border-radius: 999px; background: #0b0b0f; margin-top: .85rem; overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px;
+          background: linear-gradient(90deg, var(--accent), var(--ok)); transition: width .4s ease; }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+         background: var(--ok); margin-right: .5rem; animation: pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .2; } }
+  @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>houly<span>-</span>pipe</h1>
+  <div class="sub" id="generated">reading out/manifest.json…</div>
+  <div id="live"></div>
+  <div id="content"></div>
+</div>
+
+<script>
+// manifest.json is written when a render finishes; status.json is rewritten
+// every ~0.5s while one is running. fetch() is blocked on file:// — serve the
+// folder:  python3 -m http.server 8080
+const $ = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content; };
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+async function load() {
+  const content = document.getElementById('content');
+  let data;
+  try {
+    const res = await fetch('out/manifest.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    data = await res.json();
+  } catch (error) {
+    document.getElementById('generated').textContent = 'no completed render found';
+    content.innerHTML = '';
+    content.append($('<div class="panel err">'
+      + '<p><b>Could not read <code>out/manifest.json</code></b></p>'
+      + '<p class="note">Run a render first — <code>python3 scripts/pipeline.py</code> — '
+      + 'and open this page over HTTP, not <code>file://</code>:<br>'
+      + '<code>python3 -m http.server 8080</code> then '
+      + '<a href="http://localhost:8080/dashboard.html" style="color:var(--accent)">localhost:8080/dashboard.html</a></p>'
+      + '<p class="note">' + esc(error.message) + '</p></div>'));
+    return;
+  }
+
+  content.innerHTML = '';
+  document.getElementById('generated').textContent =
+    data.output + ' · rendered ' + data.generatedAt + ' · ' + data.renderSeconds + 's wall time';
+
+  const stats = [
+    ['duration', data.durationLabel], ['resolution', data.resolution],
+    ['fps', data.fps], ['codec', data.codec], ['size', data.sizeLabel],
+    ['scenes', data.scenes.length],
+  ].map(([label, value]) =>
+    '<div class="panel stat"><b>' + esc(value) + '</b><small>' + label + '</small></div>').join('');
+  content.append($('<h2>Master</h2><div class="stats">' + stats + '</div>'));
+
+  content.append($('<h2>Final render</h2><video controls preload="metadata" poster="out/'
+    + esc(data.thumbnail || '') + '" src="out/' + esc(data.output) + '"></video>'));
+
+  if (data.preview || data.thumbnail) {
+    content.append($('<h2>Preview &amp; thumbnail</h2><div class="grid2">'
+      + (data.preview ? '<video controls preload="none" src="out/' + esc(data.preview) + '"></video>' : '<div></div>')
+      + (data.thumbnail ? '<img class="thumb" alt="thumbnail" src="out/' + esc(data.thumbnail) + '">' : '')
+      + '</div>'));
+  }
+
+  const rows = data.scenes.map((s) =>
+    '<tr><td class="id">' + esc(s.id) + '</td><td>' + esc(s.file) + '</td>'
+    + '<td>' + esc(s.start) + '</td><td>' + esc(s.end) + '</td>'
+    + '<td>' + s.duration.toFixed(2) + 's</td>'
+    + '<td><span class="pill ' + (s.transition === 'cut' ? '' : 'fade') + '">'
+    + esc(s.transition) + '</span></td></tr>').join('');
+  content.append($('<h2>Scene segments</h2><div class="panel"><table>'
+    + '<thead><tr><th>id</th><th>source</th><th>in</th><th>out</th><th>length</th><th>transition</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table></div>'));
+}
+
+// ---- live status --------------------------------------------------------
+const STAGE_LABELS = {
+  trim: 'Trimming & normalising', render: 'Rendering master',
+  preview: 'Preview & thumbnail', upload: 'Uploading to YouTube',
+};
+let wasRunning = false;
+
+async function pollStatus() {
+  const host = document.getElementById('live');
+  let status;
+  try {
+    const res = await fetch('out/status.json?t=' + Date.now());
+    if (!res.ok) throw new Error('no status');
+    status = await res.json();
+  } catch {
+    host.innerHTML = '';
+    return;
+  }
+
+  if (status.state === 'running') {
+    wasRunning = true;
+    const pct = Math.round((status.progress ?? 0) * 100);
+    host.innerHTML = '';
+    host.append($('<div class="panel live">'
+      + '<div class="live-head">'
+      + '<b><span class="dot"></span>' + esc(STAGE_LABELS[status.stage] ?? status.stage) + '</b>'
+      + '<span>' + pct + '% · ' + esc(status.speed ?? '') + ' · '
+      + esc(status.elapsedSeconds ?? 0) + 's elapsed</span></div>'
+      + '<div class="track"><div class="fill" style="width:' + pct + '%"></div></div></div>'));
+  } else if (status.state === 'failed') {
+    host.innerHTML = '';
+    host.append($('<div class="panel err live"><b>Render failed</b>'
+      + '<p class="note">' + esc(status.error ?? 'Unknown error') + '</p></div>'));
+  } else {
+    host.innerHTML = '';
+    // Finished while the page was open — pick up the manifest it just wrote.
+    if (wasRunning) { wasRunning = false; load(); }
+  }
+}
+
+pollStatus();
+setInterval(pollStatus, 1000);
+load();
+</script>
+</body>
+</html>

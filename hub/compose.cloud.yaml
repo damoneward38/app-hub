@@ -1,0 +1,13 @@
+services:
+  aistudio-63-keli:
+    build:
+      context: ./build-contexts/aistudio-63-keli
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-aistudio-63-keli:local
+    container_name: app-aistudio-63-keli
+    ports: ["127.0.0.1:19113:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]

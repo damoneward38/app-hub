@@ -1,0 +1,3 @@
+shareEvents
+userFollows
+activityFeed

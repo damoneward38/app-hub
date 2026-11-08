@@ -1,0 +1,3 @@
+songPurchases
+userBotPurchases
+trackReviews

@@ -1,0 +1,14 @@
+# Media and intermediates — never commit renders
+raw/*
+!raw/.gitkeep
+tmp/
+out/
+
+# Credentials — these are secrets
+client_secrets.json
+token.json
+youtube-credentials.json
+
+__pycache__/
+*.pyc
+.venv/

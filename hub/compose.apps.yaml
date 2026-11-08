@@ -1,0 +1,922 @@
+name: app-project-previews
+services:
+  studio_01_google_ai_studio_02_phone_in_logs:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-01"
+    profiles: ["preview-google-ai-studio-02-phone-in-logs"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19000:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/02-phone-in-logs:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_02_google_ai_studio_03_sapphire_opencl:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-02"
+    profiles: ["preview-google-ai-studio-03-sapphire-openclaw"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19001:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/03-sapphire-openclaw:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_03_google_ai_studio_04_optimus:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-03"
+    profiles: ["preview-google-ai-studio-04-optimus"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19002:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/04-optimus:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_04_google_ai_studio_05_orgo:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-04"
+    profiles: ["preview-google-ai-studio-05-orgo"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19003:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/05-orgo:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_05_google_ai_studio_06_global_hazard_h:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-05"
+    profiles: ["preview-google-ai-studio-06-global-hazard-hub"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19004:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/06-global-hazard-hub:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_06_google_ai_studio_07_skyguard:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-06"
+    profiles: ["preview-google-ai-studio-07-skyguard"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19005:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/07-skyguard:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_07_google_ai_studio_08_zehav_the_golde:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-07"
+    profiles: ["preview-google-ai-studio-08-zehav-the-golden-vault"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19006:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/08-zehav-the-golden-vault:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_08_google_ai_studio_09_magen_raki:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-08"
+    profiles: ["preview-google-ai-studio-09-magen-raki"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19007:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/09-magen-raki:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_09_google_ai_studio_10_baraq:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-09"
+    profiles: ["preview-google-ai-studio-10-baraq"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19008:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/10-baraq:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_10_google_ai_studio_11_seter_phantom_s:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-10"
+    profiles: ["preview-google-ai-studio-11-seter-phantom-sovereign"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19009:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/11-seter-phantom-sovereign:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_11_google_ai_studio_12_buildmaster:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-11"
+    profiles: ["preview-google-ai-studio-12-buildmaster"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19010:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/12-buildmaster:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_12_google_ai_studio_14_chazah_data_int:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-12"
+    profiles: ["preview-google-ai-studio-14-chazah-data-intelligence-"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19011:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/14-chazah-data-intelligence-platform:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_13_google_ai_studio_15_thi_kunhub_repo:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-13"
+    profiles: ["preview-google-ai-studio-15-thi-kunhub-repository-fix"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19012:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/15-thi-kunhub-repository-fix-scan-utility:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_14_google_ai_studio_16_app_vault:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-14"
+    profiles: ["preview-google-ai-studio-16-app-vault"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19013:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/16-app-vault:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_15_google_ai_studio_17_remix_thi_kunhu:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-15"
+    profiles: ["preview-google-ai-studio-17-remix-thi-kunhub-reposito"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19014:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/17-remix-thi-kunhub-repository-fix-scan-utility:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_16_google_ai_studio_18_isosync:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-16"
+    profiles: ["preview-google-ai-studio-18-isosync"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19015:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/18-isosync:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_17_google_ai_studio_19_seedra:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-17"
+    profiles: ["preview-google-ai-studio-19-seedra"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19016:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/19-seedra:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_18_google_ai_studio_20_prompt_studio_c:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-18"
+    profiles: ["preview-google-ai-studio-20-prompt-studio-chat-ide"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19017:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/20-prompt-studio-chat-ide:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_19_google_ai_studio_21_signara:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-19"
+    profiles: ["preview-google-ai-studio-21-signara"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19018:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/21-signara:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_20_google_ai_studio_22_daat_platform:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-20"
+    profiles: ["preview-google-ai-studio-22-daat-platform"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19019:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/22-daat-platform:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_21_google_ai_studio_23_gifted_eternity:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-21"
+    profiles: ["preview-google-ai-studio-23-gifted-eternity-ad-maker"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19020:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/23-gifted-eternity-ad-maker:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_22_google_ai_studio_24_keira:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-22"
+    profiles: ["preview-google-ai-studio-24-keira"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19021:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/24-keira:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_23_google_ai_studio_25_et_the_time_dna:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-23"
+    profiles: ["preview-google-ai-studio-25-et-the-time-dna-platform"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19022:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/25-et-the-time-dna-platform:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_24_google_ai_studio_26_quantrade_shome:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-24"
+    profiles: ["preview-google-ai-studio-26-quantrade-shomer"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19023:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/26-quantrade-shomer:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_25_google_ai_studio_27_neshimat_chayyi:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-25"
+    profiles: ["preview-google-ai-studio-27-neshimat-chayyim"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19024:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/27-neshimat-chayyim:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_26_google_ai_studio_28_the_anunnaki_ba:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-26"
+    profiles: ["preview-google-ai-studio-28-the-anunnaki-bag"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19025:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/28-the-anunnaki-bag:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_27_google_ai_studio_29_neraxis:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-27"
+    profiles: ["preview-google-ai-studio-29-neraxis"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19026:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/29-neraxis:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_28_google_ai_studio_30_sonara:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-28"
+    profiles: ["preview-google-ai-studio-30-sonara"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19027:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/30-sonara:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_29_google_ai_studio_31_axiom:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-29"
+    profiles: ["preview-google-ai-studio-31-axiom"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19028:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/31-axiom:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_30_google_ai_studio_32_neurovault:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-30"
+    profiles: ["preview-google-ai-studio-32-neurovault"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19029:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/32-neurovault:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_31_google_ai_studio_33_lumina_vision:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-31"
+    profiles: ["preview-google-ai-studio-33-lumina-vision"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19030:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/33-lumina-vision:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_32_google_ai_studio_34_xrealm:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-32"
+    profiles: ["preview-google-ai-studio-34-xrealm"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19031:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/34-xrealm:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_33_google_ai_studio_35_anosera:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-33"
+    profiles: ["preview-google-ai-studio-35-anosera"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19032:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/35-anosera:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_34_google_ai_studio_36_rectra:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-34"
+    profiles: ["preview-google-ai-studio-36-rectra"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19033:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/36-rectra:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_35_google_ai_studio_37_glaxa:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-35"
+    profiles: ["preview-google-ai-studio-37-glaxa"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19034:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/37-glaxa:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_36_google_ai_studio_38_homex_intellige:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-36"
+    profiles: ["preview-google-ai-studio-38-homex-intelligence-hub"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19035:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/38-homex-intelligence-hub:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_37_google_ai_studio_39_bonescan_ai:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-37"
+    profiles: ["preview-google-ai-studio-39-bonescan-ai"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19036:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/39-bonescan-ai:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_38_google_ai_studio_40_dimension:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-38"
+    profiles: ["preview-google-ai-studio-40-dimension"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19037:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/40-dimension:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_39_google_ai_studio_41_habitat_hub:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-39"
+    profiles: ["preview-google-ai-studio-41-habitat-hub"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19038:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/41-habitat-hub:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_40_google_ai_studio_43_vaultx:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-40"
+    profiles: ["preview-google-ai-studio-43-vaultx"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19039:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/43-vaultx:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_41_google_ai_studio_45_mockup_studio:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-41"
+    profiles: ["preview-google-ai-studio-45-mockup-studio"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19040:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/45-mockup-studio:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_42_google_ai_studio_46_shaar_ancient_g:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-42"
+    profiles: ["preview-google-ai-studio-46-shaar-ancient-gates-porta"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19041:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/46-shaar-ancient-gates-portal:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_43_google_ai_studio_47_emet_platform:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-43"
+    profiles: ["preview-google-ai-studio-47-emet-platform"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19042:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/47-emet-platform:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_44_google_ai_studio_48_tzofeh:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-44"
+    profiles: ["preview-google-ai-studio-48-tzofeh"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19043:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/48-tzofeh:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_45_google_ai_studio_49_kol_haemet_reso:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-45"
+    profiles: ["preview-google-ai-studio-49-kol-haemet-resonance-scan"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19044:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/49-kol-haemet-resonance-scanner:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  studio_46_google_ai_studio_50_moach_kvanti:
+    image: nginxinc/nginx-unprivileged:alpine
+    container_name: "app-preview-46"
+    profiles: ["preview-google-ai-studio-50-moach-kvanti"]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:19045:8080"
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/50-moach-kvanti:/usr/share/nginx/html:ro"
+      - "/Users/davidyoung/app-containers-hub/nginx-static.conf:/etc/nginx/conf.d/default.conf:ro"
+    read_only: true
+    tmpfs: ["/tmp:size=16m,noexec,nosuid"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

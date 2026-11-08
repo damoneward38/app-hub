@@ -1,0 +1,51 @@
+# Google AI Studio export queue: entries 51–89
+
+Source page: https://aistudio.google.com/apps?source=user&tag=created-by-you
+
+**Verified:** page footer reads `51–89 of 89`. This page contains 39 rows; project IDs reveal one repeated AppForge AI ID across rows 50 and 51, so there are 88 unique project IDs across 89 rows. Repeated/named entries remain recorded.
+
+| Row | Project | AI Studio project ID | Current local status |
+|---:|---|---|---|
+| 51 | AppForge AI | `48458d91-e5ab-430c-bc75-ed3596f0c2f1` | Exact manifest ID verified at `13-appforge-ai`; same source ID as row 50, preserve duplicate row. `42-appforge-ai` is a different project ID. |
+| 52 | BuildMaster | `58068182-8e92-414a-af5f-ae976a3062f0` | Exact manifest ID verified at `12-buildmaster`; entry HTTP smoke passed. |
+| 53 | SETER PHANTOM SOVEREIGN | `c3e0ef93-6fec-473c-a03d-9c1d10b9ec1c` | Exact manifest ID verified at `11-seter-phantom-sovereign`; entry HTTP smoke passed. |
+| 54 | BARAQ | `e1ca032a-d10f-4a00-ad29-19f449d2c63e` | Entry HTTP smoke passed, but `_manifest.json` is absent; exact source identity remains unverified. |
+| 55 | Magen-Raki? (???-????) | `3c52c4a6-e8d0-4d3d-a1cd-7330923d2d13` | Exact manifest ID verified at `09-magen-raki`; entry HTTP smoke passed. |
+| 56 | ZEHAV - The Golden Vault | `d0c66dfe-6fb0-49dd-bd3f-e4e6826be417` | Exact manifest ID verified at `08-zehav-the-golden-vault`; entry HTTP smoke passed. |
+| 57 | SkyGuard - ???????? | `187a11d4-1dd3-4e7d-9f6d-b365bb450530` | Exact manifest ID verified at `07-skyguard`; entry HTTP smoke passed. This is the static export, separate from the live SkyGuard app root. |
+| 58 | Global Hazard Hub | `0a25533d-b674-4128-ba29-268603dafb5a` | Entry HTTP smoke passed, but `_manifest.json` is absent; exact source identity remains unverified. |
+| 59 | Phone in Logs | `f927f3b9-a68d-419d-9866-4313a840aad3` | Exact manifest ID verified at `02-phone-in-logs`; entry HTTP smoke passed. |
+| 60 | Optimus | `dafa829a-07ae-4e13-ae8f-cbe587aeec55` | Entry HTTP smoke passed, but `_manifest.json` is absent; exact source identity remains unverified. |
+| 61 | Untitled | `c62b1a8f-074b-491f-aa2b-0e76f4c200e1` | Both local Untitled candidates return HTTP 200, but neither has a manifest proving this source ID; identity pending. |
+| 62 | Mockup Studio | `9c9fb9fd-4003-437b-a5a2-fff1f265af49` | Local entry returns HTTP 200, but `_manifest.json` is absent; exact source identity pending. |
+| 63 | KELI � ?????? ?????????? | `703cf618-1649-4f67-b0cc-8689389ff0f1` | No exact-name local export among the 50 numbered folders; export exact project from source. |
+| 64 | GESHER - Whole Brain Genius | `db600fde-3fe1-4602-ba3d-6286a5b0155b` | No exact-name local export among the 50 numbered folders; export exact project from source. |
+| 65 | MAGEN SHIRYON Protection OS | `270f3921-4ecc-46a9-9020-498c79dd1f00` | No exact-name local export among the 50 numbered folders; export exact project from source. |
+| 66 | Project Glass Wing | `ab98c1bb-6c6a-4045-bea6-bf98a14f2f7f` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 67 | Barak ?????? � Cutting System | `9aa7f2b2-bdcd-4797-89a1-5b6a026c42a5` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 68 | SHA'AR � The Gate Platform | `a8ee0ce1-a5fe-4b13-8ece-7ee25794888d` | No exact ID manifest or source export found in local inventory; same-name SHA'AR apps are not identity proof. |
+| 69 | Decennia Glass | `98e8a50e-1cc2-4a21-a384-f58f50ee9c6c` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 70 | KOL Tone Engine | `e091bbf8-6b4c-4721-a3aa-596363b66891` | No exact ID manifest or source export found in local inventory; similarly named KOL/Untitled apps are not identity proof. |
+| 71 | KOL RESONANCE | `983cea73-1f9c-4f9d-bcd0-9da9a838bbf8` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 72 | CHAYYIM LIVE | `a3820d1d-d052-4347-b542-e7705e2e942d` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 73 | AYIN GLASS � The Omnispectrum Interface | `df274528-6238-4361-8ae3-0da1e4a97c5a` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 74 | RUACH AI | `5f6ee2a4-114a-4f3e-8873-71bcbd478e10` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 75 | NESHER BCI | `74b7b524-6869-45e1-b5b2-f5946ea18eaa` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 76 | OROT - Quantum Data Intelligence | `5bbeb062-fe2d-4812-9e97-658bbf6c8b0b` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 77 | DeepCode AI Capabilities | `86488ba7-32d1-4f8c-b0ad-be6012df5463` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 78 | ODEN ? MIBTSAR � Global Command Fortress | `ff6fa21c-f9c2-456b-91b8-e8fc87ed0f86` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 79 | HoloAR System | `09a4ad10-deef-4cf3-bbc9-8dda1062b1fe` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 80 | NEXUS AR | `19363575-993e-4bc3-b98c-f386175dc027` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 81 | QuantumLearn | `be44e552-7bb6-4fe4-9801-3ce24c7dc349` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 82 | OMNIREALM | `b7b404db-8da5-4db2-bda5-53ad639aef2e` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 83 | Astra AI - Futuristic Intelligence | `12d19234-3af1-4033-b489-aebee21c5cfe` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 84 | SHAVAR | `269c6152-2e6e-4ee4-bc18-1d55f743049a` | No exact ID manifest or source export found in local inventory; export exact source project. |
+| 85 | TZOFEH ?????? | `3972d260-65c1-49f3-83c3-35477379b496` | Local Tzofeh candidate has a different manifest ID (`5f34e40e-e19e-4294-b1a7-b950ed83aa55`); exact row-85 export missing. |
+| 86 | SHADERA | `628de6c1-2b58-450e-83c8-6dc2041db371` | No exact-name local candidate; export exact project |
+| 87 | SHOMER � QuantTrade 3000 | `5c832261-a69e-4161-9203-3c15668c5ed4` | No exact-name local candidate; export exact project |
+| 88 | Untitled | `0ec86dd4-4d3b-441f-8858-152bd8efc047` | Ambiguous Untitled; verify which project |
+| 89 | Untitled | `ed5928ff-2b19-45ca-811f-35d7b8c7b76c` | Ambiguous Untitled; verify which project |
+
+## Completion gate
+
+For each unique project ID: confirm source code identity; preserve the original export; record path/runtime; build an isolated container; run build and HTTP/health checks. Keep row duplicates in the inventory; do not claim a source export or build verified from a name match alone.

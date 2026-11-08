@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RORK-APPS — app launcher</title>
+<style>
+  :root{color-scheme:dark;--bg:#0b0f1a;--panel:#131a2b;--line:#233150;--text:#e8eefc;--muted:#8fa0c4;--accent:#7c5cff;--cyan:#00e0ff}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:radial-gradient(1200px 600px at 20% -10%,#1a1035,#0b0f1a);color:var(--text);line-height:1.6;min-height:100vh}
+  a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:1100px;margin:0 auto;padding:56px 24px 80px}
+  header{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:30px}
+  .badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:12px;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+  h1{font-size:40px;margin:0 0 8px;letter-spacing:-1px;background:linear-gradient(90deg,var(--accent),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .t{font-size:17px;color:var(--muted);margin:0;max-width:760px}
+  .meta{margin-top:14px;font-size:14px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:8px}
+  .app{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .app:hover{border-color:var(--accent)}
+  .app .fw{display:inline-block;align-self:flex-start;border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+  .app h2{margin:0 0 6px;font-size:19px}
+  .app p{margin:0 0 16px;font-size:13.5px;color:var(--muted);flex:1}
+  .app .links a{display:inline-block;margin-right:14px;font-size:13.5px;font-weight:600}
+  .app .links .go{background:linear-gradient(90deg,var(--accent),#00b3ff);color:#fff;padding:7px 14px;border-radius:8px}
+  .app .links .go:hover{text-decoration:none;opacity:.9}
+  footer{margin-top:48px;color:#5a6a8a;font-size:13px;border-top:1px solid var(--line);padding-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">RORK × SAPPHIRE AI</div>
+    <h1>RORK-APPS</h1>
+    <p class="t">Apps pulled from Rork via GitHub two-way sync. Each card opens the real landing for that project, built from its actual <code>rork.json</code>, README, and source.</p>
+    <p class="meta">Source: <a href="https://github.com/damoneward38/RORK-APPS" target="_blank">github.com/damoneward38/RORK-APPS</a></p>
+  </header>
+
+  <div class="grid">
+    <div class="app">
+      <span class="fw">Expo · React Native</span>
+      <h2>Bot Router Server</h2>
+      <p>Native cross-platform Rork app (Expo Router + React Native). App source lives in <code>expo/</code>; includes its own backend setup docs and Stripe integration.</p>
+      <div class="links">
+        <a class="go" href="rork-bot-router-server/index.html">Open →</a>
+        <a href="rork-bot-router-server/expo/README.md">expo/README.md</a>
+      </div>
+    </div>
+
+    <div class="app">
+      <span class="fw">Swift · Supabase</span>
+      <h2>Intégrav</h2>
+      <p>iOS app in Swift (<code>ios-integrav</code>) backed by Supabase, with the <code>houly-pipe</code> render dashboard and pipeline assets.</p>
+      <div class="links">
+        <a class="go" href="rork-int-grav/index.html">Open →</a>
+        <a href="rork-int-grav/houly-pipe/dashboard.html">Render dashboard</a>
+      </div>
+    </div>
+
+    <div class="app">
+      <span class="fw">Expo · Supabase</span>
+      <h2>No-Backend App with Supabase</h2>
+      <p>Expo React Native app exported from Rork with a Supabase data layer. Source and docs in <code>expo/</code>.</p>
+      <div class="links">
+        <a class="go" href="rork-no-backend-app-with-supabase/index.html">Open →</a>
+        <a href="rork-no-backend-app-with-supabase/expo/README.md">expo/README.md</a>
+      </div>
+    </div>
+
+    <div class="app">
+      <span class="fw">Rork · Web project</span>
+      <h2>Sapphire AI Music Video</h2>
+      <p>AI music-video project generated with Rork and synced two-way to GitHub — the macOS companion landing page.</p>
+      <div class="links">
+        <a class="go" href="rork-sapphire-ai-music-video/index.html">Open →</a>
+        <a href="rork-sapphire-ai-music-video/README.md">README</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>RORK-APPS · pulled via Rork GitHub sync · 2026</footer>
+</div>
+</body>
+</html>

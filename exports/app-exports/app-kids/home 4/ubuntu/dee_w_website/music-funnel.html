@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifted Eternity - Music & Stories by Damone Ward Sr.</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/music-funnel.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Gifted Eternity Story Time</h1>
+            <ul>
+                <li><a href="landing.html">Home</a></li>
+                <li><a href="index.html">Story Time</a></li>
+                <li><a href="music-funnel.html">Gifted Eternity Music</a></li>
+                <li><a href="catalog.html">Stories Catalog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="music-hero" class="music-hero">
+            <div class="hero-overlay">
+                <h2>Gifted Eternity Music</h2>
+                <p>Original Tracks by Damone Ward Sr.</p>
+                <p class="tagline">Soulful R&B • Powerful Hip-Hop • Heartfelt Country</p>
+            </div>
+        </section>
+
+        <!-- Artist Bio -->
+        <section id="artist-bio" class="artist-bio">
+            <div class="bio-content">
+                <h3>Meet Damone Ward Sr. - Gifted Eternity</h3>
+                <p>Professional musician, singer, songwriter, producer, and rapper with a passion for creating music that touches the soul and inspires the mind. Certified in Christian Counseling, Mediation, and behavioral work, Damone channels life experience, spiritual insight, and emotional intelligence into every song.</p>
+                <p>With three dynamic albums showcasing versatility and evolution, Gifted Eternity creates music that speaks to the heart, motivates the mind, and connects with people across all walks of life.</p>
+                <a href="https://soundcloud.com/user-839059545" target="_blank" class="btn btn-outline">Listen on SoundCloud</a>
+            </div>
+        </section>
+
+        <!-- Albums Section -->
+        <section id="albums" class="albums-section">
+            <h3>Featured Albums</h3>
+            <div class="albums-grid">
+                <div class="album-card">
+                    <div class="album-cover">RE</div>
+                    <h4>RE-GIFTED</h4>
+                    <p>A soulful blend of R&B, classical textures, pop emotion, and hip-hop grooves.</p>
+                    <p class="album-tracks">Featuring: Your Passion, Part of the Deal, Apatite, Socrates, City of Dreams</p>
+                </div>
+                <div class="album-card">
+                    <div class="album-cover">GF</div>
+                    <h4>G-FORCE</h4>
+                    <p>High-energy hip-hop/rap collection fueled by raw confidence and powerful beats.</p>
+                    <p class="album-tracks">Featuring: Stop Playen With Me, Stop the Hating, Fade Away, World Star, Shots Fier'd</p>
+                </div>
+                <div class="album-card">
+                    <div class="album-cover">CS</div>
+                    <h4>Country Sessions</h4>
+                    <p>Heartfelt, storytelling-driven country project showcasing emotional truth and melodic hooks.</p>
+                    <p class="album-tracks">Exploring: Love, Loss, Redemption, Real-Life Reflection</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Music Store Section -->
+        <section id="music-store" class="music-store">
+            <h3>Buy Tracks - $1 Each</h3>
+            <p class="store-intro">Download your favorite tracks instantly. Every purchase supports original music creation.</p>
+
+            <!-- Filter/Search -->
+            <div class="store-controls">
+                <input type="text" id="searchInput" placeholder="Search tracks..." class="search-box">
+                <select id="genreFilter" class="genre-filter">
+                    <option value="all">All Genres</option>
+                    <option value="R&B">R&B</option>
+                    <option value="Hip-Hop">Hip-Hop</option>
+                    <option value="Country">Country</option>
+                    <option value="Pop">Pop</option>
+                </select>
+            </div>
+
+            <!-- Music Grid -->
+            <div id="musicGrid" class="music-grid">
+                <!-- Tracks will be dynamically loaded here -->
+            </div>
+
+            <!-- Shopping Cart -->
+            <div id="cartSection" class="cart-section">
+                <h4>Shopping Cart</h4>
+                <div id="cartItems" class="cart-items">
+                    <p class="empty-cart">Your cart is empty</p>
+                </div>
+                <div class="cart-summary">
+                    <p>Total: <span id="cartTotal">$0.00</span></p>
+                    <button id="checkoutBtn" class="btn btn-primary" disabled>Proceed to Checkout</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="testimonials-section">
+            <h3>What Listeners Say</h3>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Gifted Eternity's music speaks to the soul. Every track is a journey of emotion and authenticity."</p>
+                    <p class="testimonial-author">- Music Lover</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The production quality is outstanding. You can hear the passion in every note."</p>
+                    <p class="testimonial-author">- Podcast Host</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"From R&B to country, Damone's versatility as an artist is truly impressive."</p>
+                    <p class="testimonial-author">- Radio Producer</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section id="music-cta" class="music-cta">
+            <h3>Support Original Music</h3>
+            <p>Every purchase directly supports the creation of new, original music. Thank you for your support!</p>
+            <div class="cta-links">
+                <a href="https://soundcloud.com/user-839059545" target="_blank" class="btn btn-secondary">Follow on SoundCloud</a>
+                <a href="https://www.youtube.com/@deew3738" target="_blank" class="btn btn-secondary">Subscribe on YouTube</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Gifted Eternity Story Time | All Rights Reserved</p>
+        <p>Original Music by Damone Ward Sr. | Baltimore, United States</p>
+    </footer>
+
+    <script src="js/music-data.js"></script>
+    <script src="js/music-funnel.js"></script>
+</body>
+</html>

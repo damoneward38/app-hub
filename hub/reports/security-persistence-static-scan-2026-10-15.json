@@ -1,0 +1,2718 @@
+{
+  "inventory_records": 242,
+  "unique_local_roots": 150,
+  "missing_roots": 0,
+  "source_files_scanned_unique": 2733,
+  "roots_with_package": 36,
+  "roots_with_index_html": 114,
+  "roots_with_readme": 109,
+  "marker_root_counts": {
+    "auth": 55,
+    "admin": 24,
+    "persistence": 53,
+    "file_ops": 38,
+    "api": 39
+  },
+  "rows": [
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/-SAPPHIRE-OPENCLAW-AI-",
+      "names": [
+        " SAPPHIRE OPENCLAW AI "
+      ],
+      "status": "SCANNED",
+      "files": 38,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/-Ta-n-H-zoo-",
+      "names": [
+        " Ta n H zoo "
+      ],
+      "status": "SCANNED",
+      "files": 38,
+      "package": true,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/-gifted-eternity-streaming",
+      "names": [
+        " gifted eternity streaming"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/01-untitled",
+      "names": [
+        "untitled"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/02-phone-in-logs",
+      "names": [
+        "phone in logs"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/03-sapphire-openclaw",
+      "names": [
+        "sapphire openclaw"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/04-optimus",
+      "names": [
+        "optimus"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/05-orgo",
+      "names": [
+        "orgo"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/06-global-hazard-hub",
+      "names": [
+        "global hazard hub"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/07-skyguard",
+      "names": [
+        "skyguard"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/08-zehav-the-golden-vault",
+      "names": [
+        "zehav the golden vault"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": true,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/09-magen-raki",
+      "names": [
+        "magen raki"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/10-baraq",
+      "names": [
+        "baraq"
+      ],
+      "status": "SCANNED",
+      "files": 4,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/11-seter-phantom-sovereign",
+      "names": [
+        "seter phantom sovereign"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/12-buildmaster",
+      "names": [
+        "buildmaster"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/13-appforge-ai",
+      "names": [
+        "appforge ai"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/14-chazah-data-intelligence-platform",
+      "names": [
+        "chazah data intelligence platform"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/15-thi-kunhub-repository-fix-scan-utility",
+      "names": [
+        "thi kunhub repository fix scan utility"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": false,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/16-app-vault",
+      "names": [
+        "app vault"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/17-remix-thi-kunhub-repository-fix-scan-utility",
+      "names": [
+        "remix thi kunhub repository fix scan utility"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": false,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/18-isosync",
+      "names": [
+        "isosync"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/19-seedra",
+      "names": [
+        "seedra"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/20-prompt-studio-chat-ide",
+      "names": [
+        "prompt studio chat ide"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/21-signara",
+      "names": [
+        "signara"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/22-daat-platform",
+      "names": [
+        "daat platform"
+      ],
+      "status": "SCANNED",
+      "files": 5,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/23-gifted-eternity-ad-maker",
+      "names": [
+        "gifted eternity ad maker"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/24-keira",
+      "names": [
+        "keira"
+      ],
+      "status": "SCANNED",
+      "files": 4,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/25-et-the-time-dna-platform",
+      "names": [
+        "et the time dna platform"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/26-quantrade-shomer",
+      "names": [
+        "quantrade shomer"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/27-neshimat-chayyim",
+      "names": [
+        "neshimat chayyim"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/28-the-anunnaki-bag",
+      "names": [
+        "the anunnaki bag"
+      ],
+      "status": "SCANNED",
+      "files": 4,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/29-neraxis",
+      "names": [
+        "neraxis"
+      ],
+      "status": "SCANNED",
+      "files": 3,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/30-sonara",
+      "names": [
+        "sonara"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/31-axiom",
+      "names": [
+        "axiom"
+      ],
+      "status": "SCANNED",
+      "files": 5,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/32-neurovault",
+      "names": [
+        "neurovault"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/33-lumina-vision",
+      "names": [
+        "lumina vision"
+      ],
+      "status": "SCANNED",
+      "files": 5,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/34-xrealm",
+      "names": [
+        "xrealm"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/35-anosera",
+      "names": [
+        "anosera"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/36-rectra",
+      "names": [
+        "rectra"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/37-glaxa",
+      "names": [
+        "glaxa"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/38-homex-intelligence-hub",
+      "names": [
+        "homex intelligence hub"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/39-bonescan-ai",
+      "names": [
+        "bonescan ai"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/40-dimension",
+      "names": [
+        "dimension"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/41-habitat-hub",
+      "names": [
+        "habitat hub"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/42-appforge-ai",
+      "names": [
+        "appforge ai"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/43-vaultx",
+      "names": [
+        "vaultx"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/44-untitled",
+      "names": [
+        "untitled"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/45-mockup-studio",
+      "names": [
+        "mockup studio"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/46-shaar-ancient-gates-portal",
+      "names": [
+        "shaar ancient gates portal"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/47-emet-platform",
+      "names": [
+        "emet platform"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/48-tzofeh",
+      "names": [
+        "tzofeh"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/49-kol-haemet-resonance-scanner",
+      "names": [
+        "kol haemet resonance scanner"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/50-moach-kvanti",
+      "names": [
+        "moach kvanti"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/AISTUDIO-DOWNLOADS",
+      "names": [
+        "AISTUDIO DOWNLOADS"
+      ],
+      "status": "SCANNED",
+      "files": 3,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/ANOSERA",
+      "names": [
+        "ANOSERA"
+      ],
+      "status": "SCANNED",
+      "files": 5,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/APP-Vault",
+      "names": [
+        "APP Vault"
+      ],
+      "status": "SCANNED",
+      "files": 100,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/APP-Vault/client",
+      "names": [
+        "client"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/APP-Vault/client/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/apps-examples",
+      "names": [
+        "apps examples"
+      ],
+      "status": "SCANNED",
+      "files": 41,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/apps-examples/buzz",
+      "names": [
+        "buzz"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": true,
+      "index": false,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/apps-examples/trellix",
+      "names": [
+        "trellix"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/apps-examples/trellix/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/base44-platform-starter",
+      "names": [
+        "base44-platform-starter"
+      ],
+      "status": "SCANNED",
+      "files": 185,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/base44-platform-starter/examples/white-label-minimal",
+      "names": [
+        "@base44/white-label-minimal"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/base44-platform-starter/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/cli",
+      "names": [
+        "base44-cli"
+      ],
+      "status": "SCANNED",
+      "files": 346,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/cli/packages/cli/backend-runtime",
+      "names": [
+        "backend runtime"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/cli/packages/logger",
+      "names": [
+        "logger"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": true,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/homebrew-tap",
+      "names": [
+        "homebrew tap"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/javascript-sdk",
+      "names": [
+        "@base44/sdk"
+      ],
+      "status": "SCANNED",
+      "files": 85,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/kotlin-sdk",
+      "names": [
+        "kotlin sdk"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/openclaw-onboarding",
+      "names": [
+        "openclaw onboarding"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/skills",
+      "names": [
+        "skills"
+      ],
+      "status": "SCANNED",
+      "files": 3,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": true,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BASE44-APPS/swift-sdk",
+      "names": [
+        "swift sdk"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/BuildMaster",
+      "names": [
+        "BuildMaster"
+      ],
+      "status": "SCANNED",
+      "files": 20,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Check",
+      "names": [
+        "gifted_eternity_stream_web"
+      ],
+      "status": "SCANNED",
+      "files": 22,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Check/mobile",
+      "names": [
+        "mobile"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/G-E-Stream",
+      "names": [
+        "G E Stream"
+      ],
+      "status": "SCANNED",
+      "files": 5,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Gifted_Bot-_Store",
+      "names": [
+        "Gifted Bot Store"
+      ],
+      "status": "SCANNED",
+      "files": 27,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Gifted_Bot-_Store/client",
+      "names": [
+        "client"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Gifted_Bot-_Store/client/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Gifted_Bot-_Store/server/routers",
+      "names": [
+        "routers"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Gifted_Bot-_Store/server/routers/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/HOMEX-INTELL",
+      "names": [
+        "HOMEX INTELL"
+      ],
+      "status": "SCANNED",
+      "files": 26,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/HOMEX-INTELL/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Interactive-Renders",
+      "names": [
+        "Interactive Renders"
+      ],
+      "status": "SCANNED",
+      "files": 9,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/MAGEN-RAKI-",
+      "names": [
+        "MAGEN RAKI "
+      ],
+      "status": "SCANNED",
+      "files": 56,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/MAGEN-RAKI-/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Orgo-",
+      "names": [
+        "Orgo "
+      ],
+      "status": "SCANNED",
+      "files": 50,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Orgo-/NeuralCore",
+      "names": [
+        "NeuralCore"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Orgo-/NeuralCore/NeuralCore",
+      "names": [
+        "NeuralCore"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/Orgo-/NeuralCore/NeuralCore/templates",
+      "names": [
+        "templates"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS",
+      "names": [
+        "RORK APPS"
+      ],
+      "status": "SCANNED",
+      "files": 85,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS/rork-bot-router-server",
+      "names": [
+        "rork bot router server"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS/rork-bot-router-server/expo",
+      "names": [
+        "expo-app"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS/rork-int-grav",
+      "names": [
+        "Intégrav — Rork iOS app"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS/rork-int-grav/houly-pipe",
+      "names": [
+        "houly pipe"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS/rork-no-backend-app-with-supabase",
+      "names": [
+        "No-Backend App with Supabase — repository root"
+      ],
+      "status": "SCANNED",
+      "files": 1,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": true,
+        "persistence": false,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS/rork-no-backend-app-with-supabase/expo",
+      "names": [
+        "No-Backend App with Supabase — Expo Web"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": true,
+      "index": false,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/RORK-APPS/rork-sapphire-ai-music-video",
+      "names": [
+        "rork sapphire ai music video"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/SkyGuard",
+      "names": [
+        "skyguard-cybersecurity"
+      ],
+      "status": "SCANNED",
+      "files": 58,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/SkyGuard/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/ZEHAV",
+      "names": [
+        "ZEHAV"
+      ],
+      "status": "SCANNED",
+      "files": 22,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/ZEHAV/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/axiom1",
+      "names": [
+        "axiom1"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/apps-examples/buzz",
+      "names": [
+        "buzz"
+      ],
+      "status": "SCANNED",
+      "files": 21,
+      "package": true,
+      "index": false,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/apps-examples/buzz/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/apps-examples/trellix",
+      "names": [
+        "trellix"
+      ],
+      "status": "SCANNED",
+      "files": 18,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/apps-examples/trellix/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/base44-platform-starter/examples/white-label-minimal",
+      "names": [
+        "@base44/white-label-minimal"
+      ],
+      "status": "SCANNED",
+      "files": 34,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/base44-platform-starter/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 130,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/cli/packages/logger",
+      "names": [
+        "@base44-cli/logger"
+      ],
+      "status": "SCANNED",
+      "files": 5,
+      "package": true,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/homebrew-tap",
+      "names": [
+        "homebrew tap"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/base44/openclaw-onboarding",
+      "names": [
+        "openclaw onboarding"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/get-paid",
+      "names": [
+        "gifted_eternity_stream_web"
+      ],
+      "status": "SCANNED",
+      "files": 36,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/get-paid/mobile",
+      "names": [
+        "mobile"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/gift",
+      "names": [
+        "gift"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/gifted",
+      "names": [
+        "gifted"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/giftedeternitystreaming",
+      "names": [
+        "gifted_eternity_stream_web"
+      ],
+      "status": "SCANNED",
+      "files": 22,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/giftedeternitystreaming/mobile",
+      "names": [
+        "mobile"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/gods-eye-view",
+      "names": [
+        "gods-eye-view"
+      ],
+      "status": "SCANNED",
+      "files": 399,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/gods-eye-view/pinokio",
+      "names": [
+        "pinokio"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": true,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/gods-eye-view/tools/output",
+      "names": [
+        "output"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/index.html",
+      "names": [
+        "index.html"
+      ],
+      "status": "SCANNED",
+      "files": 17,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/khi",
+      "names": [
+        "khi"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": true,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/kids",
+      "names": [
+        "kids"
+      ],
+      "status": "SCANNED",
+      "files": 53,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/kids/home 2/ubuntu/dee_w_website",
+      "names": [
+        "dee w website"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/kids/home 4/ubuntu/dee_w_website",
+      "names": [
+        "dee w website"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/kids/home 5/ubuntu/dee_w_website",
+      "names": [
+        "dee w website"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/streamy",
+      "names": [
+        "streamy"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/GitHub-Pull/t",
+      "names": [
+        "t"
+      ],
+      "status": "SCANNED",
+      "files": 2,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/base44/apps-examples/buzz",
+      "names": [
+        "buzz"
+      ],
+      "status": "SCANNED",
+      "files": 21,
+      "package": true,
+      "index": false,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/base44/apps-examples/trellix",
+      "names": [
+        "trellix"
+      ],
+      "status": "SCANNED",
+      "files": 18,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/base44/apps-examples/trellix/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/base44/cli/packages/logger",
+      "names": [
+        "@base44-cli/logger"
+      ],
+      "status": "SCANNED",
+      "files": 4,
+      "package": true,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/home/ubuntu/gifted_4_eternity",
+      "names": [
+        "gifted 4 eternity"
+      ],
+      "status": "SCANNED",
+      "files": 6,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/home/ubuntu/gifted_4_eternity/gifted_4_eternity",
+      "names": [
+        "gifted 4 eternity"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/sapphire-main",
+      "names": [
+        "sapphire main"
+      ],
+      "status": "SCANNED",
+      "files": 449,
+      "package": true,
+      "index": false,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": true,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/sapphire-main/docs",
+      "names": [
+        "docs"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/sapphire-main/interfaces/web/templates",
+      "names": [
+        "templates"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/sapphire-main/plugins/status",
+      "names": [
+        "status"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/apps/sapphire-openclaw/client",
+      "names": [
+        "client"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/13-appforge-ai",
+      "names": [
+        "appforge-ai"
+      ],
+      "status": "SCANNED",
+      "files": 16,
+      "package": true,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/13-appforge-ai/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/glowing-tardigrade-wiggle",
+      "names": [
+        "vite_react_shadcn_ts"
+      ],
+      "status": "SCANNED",
+      "files": 64,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/glowing-tardigrade-wiggle/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/rork-int-grav",
+      "names": [
+        "rork-int-grav"
+      ],
+      "status": "SCANNED",
+      "files": 11,
+      "package": true,
+      "index": true,
+      "readme": false,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": true,
+        "file_ops": true,
+        "api": true
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/rork-int-grav/houly-pipe",
+      "names": [
+        "houly pipe"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/todo-flow",
+      "names": [
+        "vite_react_shadcn_ts"
+      ],
+      "status": "SCANNED",
+      "files": 64,
+      "package": true,
+      "index": true,
+      "readme": true,
+      "markers": {
+        "auth": true,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    },
+    {
+      "path": "/Users/davidyoung/dyad-apps/todo-flow/src",
+      "names": [
+        "src"
+      ],
+      "status": "SCANNED",
+      "files": 0,
+      "package": false,
+      "index": false,
+      "readme": false,
+      "markers": {
+        "auth": false,
+        "admin": false,
+        "persistence": false,
+        "file_ops": false,
+        "api": false
+      }
+    }
+  ]
+}

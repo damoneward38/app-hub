@@ -1,0 +1,550 @@
+/* Music Funnel Page Styles */
+
+/* Hero Section */
+.music-hero {
+    background: linear-gradient(135deg, #1a1a1a 0%, var(--color-purple) 50%, var(--color-orange) 100%);
+    color: var(--color-white);
+    padding: 4em 2em;
+    border-radius: 10px;
+    margin-bottom: 2em;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.music-hero h2 {
+    font-size: 3em;
+    margin: 0 0 0.5em 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.music-hero p {
+    font-size: 1.3em;
+    margin: 0.5em 0;
+    opacity: 0.95;
+}
+
+.music-hero .tagline {
+    font-size: 1.1em;
+    font-style: italic;
+    margin-top: 1em;
+}
+
+/* Artist Bio Section */
+.artist-bio {
+    background-color: var(--color-light-gray);
+    padding: 2em;
+    border-radius: 10px;
+    margin-bottom: 2em;
+    border-left: 4px solid var(--color-orange);
+}
+
+.bio-content h3 {
+    color: var(--color-purple);
+    font-size: 1.8em;
+    margin-top: 0;
+}
+
+.bio-content p {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 1em;
+}
+
+.bio-content .btn {
+    margin-top: 1em;
+}
+
+/* Albums Section */
+.albums-section {
+    margin-bottom: 3em;
+}
+
+.albums-section h3 {
+    text-align: center;
+    color: var(--color-purple);
+    font-size: 2em;
+    margin-bottom: 2em;
+}
+
+.albums-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+}
+
+.album-card {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    padding: 1.5em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--color-orange);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.album-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.album-cover {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-orange) 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.album-card h4 {
+    color: var(--color-purple);
+    font-size: 1.4em;
+    margin: 0.5em 0;
+}
+
+.album-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 0.5em;
+}
+
+.album-tracks {
+    font-size: 0.9em;
+    color: #888;
+    font-style: italic;
+}
+
+/* Music Store Section */
+.music-store {
+    margin-bottom: 3em;
+}
+
+.music-store h3 {
+    text-align: center;
+    color: var(--color-purple);
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.store-intro {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2em;
+}
+
+/* Store Controls */
+.store-controls {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 2em;
+    flex-wrap: wrap;
+}
+
+.search-box,
+.genre-filter {
+    padding: 0.8em;
+    border: 2px solid var(--color-purple);
+    border-radius: 5px;
+    font-size: 1em;
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-box:focus,
+.genre-filter:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(106, 13, 173, 0.3);
+}
+
+/* Music Grid */
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5em;
+    margin-bottom: 2em;
+}
+
+.track-card {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid var(--color-purple);
+}
+
+.track-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.track-cover {
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-orange) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.track-info {
+    padding: 1em;
+}
+
+.track-info h4 {
+    margin: 0 0 0.5em 0;
+    color: var(--color-purple);
+    font-size: 1.1em;
+}
+
+.track-album {
+    margin: 0.3em 0;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.track-genre {
+    display: inline-block;
+    background-color: var(--color-orange);
+    color: var(--color-white);
+    padding: 0.3em 0.8em;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+.track-duration {
+    margin: 0.5em 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.track-price-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid #eee;
+}
+
+.track-price {
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--color-orange);
+}
+
+.btn-add-to-cart {
+    background-color: var(--color-purple);
+    color: var(--color-white);
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #5a0a8f;
+}
+
+/* Shopping Cart Section */
+.cart-section {
+    background-color: var(--color-light-gray);
+    padding: 2em;
+    border-radius: 10px;
+    border: 2px solid var(--color-purple);
+}
+
+.cart-section h4 {
+    color: var(--color-purple);
+    font-size: 1.5em;
+    margin-top: 0;
+}
+
+.cart-items {
+    margin-bottom: 1.5em;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.empty-cart {
+    text-align: center;
+    color: #999;
+    padding: 2em;
+}
+
+.cart-item {
+    background-color: var(--color-white);
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.cart-item-info {
+    flex: 1;
+    min-width: 150px;
+}
+
+.cart-item-title {
+    margin: 0;
+    color: var(--color-purple);
+    font-weight: 600;
+}
+
+.cart-item-album {
+    margin: 0.3em 0 0 0;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.cart-item-quantity input {
+    width: 50px;
+    padding: 0.3em;
+    border: 1px solid var(--color-purple);
+    border-radius: 4px;
+}
+
+.cart-item-price {
+    margin: 0;
+    font-weight: bold;
+    color: var(--color-orange);
+    font-size: 1.1em;
+    min-width: 80px;
+    text-align: right;
+}
+
+.btn-remove {
+    background-color: #ff4444;
+    color: var(--color-white);
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-remove:hover {
+    background-color: #cc0000;
+}
+
+.cart-summary {
+    background-color: var(--color-white);
+    padding: 1.5em;
+    border-radius: 8px;
+    text-align: right;
+}
+
+.cart-summary p {
+    margin: 0 0 1em 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--color-purple);
+}
+
+#checkoutBtn {
+    width: 100%;
+    padding: 1em;
+    font-size: 1.1em;
+}
+
+#checkoutBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    margin-bottom: 3em;
+}
+
+.testimonials-section h3 {
+    text-align: center;
+    color: var(--color-purple);
+    font-size: 2em;
+    margin-bottom: 2em;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5em;
+}
+
+.testimonial-card {
+    background-color: var(--color-white);
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--color-orange);
+}
+
+.testimonial-text {
+    color: #555;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1em;
+}
+
+.testimonial-author {
+    color: var(--color-purple);
+    font-weight: 600;
+    margin: 0;
+}
+
+/* CTA Section */
+.music-cta {
+    background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-orange) 100%);
+    color: var(--color-white);
+    padding: 2em;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.music-cta h3 {
+    font-size: 2em;
+    margin-top: 0;
+}
+
+.music-cta p {
+    font-size: 1.1em;
+    margin-bottom: 1.5em;
+}
+
+.cta-links {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-links .btn {
+    background-color: var(--color-white);
+    color: var(--color-purple);
+}
+
+.cta-links .btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* Notification */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-orange);
+    color: var(--color-white);
+    padding: 1em 1.5em;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .music-hero h2 {
+        font-size: 2em;
+    }
+
+    .music-hero .tagline {
+        font-size: 1em;
+    }
+
+    .albums-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .music-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .store-controls {
+        flex-direction: column;
+    }
+
+    .search-box,
+    .genre-filter {
+        min-width: 100%;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-item-price {
+        text-align: left;
+    }
+
+    .cta-links {
+        flex-direction: column;
+    }
+
+    .cta-links .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .music-hero {
+        padding: 2em 1em;
+    }
+
+    .music-hero h2 {
+        font-size: 1.5em;
+    }
+
+    .music-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+        flex-direction: column;
+    }
+
+    .notification {
+        right: 10px;
+        left: 10px;
+    }
+}

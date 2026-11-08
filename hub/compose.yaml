@@ -1,0 +1,163 @@
+name: app-containers-hub
+services:
+  customer-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app-containers-hub:local
+    container_name: app-containers-portal
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8780:8780"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    volumes:
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/01-untitled:/app/previews/google-ai-studio-github-pull-aistudio-apps-01-untitled:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/02-phone-in-logs:/app/previews/google-ai-studio-github-pull-aistudio-apps-02-phone-in-logs:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/03-sapphire-openclaw:/app/previews/google-ai-studio-github-pull-aistudio-apps-03-sapphire-openclaw:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/04-optimus:/app/previews/google-ai-studio-github-pull-aistudio-apps-04-optimus:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/05-orgo:/app/previews/google-ai-studio-github-pull-aistudio-apps-05-orgo:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/06-global-hazard-hub:/app/previews/google-ai-studio-github-pull-aistudio-apps-06-global-hazard-hub:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/07-skyguard:/app/previews/google-ai-studio-github-pull-aistudio-apps-07-skyguard:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/08-zehav-the-golden-vault:/app/previews/google-ai-studio-github-pull-aistudio-apps-08-zehav-the-golden-vault:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/09-magen-raki:/app/previews/google-ai-studio-github-pull-aistudio-apps-09-magen-raki:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/10-baraq:/app/previews/google-ai-studio-github-pull-aistudio-apps-10-baraq:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/11-seter-phantom-sovereign:/app/previews/google-ai-studio-github-pull-aistudio-apps-11-seter-phantom-sovereign:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/12-buildmaster:/app/previews/google-ai-studio-github-pull-aistudio-apps-12-buildmaster:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/13-appforge-ai:/app/previews/google-ai-studio-github-pull-aistudio-apps-13-appforge-ai:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/14-chazah-data-intelligence-platform:/app/previews/google-ai-studio-github-pull-aistudio-apps-14-chazah-data-intelligence-platform:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/15-thi-kunhub-repository-fix-scan-utility:/app/previews/google-ai-studio-github-pull-aistudio-apps-15-thi-kunhub-repository-fix-scan-utility:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/16-app-vault:/app/previews/google-ai-studio-github-pull-aistudio-apps-16-app-vault:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/17-remix-thi-kunhub-repository-fix-scan-utility:/app/previews/google-ai-studio-github-pull-aistudio-apps-17-remix-thi-kunhub-repository-fix-scan-utility:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/18-isosync:/app/previews/google-ai-studio-github-pull-aistudio-apps-18-isosync:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/19-seedra:/app/previews/google-ai-studio-github-pull-aistudio-apps-19-seedra:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/20-prompt-studio-chat-ide:/app/previews/google-ai-studio-github-pull-aistudio-apps-20-prompt-studio-chat-ide:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/21-signara:/app/previews/google-ai-studio-github-pull-aistudio-apps-21-signara:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/22-daat-platform:/app/previews/google-ai-studio-github-pull-aistudio-apps-22-daat-platform:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/23-gifted-eternity-ad-maker:/app/previews/google-ai-studio-github-pull-aistudio-apps-23-gifted-eternity-ad-maker:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/24-keira:/app/previews/google-ai-studio-github-pull-aistudio-apps-24-keira:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/25-et-the-time-dna-platform:/app/previews/google-ai-studio-github-pull-aistudio-apps-25-et-the-time-dna-platform:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/26-quantrade-shomer:/app/previews/google-ai-studio-github-pull-aistudio-apps-26-quantrade-shomer:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/27-neshimat-chayyim:/app/previews/google-ai-studio-github-pull-aistudio-apps-27-neshimat-chayyim:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/28-the-anunnaki-bag:/app/previews/google-ai-studio-github-pull-aistudio-apps-28-the-anunnaki-bag:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/29-neraxis:/app/previews/google-ai-studio-github-pull-aistudio-apps-29-neraxis:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/30-sonara:/app/previews/google-ai-studio-github-pull-aistudio-apps-30-sonara:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/31-axiom:/app/previews/google-ai-studio-github-pull-aistudio-apps-31-axiom:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/32-neurovault:/app/previews/google-ai-studio-github-pull-aistudio-apps-32-neurovault:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/33-lumina-vision:/app/previews/google-ai-studio-github-pull-aistudio-apps-33-lumina-vision:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/34-xrealm:/app/previews/google-ai-studio-github-pull-aistudio-apps-34-xrealm:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/35-anosera:/app/previews/google-ai-studio-github-pull-aistudio-apps-35-anosera:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/36-rectra:/app/previews/google-ai-studio-github-pull-aistudio-apps-36-rectra:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/37-glaxa:/app/previews/google-ai-studio-github-pull-aistudio-apps-37-glaxa:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/38-homex-intelligence-hub:/app/previews/google-ai-studio-github-pull-aistudio-apps-38-homex-intelligence-hub:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/39-bonescan-ai:/app/previews/google-ai-studio-github-pull-aistudio-apps-39-bonescan-ai:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/40-dimension:/app/previews/google-ai-studio-github-pull-aistudio-apps-40-dimension:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/41-habitat-hub:/app/previews/google-ai-studio-github-pull-aistudio-apps-41-habitat-hub:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/42-appforge-ai:/app/previews/google-ai-studio-github-pull-aistudio-apps-42-appforge-ai:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/43-vaultx:/app/previews/google-ai-studio-github-pull-aistudio-apps-43-vaultx:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/44-untitled:/app/previews/google-ai-studio-github-pull-aistudio-apps-44-untitled:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/45-mockup-studio:/app/previews/google-ai-studio-github-pull-aistudio-apps-45-mockup-studio:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/46-shaar-ancient-gates-portal:/app/previews/google-ai-studio-github-pull-aistudio-apps-46-shaar-ancient-gates-portal:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/47-emet-platform:/app/previews/google-ai-studio-github-pull-aistudio-apps-47-emet-platform:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/48-tzofeh:/app/previews/google-ai-studio-github-pull-aistudio-apps-48-tzofeh:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/49-kol-haemet-resonance-scanner:/app/previews/google-ai-studio-github-pull-aistudio-apps-49-kol-haemet-resonance-scanner:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/50-moach-kvanti:/app/previews/google-ai-studio-github-pull-aistudio-apps-50-moach-kvanti:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-63-keli:/app/previews/google-ai-studio-page-63:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-64-gesher:/app/previews/google-ai-studio-page-64:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-65-magen-shiryon:/app/previews/google-ai-studio-page-65:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-66-project-glass-wing:/app/previews/google-ai-studio-page-66:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-67-barak-cutting-system:/app/previews/google-ai-studio-page-67:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-68-shaar-the-gate-platform:/app/previews/google-ai-studio-page-68:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-69-decennia-glass:/app/previews/google-ai-studio-page-69:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-70-kol-tone-engine:/app/previews/google-ai-studio-page-70:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-71-kol-resonance:/app/previews/google-ai-studio-page-71:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-72-chayyim-live:/app/previews/google-ai-studio-page-72:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-73-ayin-glass:/app/previews/google-ai-studio-page-73:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-74-ruach-ai:/app/previews/google-ai-studio-page-74:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-75-nesher-bci:/app/previews/google-ai-studio-page-75:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-76-orot:/app/previews/google-ai-studio-page-76:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-77-deepcode-ai:/app/previews/google-ai-studio-page-77:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-78-oden-mibtsar:/app/previews/google-ai-studio-page-78:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-79-holoar-system:/app/previews/google-ai-studio-page-79:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-80-nexus-ar:/app/previews/google-ai-studio-page-80:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-81-quantumlearn:/app/previews/google-ai-studio-page-81:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-82-omnirealm:/app/previews/google-ai-studio-page-82:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-83-astra-ai:/app/previews/google-ai-studio-page-83:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-84-shavar:/app/previews/google-ai-studio-page-84:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-86-shadera:/app/previews/google-ai-studio-page-86:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-87-shomer-quanttrade:/app/previews/google-ai-studio-page-87:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-08-reyiat:/app/previews/google-ai-studio-visited-8f0c899c-1fe7-4d84-92ae-20d3a026712f:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-01-integrav:/app/previews/google-ai-studio-page-01:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-02-ezhkar-cyber-commander:/app/previews/google-ai-studio-page-02:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-03-tan-h-zoo:/app/previews/google-ai-studio-page-03:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-05-zakhar:/app/previews/google-ai-studio-page-05:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-09-sela-fortress:/app/previews/google-ai-studio-page-09:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-10-neural-jev:/app/previews/google-ai-studio-page-10:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-14-dabar:/app/previews/google-ai-studio-page-14:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-16-lightstar:/app/previews/google-ai-studio-page-16:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-17-luminous-nexus:/app/previews/google-ai-studio-page-17:ro"
+      - "/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/42-appforge-cyber-workbench:/app/previews/google-ai-studio-appforge-cyber-workbench:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-rork-bot-router-server:/app/previews/rork-rork-bot-router-server:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-rork-int-grav:/app/previews/rork-github-pull-rork-apps-rork-int-grav:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-rork-no-backend-supabase:/app/previews/rork-github-pull-rork-apps-rork-no-backend-app-with-supabase:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-rork-sapphire-ai-music-video:/app/previews/rork-github-pull-rork-apps-rork-sapphire-ai-music-video:ro"
+      - "/Users/davidyoung/GitHub-Pull/BASE44-APPS-BUILT/base44-apps-examples:/app/previews/base44-apps-examples:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-openclaw-onboarding:/app/previews/base44-github-pull-base44-apps-openclaw-onboarding:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-glowing-tardigrade-wiggle:/app/previews/dyad-local-exports-dyad-apps-glowing-tardigrade-wiggle:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-todo-flow:/app/previews/dyad-local-exports-dyad-apps-todo-flow:ro"
+      - "/Users/davidyoung/app-containers-hub/build-contexts/rork-no-backend-web/dist:/app/previews/rork-github-pull-rork-apps-rork-no-backend-app-with-supabase-expo:ro"
+      - "/Users/davidyoung/GitHub-Pull/BASE44-APPS-BUILT/base44-buzz:/app/previews/base44-github-pull-base44-apps-apps-examples-buzz:ro"
+      - "/Users/davidyoung/GitHub-Pull/BASE44-APPS-BUILT/base44-trellix:/app/previews/base44-github-pull-base44-apps-apps-examples-trellix:ro"
+      - "/Users/davidyoung/GitHub-Pull/BASE44-APPS-BUILT/base44-white-label-minimal:/app/previews/base44-github-pull-base44-apps-base44-platform-starter-examples-white-label-minimal:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-gifted-4-eternity:/app/previews/local-apps-apps-home-ubuntu-gifted-4-eternity:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-sapphire-docs:/app/previews/local-apps-apps-sapphire-main-docs:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-sapphire-web-templates:/app/previews/local-apps-apps-sapphire-main-interfaces-web-templates:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-sapphire-openclaw-ai:/app/previews/other-local-exports-github-pull-sapphire-openclaw-ai-:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-gifted-eternity-streaming:/app/previews/other-local-exports-github-pull-gifted-eternity-streaming:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-aistudio-downloads:/app/previews/other-local-exports-github-pull-aistudio-downloads:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-app-vault:/app/previews/other-local-exports-github-pull-app-vault:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-check:/app/previews/other-local-exports-github-pull-check:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-g-e-stream:/app/previews/other-local-exports-github-pull-g-e-stream:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-gifted-bot-store:/app/previews/other-local-exports-github-pull-gifted-bot-store:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-homex-intell:/app/previews/other-local-exports-github-pull-homex-intell:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-orgo:/app/previews/other-local-exports-github-pull-orgo-:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-rork-apps:/app/previews/other-local-exports-github-pull-rork-apps:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-axiom1:/app/previews/other-local-exports-github-pull-axiom1:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-get-paid:/app/previews/other-local-exports-github-pull-get-paid:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-gift:/app/previews/other-local-exports-github-pull-gift:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-gifted:/app/previews/other-local-exports-github-pull-gifted:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-giftedeternity-streaming:/app/previews/other-local-exports-github-pull-giftedeternitystreaming:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-gods-eye-view:/app/previews/other-local-exports-github-pull-gods-eye-view:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-github-pull-index:/app/previews/other-local-exports-github-pull-index-html:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-khi:/app/previews/other-local-exports-github-pull-khi:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-kids:/app/previews/other-local-exports-github-pull-kids:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-streamy:/app/previews/other-local-exports-github-pull-streamy:ro"
+      - "/Users/davidyoung/GitHub-Pull/APP-EXPORTS/app-t:/app/previews/other-local-exports-github-pull-t:ro"
+      - "/Users/davidyoung/GitHub-Pull/BASE44-APPS-BUILT/base44-forgeai:/app/previews/base44-cloud-69d278a5bb79d4c2ee08f484:ro"
+      - "/Users/davidyoung/GitHub-Pull/BASE44-APPS-BUILT/base44-freecast:/app/previews/base44-cloud-69d26001a3aae449f2d1d91a:ro"
+      - "/Users/davidyoung/GitHub-Pull/MANUS-APPS/manus-streamwave:/app/previews/manus-streamwave:ro"
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8780/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

@@ -1,0 +1,21 @@
+# Rendering needs only PyYAML — FFmpeg does the work and is called as a binary.
+PyYAML>=6.0
+
+# Compositing extras (green_machine.py, interactive_avatar.py, and the
+# pipeline's `composite` stage). Skip them on a render-only host: the pipeline
+# imports OpenCV lazily and every other stage runs on FFmpeg alone.
+opencv-python>=4.9
+numpy>=1.26
+
+# Optional, imported only when explicitly asked for. Both scripts key and track
+# with nothing but OpenCV, so neither belongs in the required set:
+#   mediapipe    `--matte person`, `--hands mediapipe`
+#   ultralytics  `--detect yolo`
+# mediapipe>=0.10
+# ultralytics>=8.1
+
+# Upload extras (optional: skip these for render-only / CI-render jobs)
+google-api-python-client>=2.120.0
+google-auth>=2.28.0
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.2.0

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stories Catalog - Gifted Eternity Story Time</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/catalog.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Gifted Eternity Story Time</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="videos.html">Videos</a></li>
+                <li><a href="catalog.html">Stories Catalog</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="catalog-header">
+            <h2>Gifted Eternity Story Time - Complete Catalog</h2>
+            <p>Explore all 20 magical bedtime stories with personalized adventures for your child.</p>
+        </section>
+
+        <section id="catalog-filters">
+            <h3>Filter by Category:</h3>
+            <button class="filter-btn active" data-filter="all">All Stories</button>
+            <button class="filter-btn" data-filter="Bedtime">Bedtime</button>
+            <button class="filter-btn" data-filter="Kindness">Kindness</button>
+            <button class="filter-btn" data-filter="Math">Math</button>
+            <button class="filter-btn" data-filter="Playing Nice">Playing Nice</button>
+            <button class="filter-btn" data-filter="Adventure">Adventure</button>
+        </section>
+
+        <section id="catalog-grid">
+            <div class="catalog-container" id="catalog-container">
+                <!-- Stories will be dynamically loaded here -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Gifted Eternity Story Time | Available on Amazon Kindle & More!</p>
+    </footer>
+    <script src="js/stories-data.js"></script>
+    <script src="js/catalog.js"></script>
+</body>
+</html>

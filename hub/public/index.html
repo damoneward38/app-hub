@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark"><title>App Hub — AI Studio · Base44 · Rork · Manus</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;color:#eef2ff;background:#0b1020;--line:#273252;--panel:#111a31e8;--muted:#9eaccb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#192448 0,#0b1020 55%);min-height:100vh}
+header{padding:34px max(22px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8ba8ff}
+h1{font-size:clamp(30px,5vw,52px);margin:10px 0 8px;letter-spacing:-.04em}
+h2{font-size:20px;margin:34px 0 4px;display:flex;align-items:baseline;gap:10px}
+h2 .count{font-size:13px;font-weight:500;color:var(--muted)}
+h2 .pill{font-size:11px;font-weight:600;color:#9ff0c0;background:#12301f;border:1px solid #1e5a38;border-radius:999px;padding:3px 9px}
+p{color:#aeb9d6;line-height:1.55}.wrap{max-width:1180px;margin:auto;padding:28px 22px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:22px}
+.stat,.panel,.app{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:18px}
+.stat strong{display:block;font-size:28px;margin-bottom:4px}.stat span,.muted{font-size:13px;color:var(--muted)}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 6px}
+input,select{background:#0b1225;border:1px solid #354263;color:#eef2ff;border-radius:10px;padding:12px;font:inherit}
+input{flex:1;min-width:220px}select{min-width:170px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:12px}
+.app h3{margin:0 0 8px;overflow-wrap:anywhere}
+.tag{display:inline-block;padding:5px 8px;border-radius:7px;background:#202c4b;color:#b9c9ff;font-size:11px;margin:3px 4px 3px 0}
+.tag.ok{background:#12301f;color:#9ff0c0}.tag.src{background:#221a3a;color:#c9b6ff}
+.app .open{display:inline-block;margin-top:10px;padding:9px 12px;border-radius:10px;background:#2f5cff;color:#fff;text-decoration:none;font-size:13px;font-weight:600}
+.app .open:hover{background:#3f6bff}
+.app .path{font-size:11px;color:#7180a3;word-break:break-all;margin-top:8px}
+.empty{padding:38px;text-align:center;border:1px dashed #354263;border-radius:16px;color:#aeb9d6}
+details{margin-top:38px}summary{cursor:pointer;color:#aeb9d6;font-size:14px}
+.note{font-size:12px;color:var(--muted);margin:2px 0 0}
+footer{padding:24px;text-align:center;color:#7180a3;font-size:12px}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Private deployment workspace</div><h1>App Hub</h1><p>Every app you built in Google AI Studio, Base44, Rork AI, and Manus AI — served together from one portal.</p></header>
+<main class="wrap">
+<div class="stats" id="stats"></div>
+<div class="toolbar">
+  <input id="q" placeholder="Search apps…">
+  <select id="status"><option value="">All statuses</option><option>PREVIEW_RUNNING</option><option>CONTAINER_RUNNING</option><option>TOOL_OR_DUPLICATE</option></select>
+  <select id="platform"><option value="">All platforms</option></select>
+</div>
+<div id="sections"></div>
+</main>
+<footer>Local-first · Source folders are mounted read-only · Only verified routes are linked</footer>
+<script>
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const PLATFORMS=[["Google AI Studio","Google AI Studio"],["Base44","Base44"],["Rork","Rork AI"],["Manus AI","Manus AI"]];
+const served=a=>!!(a.preview&&a.preview.url);
+let registry={apps:[],summary:{}};
+async function load(){try{const r=await fetch("/api/apps",{cache:"no-store"});registry=await r.json()}catch(e){registry={apps:[],summary:{}}}render()}
+function statsHtml(apps){
+  const total=apps.filter(served).length;
+  const per=PLATFORMS.map(([k,l])=>[apps.filter(a=>a.source===k&&served(a)).length,l+" apps"]);
+  const open=apps.filter(a=>PLATFORMS.some(([k])=>a.source===k)&&!served(a)).length;
+  return [["Apps served",total],...per,["Not served",open]].map(([k,l])=>`<div class="stat"><strong>${Number(k)}</strong><span>${esc(l)}</span></div>`).join("");
+}
+function card(a){
+  const link=served(a)?`<a class="open" href="${esc(a.preview.url)}" target="_blank" rel="noreferrer">Open app →</a>`:"";
+  return `<article class="app"><h3>${esc(a.name)}</h3>
+    <span class="tag ${served(a)?"ok":""}">${esc(a.status||"NEEDS_REVIEW")}</span>
+    <span class="tag src">${esc(a.source||"Local")}</span>
+    ${a.reason?`<p class="note">${esc(a.reason)}</p>`:""}
+    ${link}<div class="path">${esc(a.path||"")}</div></article>`;
+}
+function render(){
+  const apps=registry.apps||[], s=registry.summary||{};
+  document.querySelector("#stats").innerHTML=statsHtml(apps);
+  const platSel=document.querySelector("#platform");
+  if(platSel.options.length===1) PLATFORMS.forEach(([k,l])=>platSel.add(new Option(l,k)));
+  const q=document.querySelector("#q").value.toLowerCase();
+  const st=document.querySelector("#status").value;
+  const pf=platSel.value;
+  const match=a=>(!st||a.status===st)&&(!pf||a.source===pf)&&JSON.stringify(a).toLowerCase().includes(q);
+  let html="";
+  for(const [key,label] of PLATFORMS){
+    if(pf&&pf!==key) continue;
+    const all=apps.filter(a=>a.source===key);
+    const show=all.filter(served).filter(match);
+    if(!show.length&&!all.length) continue;
+    const notServed=all.length-all.filter(served).length;
+    html+=`<h2>${esc(label)} <span class="pill">${show.length} served</span><span class="count">${notServed?notServed+" linked source/duplicate records not served":""}</span></h2>`;
+    html+=`<div class="grid">${show.length?show.map(card).join(""):'<div class="empty">No matching served apps.</div>'}</div>`;
+  }
+  if(!pf){
+    const other=apps.filter(a=>!PLATFORMS.some(([k])=>a.source===k)&&served(a)&&match(a));
+    if(other.length) html+=`<details><summary>Other local exports (${other.length})</summary><div class="grid">${other.map(card).join("")}</div></details>`;
+  }
+  document.querySelector("#sections").innerHTML=html||'<div class="empty">No matching apps.</div>';
+}
+document.querySelector("#q").addEventListener("input",render);
+document.querySelector("#status").addEventListener("change",render);
+document.querySelector("#platform").addEventListener("change",render);
+load();
+</script>
+</body>
+</html>

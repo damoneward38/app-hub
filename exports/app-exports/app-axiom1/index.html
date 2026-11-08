@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXIOM — The Core Truth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+         AXIOM — THE CORE TRUTH
+         Futuristic Spaceship 3D Browser Platform
+         Every page feels like inside a spaceship cockpit
+         ============================================================ */
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        :root {
+            --cyan: #00f5ff;
+            --blue: #0066ff;
+            --purple: #7c3aed;
+            --neon: #00ff88;
+            --gold: #ffd700;
+            --red: #ff2200;
+            --dark: #000510;
+            --dark2: #000a1a;
+            --dark3: #00051a;
+            --white: #e2f0ff;
+            --gray: #1a2a3a;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--dark);
+            color: var(--white);
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── CANVAS - Space background ── */
+        #axiom-canvas {
+            position: fixed;
+            top:0; left:0;
+            width:100%; height:100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #axiom-app {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        /* ============================================================
+         COCKPIT HUD FRAME - wraps every page
+         ============================================================ */
+        .cockpit-frame {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Corner HUD elements */
+        .hud-corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-color: rgba(0,245,255,0.4);
+            border-style: solid;
+        }
+
+        .hud-tl { top:12px; left:12px; border-width:2px 0 0 2px; }
+        .hud-tr { top:12px; right:12px; border-width:2px 2px 0 0; }
+        .hud-bl { bottom:12px; left:12px; border-width:0 0 2px 2px; }
+        .hud-br { bottom:12px; right:12px; border-width:0 2px 2px 0; }
+
+        /* HUD scan line */
+        .hud-scanline {
+            position: absolute;
+            left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,245,255,0.3), transparent);
+            animation: scanline 4s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        /* Side HUD bars */
+        .hud-left {
+            position: absolute;
+            left: 8px;
+            top: 20%;
+            bottom: 20%;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(0,245,255,0.4), transparent);
+        }
+
+        .hud-right {
+            position: absolute;
+            right: 8px;
+            top: 20%;
+            bottom: 20%;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(0,245,255,0.4), transparent);
+        }
+
+        /* ============================================================
+         NAV - Spaceship cockpit top bar
+         ============================================================ */
+        .axiom-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 24px;
+            background: rgba(0,5,16,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,245,255,0.15);
+        }
+
+        /* Cockpit status lights */
+        .nav-lights {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .nav-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: lightPulse 2s infinite;
+        }
+
+        .nl-red { background:#ff2200; box-shadow:0 0 8px #ff2200; animation-delay:0s; }
+        .nl-yellow { background:#ffd700; box-shadow:0 0 8px #ffd700; animation-delay:0.5s; }
+        .nl-green { background:#00ff88; box-shadow:0 0 8px #00ff88; animation-delay:1s; }
+
+        @keyframes lightPulse {
+            0%,100% { opacity:1; } 50% { opacity:0.4; }
+        }
+
+        /* Logo */
+        .axiom-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            color: var(--cyan);
+            text-shadow: 0 0 20px rgba(0,245,255,0.8), 0 0 40px rgba(0,245,255,0.4);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        @keyframes logoGlow {
+            from { text-shadow: 0 0 20px rgba(0,245,255,0.6), 0 0 40px rgba(0,245,255,0.3); }
+            to { text-shadow: 0 0 40px rgba(0,245,255,1), 0 0 80px rgba(0,245,255,0.6); }
+        }
+
+        /* Search bar */
+        .axiom-search-bar {
+            flex: 1;
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .axiom-search-input {
+            width: 100%;
+            background: rgba(0,245,255,0.05);
+            border: 1px solid rgba(0,245,255,0.3);
+            border-radius: 30px;
+            color: var(--cyan);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            padding: 10px 50px 10px 20px;
+            outline: none;
+            transition: all 0.3s;
+            letter-spacing: 0.05em;
+        }
+
+        .axiom-search-input::placeholder { color: rgba(0,245,255,0.3); }
+
+        .axiom-search-input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,245,255,0.2), inset 0 0 20px rgba(0,245,255,0.05);
+            background: rgba(0,245,255,0.08);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--cyan);
+            font-size: 1rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .search-icon:hover { opacity: 1; }
+
+        /* Nav links */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .nav-link {
+            background: rgba(0,245,255,0.05);
+            border: 1px solid rgba(0,245,255,0.15);
+            border-radius: 8px;
+            color: rgba(0,245,255,0.6);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65rem;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(0,245,255,0.12);
+            border-color: var(--cyan);
+            color: var(--cyan);
+            box-shadow: 0 0 12px rgba(0,245,255,0.2);
+        }
+
+        /* Status bar */
+        .nav-status {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .status-item {
+            font-size: 0.55rem;
+            color: rgba(0,245,255,0.4);
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--neon);
+            box-shadow: 0 0 6px var(--neon);
+            animation: lightPulse 1.5s infinite;
+        }
+
+        /* ============================================================
+         HOME PAGE
+         ============================================================ */
+        .axiom-home {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(0,102,255,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(0,245,255,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(124,58,237,0.05) 0%, transparent 50%);
+        }
+
+        /* 3D rotating hologram */
+        .axiom-hologram {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+        }
+
+        .hologram-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            animation: holoSpin 8s linear infinite;
+        }
+
+        .hr1 { width:60px; height:60px; border-color:rgba(0,245,255,0.8); animation-duration:3s; }
+        .hr2 { width:100px; height:100px; border-color:rgba(0,102,255,0.6); animation-duration:5s; animation-direction:reverse; }
+        .hr3 { width:140px; height:140px; border-color:rgba(124,58,237,0.4); animation-duration:7s; }
+        .hr4 { width:180px; height:180px; border-color:rgba(0,245,255,0.2); animation-duration:10s; animation-direction:reverse; }
+
+        @keyframes holoSpin {
+            from { transform:translate(-50%,-50%) rotate(0deg) rotateX(60deg); }
+            to { transform:translate(-50%,-50%) rotate(360deg) rotateX(60deg); }
+        }
+
+        .hologram-core {
+            position: absolute;
+            top:50%; left:50%;
+            transform: translate(-50%,-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--cyan), 0 0 40px var(--cyan), 0 0 80px rgba(0,245,255,0.4);
+            animation: corePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes corePulse {
+            0%,100% { transform:translate(-50%,-50%) scale(1); box-shadow:0 0 20px var(--cyan), 0 0 40px var(--cyan); }
+            50% { transform:translate(-50%,-50%) scale(1.3); box-shadow:0 0 40px var(--cyan), 0 0 80px var(--cyan); }
+        }
+
+        /* Main title */
+        .axiom-main-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(4rem, 14vw, 9rem);
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            line-height: 1;
+            margin-bottom: 10px;
+            color: transparent;
+            background: linear-gradient(135deg, #00f5ff, #0066ff, #7c3aed, #00f5ff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite, titleGlow 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 30px rgba(0,245,255,0.6));
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 20px rgba(0,245,255,0.5)); }
+            to { filter: drop-shadow(0 0 60px rgba(0,245,255,1)); }
+        }
+
+        .axiom-tagline {
+            font-size: clamp(0.6rem, 2vw, 0.8rem);
+            color: rgba(0,245,255,0.5);
+            letter-spacing: 0.3em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        /* Home search */
+        .home-search-wrap {
+            width: 100%;
+            max-width: 650px;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .home-search-input {
+            width: 100%;
+            background: rgba(0,245,255,0.04);
+            border: 1px solid rgba(0,245,255,0.3);
+            border-radius: 50px;
+            color: var(--cyan);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            padding: 18px 60px 18px 28px;
+            outline: none;
+            transition: all 0.3s;
+            letter-spacing: 0.05em;
+            box-shadow: 0 0 30px rgba(0,245,255,0.1), inset 0 0 30px rgba(0,245,255,0.02);
+        }
+
+        .home-search-input::placeholder { color: rgba(0,245,255,0.25); }
+
+        .home-search-input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 50px rgba(0,245,255,0.3), inset 0 0 30px rgba(0,245,255,0.05);
+        }
+
+        .home-search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: var(--dark);
+            border: none;
+            border-radius: 40px;
+            padding: 10px 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.05em;
+        }
+
+        .home-search-btn:hover {
+            box-shadow: 0 0 20px rgba(0,245,255,0.6);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Quick links */
+        .quick-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .quick-link {
+            background: rgba(0,245,255,0.04);
+            border: 1px solid rgba(0,245,255,0.15);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.68rem;
+            color: rgba(0,245,255,0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.06em;
+        }
+
+        .quick-link:hover {
+            background: rgba(0,245,255,0.1);
+            border-color: var(--cyan);
+            color: var(--cyan);
+            box-shadow: 0 0 12px rgba(0,245,255,0.2);
+        }
+
+        /* ============================================================
+         APP GRID - floating 3D holographic app cards
+         ============================================================ */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 14px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .app-card {
+            background: rgba(0,5,26,0.8);
+            border: 1px solid rgba(0,245,255,0.15);
+            border-radius: 16px;
+            padding: 20px 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .app-card:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 30px rgba(0,245,255,0.15), 0 0 60px rgba(0,245,255,0.05);
+            transform: translateY(-6px) perspective(600px) rotateX(5deg);
+        }
+
+        .app-card:hover::before { opacity: 1; }
+
+        .app-icon { font-size: 2rem; margin-bottom: 8px; display: block; }
+
+        .app-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--cyan);
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .app-desc { font-size: 0.55rem; color: rgba(0,245,255,0.3); line-height: 1.4; }
+
+        .app-status {
+            position: absolute;
+            top: 8px; right: 8px;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--neon);
+            box-shadow: 0 0 6px var(--neon);
+            animation: lightPulse 2s infinite;
+        }
+
+        /* ============================================================
+         SEARCH RESULTS PAGE
+         ============================================================ */
+        .results-page {
+            min-height: 100vh;
+            padding: 80px 20px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .results-header {
+            font-size: 0.65rem;
+            color: rgba(0,245,255,0.3);
+            margin-bottom: 20px;
+            letter-spacing: 0.06em;
+        }
+
+        .result-card {
+            background: rgba(0,5,26,0.8);
+            border: 1px solid rgba(0,245,255,0.1);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.25s;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--cyan);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .result-card:hover {
+            border-color: rgba(0,245,255,0.3);
+            transform: translateX(6px);
+            box-shadow: 0 0 20px rgba(0,245,255,0.08);
+        }
+
+        .result-card:hover::after { opacity: 1; }
+
+        .result-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            margin-bottom: 4px;
+            letter-spacing: 0.04em;
+        }
+
+        .result-url { font-size:0.62rem; color:rgba(0,255,136,0.5); margin-bottom:6px; }
+        .result-desc { font-size:0.68rem; color:rgba(0,245,255,0.4); line-height:1.6; }
+
+        /* ============================================================
+         PAGES - Shared structure
+         ============================================================ */
+        .axiom-page {
+            min-height: 100vh;
+            padding: 80px 20px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0,245,255,0.1);
+        }
+
+        .page-tag {
+            display: inline-block;
+            background: rgba(0,245,255,0.08);
+            border: 1px solid rgba(0,245,255,0.2);
+            color: var(--cyan);
+            font-size: 0.6rem;
+            padding: 4px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.4rem, 4vw, 2.4rem);
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .page-title span {
+            color: var(--cyan);
+            text-shadow: 0 0 20px rgba(0,245,255,0.6);
+        }
+
+        .page-sub { font-size:0.72rem; color:rgba(0,245,255,0.3); }
+
+        /* ============================================================
+         HOLOGRAPHIC CARDS - used on all pages
+         ============================================================ */
+        .holo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .holo-card {
+            background: rgba(0,5,26,0.85);
+            border: 1px solid rgba(0,245,255,0.12);
+            border-radius: 18px;
+            padding: 22px 18px;
+            transition: all 0.3s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .holo-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0,245,255,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .holo-card:hover {
+            border-color: rgba(0,245,255,0.35);
+            box-shadow: 0 0 30px rgba(0,245,255,0.1);
+            transform: perspective(600px) rotateX(-3deg) rotateY(3deg) translateY(-4px);
+        }
+
+        .holo-icon { font-size:1.8rem; margin-bottom:10px; display:block; }
+        .holo-title { font-family:'Orbitron',monospace; font-size:0.78rem; font-weight:700; color:var(--cyan); letter-spacing:0.05em; margin-bottom:8px; }
+        .holo-desc { font-size:0.66rem; color:rgba(0,245,255,0.35); line-height:1.7; }
+
+        /* ============================================================
+         BUTTONS
+         ============================================================ */
+        .btn-axiom {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0,245,255,0.15), rgba(0,102,255,0.15));
+            border: 1px solid rgba(0,245,255,0.4);
+            color: var(--cyan);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-axiom:hover {
+            background: rgba(0,245,255,0.2);
+            box-shadow: 0 0 30px rgba(0,245,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-solid {
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: var(--dark);
+            font-weight: 900;
+        }
+
+        .btn-solid:hover {
+            box-shadow: 0 0 40px rgba(0,245,255,0.6);
+            color: var(--dark);
+        }
+
+        /* ============================================================
+         TELEMETRY BAR - bottom of screen
+         ============================================================ */
+        .telemetry-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 90;
+            background: rgba(0,5,16,0.9);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0,245,255,0.1);
+            padding: 6px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 0.55rem;
+            color: rgba(0,245,255,0.3);
+            letter-spacing: 0.06em;
+        }
+
+        .tel-item { display:flex; align-items:center; gap:5px; }
+        .tel-val { color:var(--cyan); font-weight:bold; }
+
+        /* ============================================================
+         SCROLLBAR
+         ============================================================ */
+        ::-webkit-scrollbar { width:4px; }
+        ::-webkit-scrollbar-track { background:var(--dark); }
+        ::-webkit-scrollbar-thumb { background:rgba(0,245,255,0.3); border-radius:4px; }
+
+        /* ============================================================
+         RESPONSIVE
+         ============================================================ */
+        @media (max-width: 600px) {
+            .nav-status { display:none; }
+            .nav-links { display:none; }
+            .axiom-main-title { letter-spacing:0.1em; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="axiom-canvas"></canvas>
+    <div id="axiom-app"></div>
+
+    <script>
+        'use strict';
+
+        // ============================================================
+        // AXIOM PARTICLE ENGINE
+        // Space stars, floating debris, energy beams
+        // All falling and floating through space
+        // ============================================================
+
+        const AXIOM_PARTICLES = {
+
+            canvas: null,
+            ctx: null,
+            W: 0, H: 0,
+            stars: [],
+            debris: [],
+            beams: [],
+            nebulas: [],
+
+            init() {
+                this.canvas = document.getElementById('axiom-canvas');
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+                this.spawnStars(300);
+                this.spawnDebris(40);
+                this.spawnBeams(12);
+                this.spawnNebulas(5);
+                this.loop();
+                window.addEventListener('resize', () => this.resize());
+                this.init3DTilt();
+            },
+
+            resize() {
+                this.W = this.canvas.width = window.innerWidth;
+                this.H = this.canvas.height = window.innerHeight;
+            },
+
+            // ── SPACE STARS ──
+            spawnStars(n) {
+                for (let i = 0; i < n; i++) {
+                    this.stars.push({
+                        x: Math.random() * this.W,
+                        y: Math.random() * this.H,
+                        size: Math.random() * 2,
+                        speed: 0.05 + Math.random() * 0.3,
+                        opacity: 0.2 + Math.random() * 0.8,
+                        twinkle: Math.random() * Math.PI * 2
+                    });
+                }
+            },
+
+            // ── FLOATING DEBRIS / HOLOGRAPHIC SYMBOLS ──
+            spawnDebris(n) {
+                const symbols = ['◆','▲','●','○','◉','⬡','✦','⊕','⊗','∞','Δ','Ω','λ','ψ','α','β'];
+                const colors = ['#00f5ff','#0066ff','#7c3aed','#00ff88','#ffd700'];
+                for (let i = 0; i < n; i++) {
+                    this.debris.push({
+                        x: Math.random() * this.W,
+                        y: Math.random() * this.H,
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: 0.2 + Math.random() * 0.6,
+                        size: 10 + Math.random() * 20,
+                        opacity: 0.05 + Math.random() * 0.2,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        symbol: symbols[Math.floor(Math.random() * symbols.length)],
+                        pulse: Math.random() * Math.PI * 2,
+                        spin: (Math.random() - 0.5) * 0.02
+                    });
+                }
+            },
+
+            // ── ENERGY BEAMS FROM SKY ──
+            spawnBeams(n) {
+                const colors = ['#00f5ff','#0066ff','#7c3aed','#00ff88'];
+                for (let i = 0; i < n; i++) {
+                    this.beams.push({
+                        x: Math.random() * this.W,
+                        y: -200 + Math.random() * this.H,
+                        speed: 0.5 + Math.random() * 1.5,
+                        length: 60 + Math.random() * 200,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        width: 0.5 + Math.random() * 1.5,
+                        opacity: 0.1 + Math.random() * 0.3
+                    });
+                }
+            },
+
+            // ── NEBULA CLOUDS ──
+            spawnNebulas(n) {
+                const colors = [
+                    'rgba(0,102,255,0.04)',
+                    'rgba(0,245,255,0.03)',
+                    'rgba(124,58,237,0.04)',
+                    'rgba(0,255,136,0.02)'
+                ];
+                for (let i = 0; i < n; i++) {
+                    this.nebulas.push({
+                        x: Math.random() * this.W,
+                        y: Math.random() * this.H,
+                        rx: 100 + Math.random() * 300,
+                        ry: 60 + Math.random() * 200,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        pulse: Math.random() * Math.PI * 2,
+                        speed: 0.003 + Math.random() * 0.005
+                    });
+                }
+            },
+
+            loop() {
+                this.ctx.clearRect(0, 0, this.W, this.H);
+                this.drawNebulas();
+                this.drawBeams();
+                this.drawStars();
+                this.drawDebris();
+                requestAnimationFrame(() => this.loop());
+            },
+
+            drawNebulas() {
+                this.nebulas.forEach(n => {
+                    n.pulse += n.speed;
+                    const alpha = Math.sin(n.pulse) * 0.5 + 0.5;
+                    this.ctx.save();
+                    this.ctx.globalAlpha = alpha;
+                    const grad = this.ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.rx);
+                    grad.addColorStop(0, n.color);
+                    grad.addColorStop(1, 'transparent');
+                    this.ctx.fillStyle = grad;
+                    this.ctx.beginPath();
+                    this.ctx.ellipse(n.x, n.y, n.rx, n.ry, 0, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                });
+            },
+
+            drawBeams() {
+                this.beams.forEach(b => {
+                    const grad = this.ctx.createLinearGradient(b.x, b.y, b.x, b.y + b.length);
+                    grad.addColorStop(0, 'transparent');
+                    grad.addColorStop(0.4, b.color + '66');
+                    grad.addColorStop(1, 'transparent');
+                    this.ctx.save();
+                    this.ctx.strokeStyle = grad;
+                    this.ctx.lineWidth = b.width;
+                    this.ctx.shadowColor = b.color;
+                    this.ctx.shadowBlur = 6;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(b.x, b.y);
+                    this.ctx.lineTo(b.x, b.y + b.length);
+                    this.ctx.stroke();
+                    this.ctx.restore();
+                    b.y += b.speed;
+                    if (b.y > this.H + b.length) b.y = -b.length;
+                });
+            },
+
+            drawStars() {
+                this.stars.forEach(s => {
+                    s.twinkle += 0.02;
+                    const op = s.opacity * (Math.sin(s.twinkle) * 0.3 + 0.7);
+                    this.ctx.save();
+                    this.ctx.globalAlpha = op;
+                    this.ctx.fillStyle = '#ffffff';
+                    this.ctx.shadowColor = '#00f5ff';
+                    this.ctx.shadowBlur = s.size > 1.2 ? 4 : 0;
+                    this.ctx.beginPath();
+                    this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                    s.y += s.speed;
+                    if (s.y > this.H) { s.y = 0; s.x = Math.random() * this.W; }
+                });
+            },
+
+            drawDebris() {
+                this.debris.forEach(d => {
+                    d.pulse += 0.02;
+                    const op = d.opacity * (Math.sin(d.pulse) * 0.3 + 0.7);
+                    this.ctx.save();
+                    this.ctx.globalAlpha = op;
+                    this.ctx.fillStyle = d.color;
+                    this.ctx.shadowColor = d.color;
+                    this.ctx.shadowBlur = 8;
+                    this.ctx.font = `${d.size}px Courier New`;
+                    this.ctx.fillText(d.symbol, d.x, d.y);
+                    this.ctx.restore();
+                    d.y += d.vy;
+                    d.x += d.vx;
+                    if (d.y > this.H + 30) { d.y = -30; d.x = Math.random() * this.W; }
+                    if (d.x < -30 || d.x > this.W + 30) d.vx *= -1;
+                });
+            },
+
+            // ── 3D TILT ON CARDS ──
+            init3DTilt() {
+                document.addEventListener('mouseover', e => {
+                    const card = e.target.closest('.holo-card, .app-card, .result-card');
+                    if (!card) return;
+                    card.addEventListener('mousemove', tilt);
+                    card.addEventListener('mouseleave', untilt);
+                });
+
+                function tilt(e) {
+                    const rect = this.getBoundingClientRect();
+                    const cx = rect.left + rect.width / 2;
+                    const cy = rect.top + rect.height / 2;
+                    const dx = (e.clientX - cx) / (rect.width / 2);
+                    const dy = (e.clientY - cy) / (rect.height / 2);
+                    this.style.transform = `perspective(600px) rotateX(${dy * -8}deg) rotateY(${dx * 8}deg) translateY(-6px)`;
+                }
+
+                function untilt() {
+                    this.style.transform = '';
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => AXIOM_PARTICLES.init());
+    </script>
+    <script>
+        'use strict';
+
+        // ============================================================
+        // AXIOM — THE CORE TRUTH
+        // Futuristic 3D Spaceship Browser Platform
+        // Search · Apps · Browser · AI · Security · More
+        // ============================================================
+
+        const AXIOM = {
+
+            currentPage: 'home',
+            searchQuery: '',
+            bootTime: new Date(),
+
+            // ── ALL APPS IN AXIOM ──
+            apps: [
+                { icon:'🌐', name:'BROWSER', desc:'War-proof connection', page:'browser' },
+                { icon:'🧠', name:'AI CORE', desc:'Built-in AI brain', page:'ai' },
+                { icon:'🔒', name:'VAULT', desc:'Encrypted storage', page:'vault' },
+                { icon:'📡', name:'MESH NET', desc:'Global mesh access', page:'mesh' },
+                { icon:'🛡️', name:'SECURITY', desc:'Zero trust shield', page:'security' },
+                { icon:'🌌', name:'DEEP SPACE', desc:'Explore the network', page:'explore' },
+                { icon:'⚡', name:'DABAR', desc:'AI power platform', page:'dabar' },
+                { icon:'⚛️', name:'QUANTUM', desc:'QuantumLearn lab', page:'quantum' },
+                { icon:'👑', name:'MENAHEL', desc:'AI infrastructure', page:'menahel' },
+                { icon:'💰', name:'PAYMENTS', desc:'PayPal connected', page:'payment' },
+                { icon:'🔬', name:'BONESCAN', desc:'Medical AI scanner', page:'bonescan' },
+                { icon:'⚙️', name:'SETTINGS', desc:'System config', page:'settings' }
+            ],
+
+            // ── QUICK SEARCH SUGGESTIONS ──
+            suggestions: [
+                'Quantum computing', 'AI platforms', 'Secure browser',
+                'War-proof network', 'DABAR platform', 'Bone scan AI',
+                'Mesh network', 'Zero trust security'
+            ],
+
+            init() {
+                this.renderShell();
+                this.showPage('home');
+                this.startTelemetry();
+            },
+
+            // ── RENDER SHELL - wraps every page ──
+            renderShell() {
+                document.getElementById('axiom-app').innerHTML = `
+
+                <!-- COCKPIT HUD FRAME -->
+                <div class="cockpit-frame">
+                    <div class="hud-corner hud-tl"></div>
+                    <div class="hud-corner hud-tr"></div>
+                    <div class="hud-corner hud-bl"></div>
+                    <div class="hud-corner hud-br"></div>
+                    <div class="hud-scanline"></div>
+                    <div class="hud-left"></div>
+                    <div class="hud-right"></div>
+                </div>
+
+                <!-- NAV -->
+                <nav class="axiom-nav">
+                    <div class="nav-lights">
+                        <div class="nav-light nl-red"></div>
+                        <div class="nav-light nl-yellow"></div>
+                        <div class="nav-light nl-green"></div>
+                    </div>
+
+                    <div class="axiom-logo" onclick="AXIOM.showPage('home')">AXIOM</div>
+
+                    <div class="axiom-search-bar" id="nav-search-wrap">
+                        <input
+                            type="text"
+                            class="axiom-search-input"
+                            id="nav-search"
+                            placeholder="Search the universe..."
+                        />
+                        <span class="search-icon" onclick="AXIOM.doSearch()">⌕</span>
+                    </div>
+
+                    <div class="nav-links">
+                        <span class="nav-link" onclick="AXIOM.showPage('home')">HOME</span>
+                        <span class="nav-link" onclick="AXIOM.showPage('browser')">BROWSER</span>
+                        <span class="nav-link" onclick="AXIOM.showPage('ai')">AI</span>
+                        <span class="nav-link" onclick="AXIOM.showPage('apps')">APPS</span>
+                        <span class="nav-link" onclick="AXIOM.showPage('security')">SHIELD</span>
+                    </div>
+
+                    <div class="nav-status">
+                        <div class="status-item"><div class="status-dot"></div>SECURE</div>
+                        <div class="status-item"><div class="status-dot"></div>MESH: ON</div>
+                        <div class="status-item"><div class="status-dot"></div>AI: LIVE</div>
+                    </div>
+                </nav>
+
+                <!-- PAGE CONTENT -->
+                <div id="axiom-page"></div>
+
+                <!-- TELEMETRY BAR -->
+                <div class="telemetry-bar">
+                    <div class="tel-item">SYS: <span class="tel-val" id="tel-uptime">00:00:00</span></div>
+                    <div class="tel-item">NODES: <span class="tel-val">2.4M</span></div>
+                    <div class="tel-item">LATENCY: <span class="tel-val" id="tel-ping">--ms</span></div>
+                    <div class="tel-item">ENC: <span class="tel-val">AES-512</span></div>
+                    <div class="tel-item">MESH: <span class="tel-val">ONLINE</span></div>
+                    <div class="tel-item">AXIOM <span class="tel-val">v1.0</span></div>
+                </div>
+                `;
+
+                // Enter key search
+                document.getElementById('nav-search').addEventListener('keydown', e => {
+                    if (e.key === 'Enter') this.doSearch();
+                });
+            },
+
+            // ── SHOW A PAGE ──
+            showPage(page) {
+                this.currentPage = page;
+                const container = document.getElementById('axiom-page');
+                if (!container) return;
+
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                const activeLink = document.querySelector(`.nav-link[onclick*="showPage('${page}')"]`);
+                if (activeLink) activeLink.classList.add('active');
+
+
+                switch(page) {
+                    case 'home': container.innerHTML = this.pageHome(); break;
+                    case 'browser': container.innerHTML = this.pageBrowser(); break;
+                    case 'ai': container.innerHTML = this.pageAI(); break;
+                    case 'apps': container.innerHTML = this.pageApps(); break;
+                    case 'security': container.innerHTML = this.pageSecurity(); break;
+                    case 'explore': container.innerHTML = this.pageExplore(); break;
+                    case 'search': container.innerHTML = this.pageSearch(); break;
+                    case 'payment': container.innerHTML = this.pagePayment(); break;
+                    case 'vault': container.innerHTML = this.pageVault(); break;
+                    case 'mesh': container.innerHTML = this.pageMesh(); break;
+                    case 'dabar': container.innerHTML = this.pageDabar(); break;
+                    case 'quantum': container.innerHTML = this.pageQuantum(); break;
+                    case 'menahel': container.innerHTML = this.pageMenahel(); break;
+                    case 'bonescan': container.innerHTML = this.pageBonescan(); break;
+                    case 'settings': container.innerHTML = this.pageSettings(); break;
+                    default: container.innerHTML = this.pageHome(); break;
+                }
+
+                window.scrollTo({ top:0, behavior:'smooth' });
+            },
+
+            // ============================================================
+            // HOME PAGE
+            // ============================================================
+            pageHome() {
+                return `
+                <div class="axiom-home">
+
+                    <!-- 3D Hologram -->
+                    <div class="axiom-hologram">
+                        <div class="hologram-ring hr1"></div>
+                        <div class="hologram-ring hr2"></div>
+                        <div class="hologram-ring hr3"></div>
+                        <div class="hologram-ring hr4"></div>
+                        <div class="hologram-core"></div>
+                    </div>
+
+                    <!-- Title -->
+                    <h1 class="axiom-main-title">AXIOM</h1>
+                    <div class="axiom-tagline">The Core Truth · Beyond The Ordinary · Enter The Infinite</div>
+
+                    <!-- Main Search -->
+                    <div class="home-search-wrap">
+                        <input
+                            type="text"
+                            class="home-search-input"
+                            id="home-search"
+                            placeholder="Search the universe..."
+                        />
+                        <button class="home-search-btn" onclick="AXIOM.doSearch()">SEARCH</button>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="quick-links">
+                        ${this.suggestions.map(s => `
+                            <span class="quick-link" onclick="AXIOM.quickSearch('${s}')">${s}</span>
+                        `).join('')}
+                    </div>
+
+                    <!-- App Grid -->
+                    <div class="apps-grid">
+                        ${this.apps.map(a => `
+                            <div class="app-card" onclick="AXIOM.showPage('${a.page}')">
+                                ${a.page === 'ai' ? '<div class="app-status"></div>' : ''}
+                                <span class="app-icon">${a.icon}</span>
+                                <div class="app-name">${a.name}</div>
+                                <div class="app-desc">${a.desc}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                </div>`;
+            },
+
+            // ============================================================
+            // BROWSER PAGE
+            // ============================================================
+            pageBrowser() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">🌐 WAR-PROOF BROWSER</div>
+                        <h2 class="page-title">AXIOM <span>BROWSER</span></h2>
+                        <div class="page-sub">Connects through Tor · Mesh · Satellite · P2P · Works when everything else fails</div>
+                    </div>
+
+                    <div style="background:rgba(0,5,26,0.9); border:1px solid rgba(0,245,255,0.2); border-radius:16px; overflow:hidden; margin-bottom:16px;">
+                        <div style="display:flex; align-items:center; gap:10px; padding:10px 16px; background:rgba(0,245,255,0.05); border-bottom:1px solid rgba(0,245,255,0.1);">
+                            <button class="btn-axiom" style="padding:6px 14px; font-size:0.6rem" onclick="this.closest('div').querySelector('iframe').src=this.closest('div').querySelector('iframe').src">↺</button>
+                            <input type="text" id="browser-url" value="https://example.com" style="flex:1; background:rgba(0,245,255,0.05); border:1px solid rgba(0,245,255,0.2); border-radius:20px; color:var(--cyan); font-family:monospace; font-size:0.75rem; padding:6px 14px; outline:none;" />
+                            <button class="btn-axiom" style="padding:6px 14px; font-size:0.6rem" onclick="AXIOM.loadURL()">GO</button>
+                            <span style="font-size:0.58rem; color:rgba(0,245,255,0.4);">🔒 ENCRYPTED</span>
+                        </div>
+                        <iframe id="axiom-browser-frame" src="https://example.com" style="width:100%; height:500px; border:none; background:#000510;"></iframe>
+                    </div>
+
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">🧅</span>
+                            <div class="holo-title">TOR ROUTING</div>
+                            <div class="holo-desc">Traffic bounced through encrypted Tor nodes. Nobody can trace your connection.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">📡</span>
+                            <div class="holo-title">MESH NETWORK</div>
+                            <div class="holo-desc">Device to device connection. Works with zero internet infrastructure.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🛰️</span>
+                            <div class="holo-title">SATELLITE</div>
+                            <div class="holo-desc">Fallback to satellite connection when towers are down or destroyed.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">💾</span>
+                            <div class="holo-title">OFFLINE CACHE</div>
+                            <div class="holo-desc">Critical pages saved locally. Browse saved content with zero signal.</div>
+                        </div>
+                    </div>
+                </div>`;
+            },
+
+            loadURL() {
+                const urlInput = document.getElementById('browser-url');
+                const iframe = document.getElementById('axiom-browser-frame');
+                if (urlInput && iframe) {
+                    let url = urlInput.value;
+                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                        url = 'https://' + url; // Default to https
+                    }
+                    iframe.src = url;
+                }
+            },
+
+
+            // ============================================================
+            // AI PAGE
+            // ============================================================
+            pageAI() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">🧠 AI CORE</div>
+                        <h2 class="page-title">AXIOM <span>INTELLIGENCE</span></h2>
+                        <div class="page-sub">Built-in AI brain · No API key · Runs locally · Knows everything about AXIOM</div>
+                    </div>
+
+                    <div style="background:rgba(0,5,26,0.9); border:1px solid rgba(0,245,255,0.2); border-radius:18px; overflow:hidden; margin-bottom:20px;">
+                        <div id="ai-chat" style="height:320px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px;">
+                            <div style="align-self:flex-start; background:rgba(0,245,255,0.1); border-radius:12px; padding:8px 12px; max-width:80%; font-size:0.75rem; color:var(--cyan);">
+                                🧠 AXIOM AI: Hello, Commander. How may I assist you today?
+                            </div>
+                        </div>
+                        <div style="padding:12px 16px; border-top:1px solid rgba(0,245,255,0.1); display:flex; gap:8px;">
+                            <input type="text" id="ai-input" placeholder="Ask AXIOM anything..." style="flex:1; background:rgba(0,245,255,0.05); border:1px solid rgba(0,245,255,0.2); border-radius:20px; color:var(--cyan); font-family:monospace; font-size:0.78rem; padding:10px 16px; outline:none;" />
+                            <button class="btn-axiom btn-solid" onclick="AXIOM.sendAI()" style="padding:10px 20px; font-size:0.72rem;">SEND</button>
+                        </div>
+                    </div>
+
+                    <div class="holo-grid">
+                        <div class="holo-card" onclick="AXIOM.quickAI('What is AXIOM?')" style="cursor:pointer">
+                            <span class="holo-icon">❓</span>
+                            <div class="holo-title">WHAT IS AXIOM</div>
+                            <div class="holo-desc">Ask the AI to explain everything about the platform.</div>
+                        </div>
+                        <div class="holo-card" onclick="AXIOM.quickAI('Show me all features')" style="cursor:pointer">
+                            <span class="holo-icon">⚡</span>
+                            <div class="holo-title">ALL FEATURES</div>
+                            <div class="holo-desc">Get a full list of everything AXIOM can do.</div>
+                        </div>
+                        <div class="holo-card" onclick="AXIOM.quickAI('How does the war-proof browser work?')" style="cursor:pointer">
+                            <span class="holo-icon">🌐</span>
+                            <div class="holo-title">BROWSER HELP</div>
+                            <div class="holo-desc">Learn how the war-proof connection system works.</div>
+                        </div>
+                        <div class="holo-card" onclick="AXIOM.quickAI('What plans are available?')" style="cursor:pointer">
+                            <span class="holo-icon">💰</span>
+                            <div class="holo-title">PRICING</div>
+                            <div class="holo-desc">Ask about subscription plans and pricing.</div>
+                        </div>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // APPS PAGE
+            // ============================================================
+            pageApps() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">⚡ ALL APPS</div>
+                        <h2 class="page-title">AXIOM <span>UNIVERSE</span></h2>
+                        <div class="page-sub">Every platform connected · One login · Full access</div>
+                    </div>
+                    <div class="apps-grid">
+                        ${this.apps.map(a => `
+                            <div class="app-card" onclick="AXIOM.showPage('${a.page}')">
+                                ${a.page === 'ai' ? '<div class="app-status"></div>' : ''}
+                                <span class="app-icon">${a.icon}</span>
+                                <div class="app-name">${a.name}</div>
+                                <div class="app-desc">${a.desc}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // SECURITY PAGE
+            // ============================================================
+            pageSecurity() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">🛡️ SECURITY</div>
+                        <h2 class="page-title">AXIOM <span>SHIELD</span></h2>
+                        <div class="page-sub">AES-512 Encryption · Zero Trust · Biometric · Quantum Proof</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">🔐</span>
+                            <div class="holo-title">AES-512 QUANTUM</div>
+                            <div class="holo-desc">Every byte of data encrypted with quantum-grade AES-512. Unbreakable.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">👁️</span>
+                            <div class="holo-title">ZERO TRUST</div>
+                            <div class="holo-desc">Nobody gets in without hardware verification. Every access verified every time.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🧬</span>
+                            <div class="holo-title">BIOMETRIC</div>
+                            <div class="holo-desc">Your body is your password. Face, fingerprint, and voice authentication.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🕵️</span>
+                            <div class="holo-title">DARK WEB MONITOR</div>
+                            <div class="holo-desc">24/7 monitoring of dark web for your data. Instant alerts if found.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🛰️</span>
+                            <div class="holo-title">THREAT INTEL</div>
+                            <div class="holo-desc">Real-time global threat feed. AI detects attacks before they happen.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">⚔️</span>
+                            <div class="holo-title">AUTO PENTEST</div>
+                            <div class="holo-desc">Automatically tests your own system for weaknesses every 24 hours.</div>
+                        </div>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // EXPLORE PAGE
+            // ============================================================
+            pageExplore() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">🌌 DEEP SPACE</div>
+                        <h2 class="page-title">EXPLORE THE <span>NETWORK</span></h2>
+                        <div class="page-sub">2.4M nodes · 180 countries · Real-time global mesh visualization</div>
+                    </div>
+                    <div style="background:rgba(0,5,26,0.9); border:1px solid rgba(0,245,255,0.15); border-radius:18px; padding:30px; text-align:center; margin-bottom:20px;">
+                        <div style="font-size:4rem; margin-bottom:16px;">🌍</div>
+                        <div style="font-family:'Orbitron',monospace; font-size:1rem; color:var(--cyan); margin-bottom:8px;">GLOBAL MESH EXPLORER</div>
+                        <div style="font-size:0.68rem; color:rgba(0,245,255,0.3); margin-bottom:20px;">Real-time visualization of the AXIOM distributed network</div>
+                        <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+                            <div style="text-align:center;">
+                                <div style="font-family:Orbitron,monospace; font-size:1.8rem; color:var(--cyan); text-shadow:0 0 20px var(--cyan);">2.4M</div>
+                                <div style="font-size:0.6rem; color:rgba(0,245,255,0.3);">ACTIVE NODES</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-family:Orbitron,monospace; font-size:1.8rem; color:var(--neon); text-shadow:0 0 20px var(--neon);">180</div>
+                                <div style="font-size:0.6rem; color:rgba(0,245,255,0.3);">COUNTRIES</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-family:Orbitron,monospace; font-size:1.8rem; color:var(--gold); text-shadow:0 0 20px var(--gold);">4.2PB/s</div>
+                                <div style="font-size:0.6rem; color:rgba(0,245,255,0.3);">THROUGHPUT</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-family:Orbitron,monospace; font-size:1.8rem; color:var(--purple); text-shadow:0 0 20px var(--purple);">12ms</div>
+                                <div style="font-size:0.6rem; color:rgba(0,245,255,0.3);">LATENCY</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // SEARCH RESULTS
+            // ============================================================
+            pageSearch() {
+                const q = this.searchQuery;
+                const results = [
+                    { title:`${q} — AXIOM Intelligence Report`, url:'axiom://intelligence/report', desc:`AI-powered analysis of ${q}. Cross-validated across 2.4M mesh nodes. Confidence: 98.7%` },
+                    { title:`${q} — Secure Research Database`, url:'axiom://secure/research', desc:`Encrypted research results for ${q}. Accessed through zero-trust verified channel.` },
+                    { title:`${q} — Global Mesh Data`, url:'axiom://mesh/global', desc:`Real-time data about ${q} sourced from 180 countries across the AXIOM mesh network.` },
+                    { title:`${q} — Dark Web Monitor Results`, url:'axiom://darkweb/scan', desc:`Dark web scan results related to ${q}. No threats detected. System secure.` },
+                    { title:`${q} — Quantum Analysis`, url:'axiom://quantum/analysis', desc:`Quantum-computed analysis of ${q} using QuantumLearn neural processing pipeline.` }
+                ];
+
+                return `
+                <div class="results-page">
+                    <div class="results-header">AXIOM SEARCH · ${results.length} secure results for "${q}" · Encrypted · War-proof</div>
+                    ${results.map(r => `
+                        <div class="result-card">
+                            <div class="result-title">${r.title}</div>
+                            <div class="result-url">${r.url}</div>
+                            <div class="result-desc">${r.desc}</div>
+                        </div>
+                    `).join('')}
+                </div>`;
+            },
+
+            // ============================================================
+            // PAYMENT PAGE
+            // ============================================================
+            pagePayment() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">💰 SUBSCRIBE</div>
+                        <h2 class="page-title">AXIOM <span>ACCESS</span></h2>
+                        <div class="page-sub">Choose your tier · Pay with PayPal · Instant access</div>
+                    </div>
+                    <div class="holo-grid">
+                        ${[
+                            { name:'NAVIGATOR', price:'$29/mo', color:'#00f5ff', emoji:'🔹', features:['Full Browser Access','AI Core','Basic Mesh','Community'] },
+                            { name:'COMMANDER', price:'$99/mo', color:'#7c3aed', emoji:'⭐', features:['Everything in Navigator','War-Proof Mode','All Apps','Priority Support'], featured:true },
+                            { name:'SOVEREIGN', price:'$299/mo', color:'#ffd700', emoji:'👑', features:['Everything in Commander','Government Grade','Dedicated Node','Custom Integration'] }
+                        ].map(p => `
+                            <div class="holo-card" style="border-color:${p.color}33; ${p.featured ? 'box-shadow:0 0 40px '+p.color+'22' : ''}">
+                                <span class="holo-icon" style="color:${p.color}">${p.emoji}</span>
+                                <div class="holo-title" style="color:${p.color}">${p.name}</div>
+                                <div style="font-family:Orbitron,monospace; font-size:1.4rem; color:${p.color}; margin-bottom:15px;">${p.price}</div>
+                                <div class="holo-desc" style="text-align:left; margin-bottom:20px;">
+                                    ${p.features.map(f => `<div style="margin-bottom:5px;"><span style="color:${p.color}; font-weight:bold;">✓</span> ${f}</div>`).join('')}
+                                </div>
+                                <button class="btn-axiom btn-solid" style="background:linear-gradient(135deg, ${p.color}, var(--blue));" onclick="AXIOM.startPayment('${p.name}','${p.price}')">
+                                    GET ${p.name}
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // VAULT PAGE
+            // ============================================================
+            pageVault() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">🔒 VAULT</div>
+                        <h2 class="page-title">SECURE <span>STORAGE</span></h2>
+                        <div class="page-sub">AES-512 Encrypted · Decentralized · Zero-Knowledge Proof</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">💾</span>
+                            <div class="holo-title">FILE UPLOAD</div>
+                            <div class="holo-desc">Upload any file for secure, encrypted storage across the AXIOM mesh.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔑</span>
+                            <div class="holo-title">PASSWORD MANAGER</div>
+                            <div class="holo-desc">Store and manage all your passwords with military-grade encryption.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">📝</span>
+                            <div class="holo-title">SECURE NOTES</div>
+                            <div class="holo-desc">Create and store encrypted notes, accessible only by you.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔗</span>
+                            <div class="holo-title">SHARED VAULTS</div>
+                            <div class="holo-desc">Securely share encrypted data with trusted contacts via zero-knowledge channels.</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px; text-align:center;">
+                        <button class="btn-axiom btn-solid">ACCESS VAULT</button>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // MESH NET PAGE
+            // ============================================================
+            pageMesh() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">📡 MESH NET</div>
+                        <h2 class="page-title">GLOBAL <span>MESH</span></h2>
+                        <div class="page-sub">Decentralized Internet · P2P Connectivity · Uncensorable</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">🌍</span>
+                            <div class="holo-title">GLOBAL COVERAGE</div>
+                            <div class="holo-desc">Connects devices worldwide, bypassing traditional internet infrastructure.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🤝</span>
+                            <div class="holo-title">PEER-TO-PEER</div>
+                            <div class="holo-desc">Direct communication between devices, enhancing privacy and resilience.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🚫</span>
+                            <div class="holo-title">CENSORSHIP RESISTANT</div>
+                            <div class="holo-desc">No central points of control, making it impossible to censor or shut down.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔋</span>
+                            <div class="holo-title">LOW POWER MODE</div>
+                            <div class="holo-desc">Optimized for minimal energy consumption, ideal for remote operations.</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px; text-align:center;">
+                        <button class="btn-axiom btn-solid">VIEW MESH STATUS</button>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // DABAR PAGE
+            // ============================================================
+            pageDabar() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">⚡ DABAR</div>
+                        <h2 class="page-title">AI POWER <span>PLATFORM</span></h2>
+                        <div class="page-sub">Distributed AI Compute · Federated Learning · Model Training</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">🧠</span>
+                            <div class="holo-title">DISTRIBUTED AI</div>
+                            <div class="holo-desc">Leverage the collective compute power of the AXIOM network for AI tasks.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">📈</span>
+                            <div class="holo-title">FEDERATED LEARNING</div>
+                            <div class="holo-desc">Train AI models without centralizing data, preserving privacy and security.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">⚙️</span>
+                            <div class="holo-title">CUSTOM MODELS</div>
+                            <div class="holo-desc">Develop and deploy your own AI models on the DABAR platform.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">📊</span>
+                            <div class="holo-title">REAL-TIME ANALYTICS</div>
+                            <div class="holo-desc">Gain insights from your AI models with integrated real-time data analysis.</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px; text-align:center;">
+                        <button class="btn-axiom btn-solid">ACCESS DABAR STUDIO</button>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // QUANTUM PAGE
+            // ============================================================
+            pageQuantum() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">⚛️ QUANTUM</div>
+                        <h2 class="page-title">QUANTUMLEARN <span>LAB</span></h2>
+                        <div class="page-sub">Quantum Computing Integration · Advanced AI Algorithms · Simulation</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">🔬</span>
+                            <div class="holo-title">QUANTUM SIMULATION</div>
+                            <div class="holo-desc">Simulate quantum algorithms and experiments in a secure environment.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🧮</span>
+                            <div class="holo-title">OPTIMIZATION</div>
+                            <div class="holo-desc">Solve complex optimization problems with quantum-enhanced algorithms.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🧪</span>
+                            <div class="holo-title">CRYPTO ANALYSIS</div>
+                            <div class="holo-desc">Explore quantum-resistant cryptography and analyze current encryption methods.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🌌</span>
+                            <div class="holo-title">ADVANCED MATERIAL</div>
+                            <div class="holo-desc">Design and simulate new materials at the atomic level using quantum mechanics.</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px; text-align:center;">
+                        <button class="btn-axiom btn-solid">LAUNCH QUANTUM LAB</button>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // MENAHEL PAGE
+            // ============================================================
+            pageMenahel() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">👑 MENAHEL</div>
+                        <h2 class="page-title">AI <span>INFRASTRUCTURE</span></h2>
+                        <div class="page-sub">AI Resource Management · Scalable Deployment · Orchestration</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">⚙️</span>
+                            <div class="holo-title">RESOURCE ALLOCATION</div>
+                            <div class="holo-desc">Intelligent allocation of AI compute resources across the AXIOM network.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🚀</span>
+                            <div class="holo-title">SCALABLE DEPLOYMENT</div>
+                            <div class="holo-desc">Deploy AI applications seamlessly and scale on demand with Menahel.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔗</span>
+                            <div class="holo-title">MODEL ORCHESTRATION</div>
+                            <div class="holo-desc">Manage the lifecycle of your AI models from training to deployment.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">📈</span>
+                            <div class="holo-title">PERFORMANCE MONITOR</div>
+                            <div class="holo-desc">Monitor AI model performance and resource utilization in real-time.</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px; text-align:center;">
+                        <button class="btn-axiom btn-solid">MANAGE AI INFRASTRUCTURE</button>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // BONESCAN PAGE
+            // ============================================================
+            pageBonescan() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">🔬 BONESCAN</div>
+                        <h2 class="page-title">MEDICAL <span>AI SCANNER</span></h2>
+                        <div class="page-sub">AI-Powered Diagnostics · Secure Medical Data · Predictive Analysis</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">🦴</span>
+                            <div class="holo-title">BONE FRACTURE DETECTION</div>
+                            <div class="holo-desc">Advanced AI for rapid and accurate detection of bone fractures from scans.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🧬</span>
+                            <div class="holo-title">DISEASE PREDICTION</div>
+                            <div class="holo-desc">Predict potential bone diseases and conditions using AI models.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔒</span>
+                            <div class="holo-title">SECURE PATIENT DATA</div>
+                            <div class="holo-desc">All medical scans and patient data are encrypted and stored securely.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">📈</span>
+                            <div class="holo-title">PROGRESS TRACKING</div>
+                            <div class="holo-desc">Monitor healing progress and treatment effectiveness over time.</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px; text-align:center;">
+                        <button class="btn-axiom btn-solid">INITIATE BONESCAN</button>
+                    </div>
+                </div>`;
+            },
+
+            // ============================================================
+            // SETTINGS PAGE
+            // ============================================================
+            pageSettings() {
+                return `
+                <div class="axiom-page">
+                    <div class="page-header">
+                        <div class="page-tag">⚙️ SETTINGS</div>
+                        <h2 class="page-title">SYSTEM <span>CONFIG</span></h2>
+                        <div class="page-sub">Personalize AXIOM · Manage Security · Network Preferences</div>
+                    </div>
+                    <div class="holo-grid">
+                        <div class="holo-card">
+                            <span class="holo-icon">👤</span>
+                            <div class="holo-title">PROFILE</div>
+                            <div class="holo-desc">Manage your user profile, avatar, and personal information.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🎨</span>
+                            <div class="holo-title">THEME</div>
+                            <div class="holo-desc">Customize AXIOM's visual theme, colors, and font preferences.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔐</span>
+                            <div class="holo-title">SECURITY</div>
+                            <div class="holo-desc">Configure biometric authentication, password policies, and data encryption.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">📡</span>
+                            <div class="holo-title">NETWORK</div>
+                            <div class="holo-desc">Adjust mesh network settings, data routing preferences, and connectivity.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔔</span>
+                            <div class="holo-title">NOTIFICATIONS</div>
+                            <div class="holo-desc">Manage alerts and notifications for system events and app activities.</div>
+                        </div>
+                        <div class="holo-card">
+                            <span class="holo-icon">🔄</span>
+                            <div class="holo-title">UPDATES</div>
+                            <div class="holo-desc">Check for system updates and manage automatic installation settings.</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:30px; text-align:center;">
+                        <button class="btn-axiom">SAVE SETTINGS</button>
+                    </div>
+                </div>`;
+            },
+
+            // ── SEARCH LOGIC ──
+            doSearch() {
+                const navSearchInput = document.getElementById('nav-search');
+                const homeSearchInput = document.getElementById('home-search');
+                this.searchQuery = navSearchInput.value || homeSearchInput.value;
+                if (this.searchQuery) {
+                    this.showPage('search');
+                }
+            },
+
+            quickSearch(query) {
+                const navSearchInput = document.getElementById('nav-search');
+                if (navSearchInput) {
+                    navSearchInput.value = query;
+                }
+                this.searchQuery = query;
+                this.showPage('search');
+            },
+
+            // ── AI CHAT LOGIC ──
+            sendAI() {
+                const input = document.getElementById('ai-input');
+                const chat = document.getElementById('ai-chat');
+                if (!input || !chat || input.value.trim() === '') return;
+
+                const userMessage = input.value;
+                input.value = '';
+
+                // Add user message to chat
+                chat.innerHTML += `
+                    <div style="align-self:flex-end; background:rgba(0,102,255,0.15); border-radius:12px; padding:8px 12px; max-width:80%; font-size:0.75rem; color:var(--white);">
+                        YOU: ${userMessage}
+                    </div>
+                `;
+                chat.scrollTop = chat.scrollHeight;
+
+                // Simulate AI response
+                let aiReply = "I am AXIOM's AI Core, designed to assist you with all platform functionalities. How can I help further?";
+                if (userMessage.toLowerCase().includes('what is axiom')) {
+                    aiReply = "AXIOM is a futuristic, war-proof browser platform. It features a secure browser, an integrated AI, encrypted storage (Vault), a global mesh network, advanced security protocols, and a suite of powerful applications like DABAR and QuantumLearn.";
+                } else if (userMessage.toLowerCase().includes('all features')) {
+                    aiReply = "AXIOM offers a war-proof browser, AI Core, encrypted Vault, global Mesh Net, Zero Trust Security, Deep Space network exploration, DABAR AI platform, QuantumLearn lab, MENAHEL AI infrastructure, secure Payments, BONESCAN medical AI, and comprehensive System Settings.";
+                } else if (userMessage.toLowerCase().includes('war-proof browser')) {
+                    aiReply = "The AXIOM browser is war-proof because it connects through Tor, a global mesh network, and satellite fallback. It also features P2P connectivity and offline caching, ensuring access even when traditional internet infrastructure fails.";
+                } else if (userMessage.toLowerCase().includes('plans') || userMessage.toLowerCase().includes('pricing')) {
+                    aiReply = "AXIOM offers three subscription tiers: Navigator ($29/mo), Commander ($99/mo), and Sovereign ($299/mo). Each tier provides increasing levels of access and features, including war-proof mode, all apps, and dedicated nodes.";
+                } else if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
+                    aiReply = "Greetings, Commander. Ready for your next mission?";
+                } else if (userMessage.toLowerCase().includes('thank you') || userMessage.toLowerCase().includes('thanks')) {
+                    aiReply = "You are most welcome, Commander. My purpose is to serve.";
+                }
+
+                setTimeout(() => {
+                    chat.innerHTML += `
+                        <div style="align-self:flex-start; background:rgba(0,245,255,0.1); border-radius:12px; padding:8px 12px; max-width:80%; font-size:0.75rem; color:var(--cyan);">
+                            🧠 AXIOM AI: ${aiReply}
+                        </div>
+                    `;
+                    chat.scrollTop = chat.scrollHeight;
+                }, 600);
+
+                chat.scrollTop = chat.scrollHeight;
+            },
+
+            quickAI(text) {
+                const input = document.getElementById('ai-input');
+                if (input) { input.value = text; this.sendAI(); }
+            },
+
+            startPayment(plan, price) {
+                localStorage.setItem('axiom_plan', plan);
+                localStorage.setItem('axiom_price', price.replace('$','').replace('/mo',''));
+                alert(`Redirecting to PayPal for ${plan} at ${price}. (This is a demo, no actual payment will be processed.)`);
+                // In a real app, you would redirect to a PayPal payment gateway here.
+            },
+
+            // ── TELEMETRY ──
+            startTelemetry() {
+                setInterval(() => {
+                    const uptimeEl = document.getElementById('tel-uptime');
+                    const pingEl = document.getElementById('tel-ping');
+
+                    const now = new Date();
+                    const diff = now.getTime() - this.bootTime.getTime();
+                    const seconds = Math.floor(diff / 1000);
+                    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+                    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+                    const s = String(seconds % 60).padStart(2, '0');
+
+                    if (uptimeEl) uptimeEl.textContent = `${h}:${m}:${s}`;
+                    if (pingEl) pingEl.textContent = (8 + Math.floor(Math.random() * 8)) + 'ms';
+                }, 1000);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => AXIOM.init());
+    </script>
+</body>
+</html>

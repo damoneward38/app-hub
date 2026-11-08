@@ -1,0 +1,40 @@
+services:
+  skyguard:
+    build:
+      context: ./build-contexts/skyguard
+      dockerfile: ../../containers/node-app.Dockerfile
+    image: app-skyguard:local
+    container_name: app-skyguard
+    ports: ["127.0.0.1:19110:3000"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=64m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["backend"]
+  buildmaster:
+    build:
+      context: ./build-contexts/buildmaster
+      dockerfile: ../../containers/node-app.Dockerfile
+    image: app-buildmaster:local
+    container_name: app-buildmaster
+    ports: ["127.0.0.1:19111:3000"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=64m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["backend"]
+  magen-raki:
+    build:
+      context: ./build-contexts/magen-raki
+      dockerfile: ../../containers/node-app.Dockerfile
+    image: app-magen-raki:local
+    container_name: app-magen-raki
+    ports: ["127.0.0.1:19112:3000"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=64m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["backend"]

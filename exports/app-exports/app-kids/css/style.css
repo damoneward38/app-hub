@@ -1,0 +1,123 @@
+:root {
+    --color-purple: #6A0DAD; /* Main Purple */
+    --color-black: #000000; /* Main Black */
+    --color-orange: #FF8C00; /* Accent Orange */
+    --color-white: #FFFFFF;
+    --color-light-gray: #f4f4f4;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
+}
+
+header {
+    background-color: var(--color-purple);
+    color: var(--color-white);
+    padding: 1em 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav h1 {
+    margin: 0;
+    color: var(--color-orange);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li a {
+    color: var(--color-white);
+    text-decoration: none;
+    padding: 0.5em 1em;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-white);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    text-align: center;
+    padding: 1em 0;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    nav h1 {
+        font-size: 1.5em;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav ul li a {
+        padding: 0.5em 0.8em;
+        font-size: 0.9em;
+    }
+
+    main {
+        margin: 10px auto;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li a {
+        padding: 0.5em 0.5em;
+        font-size: 0.8em;
+    }
+}
+
+.footer-social {
+    margin-top: 0.5em;
+}
+
+.footer-social a {
+    color: var(--color-orange);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: var(--color-white);
+    text-decoration: underline;
+}

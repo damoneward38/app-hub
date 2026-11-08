@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check — 1check streaming platform</title>
+<style>
+  :root{color-scheme:dark;--bg:#0d1117;--panel:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--orange:#f0883e}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 80px}
+  header{border-bottom:1px solid #21262d;padding-bottom:24px;margin-bottom:28px}
+  .badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:12px;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+  h1{font-size:38px;margin:0 0 8px;letter-spacing:-.5px}h1 b{color:var(--accent)}
+  .t{font-size:18px;color:var(--muted);margin:0}
+  .meta{margin-top:14px;font-size:14px}
+  h2{font-size:21px;margin:38px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card h3{margin:0 0 6px;font-size:15px;color:var(--accent)}
+  .card p{margin:0;font-size:13.5px;color:var(--muted)}
+  .pill{display:inline-block;background:#1c2128;border:1px solid var(--line);border-radius:6px;padding:4px 10px;margin:3px 5px 3px 0;font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+  .warn{background:#1c1a12;border:1px solid #5c4b1a;border-left:3px solid var(--orange);border-radius:8px;padding:16px 18px;margin:16px 0}
+  .warn h3{margin:0 0 8px;color:var(--orange);font-size:16px}
+  .warn ul{margin:8px 0 0;padding-left:20px}
+  pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px 17px;overflow-x:auto}
+  pre code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.7}
+  .btn{display:inline-block;padding:9px 17px;border-radius:8px;background:#238636;color:#fff;font-weight:600;margin:4px 9px 4px 0;font-size:13.5px}
+  .btn.gh{background:#21262d;border:1px solid var(--line);color:var(--text)}
+  /* docs viewer */
+  .docs{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:8px}
+  @media(max-width:820px){.docs{grid-template-columns:1fr}}
+  .doclist{background:var(--panel);border:1px solid var(--line);border-radius:10px;max-height:640px;overflow:auto;padding:10px}
+  .doclist .grp{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:12px 10px 6px;font-weight:700}
+  .doclist button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);font:inherit;font-size:13.5px;padding:7px 10px;border-radius:7px;cursor:pointer}
+  .doclist button:hover{background:#1c2128}
+  .doclist button.active{background:#1f6feb22;color:var(--accent);border:1px solid #1f6feb55}
+  .viewer{background:var(--panel);border:1px solid var(--line);border-radius:10px;min-height:640px;display:flex;flex-direction:column;overflow:hidden}
+  .viewer-head{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:12px 16px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--muted)}
+  .viewer-body{padding:20px 24px;overflow:auto;max-height:600px}
+  .viewer-body h1,.viewer-body h2,.viewer-body h3{color:var(--text);line-height:1.3;margin:22px 0 10px}
+  .viewer-body h1{font-size:26px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  .viewer-body h2{font-size:20px;border-bottom:1px solid #21262d;padding-bottom:6px}
+  .viewer-body h3{font-size:16px}
+  .viewer-body p,.viewer-body li{font-size:14.5px;color:#c9d1d9}
+  .viewer-body code{background:#1c2128;border-radius:5px;padding:1.5px 6px;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+  .viewer-body pre{padding:14px}
+  .viewer-body table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13.5px}
+  .viewer-body th,.viewer-body td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+  .viewer-body th{background:#1c2128}
+  .viewer-body blockquote{border-left:3px solid var(--accent);margin:12px 0;padding:4px 14px;color:var(--muted)}
+  .viewer-body hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+  footer{margin-top:48px;color:#484f58;font-size:13px;border-top:1px solid #21262d;padding-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">Full-stack · React 19 + tRPC + MySQL</div>
+    <h1><b>Check</b> — 1check</h1>
+    <p class="t">Streaming checks and monitors — the Gifted Eternity music streaming &amp; distribution platform.</p>
+    <p class="meta">
+      <a href="https://damoneward38.github.io/Check/" target="_blank">Landing</a> ·
+      <a href="https://github.com/damoneward38/Check" target="_blank">Source</a> ·
+      Quick start: <code>git clone https://github.com/damoneward38/Check.git</code>
+    </p>
+  </header>
+
+  <h2>What it is</h2>
+  <p style="color:#c9d1d9;max-width:820px">
+    Gifted Eternity is a complete music streaming platform built for artist Damone Ward Sr. — live PayPal payment
+    processing, tiered subscription access, SoundCloud integration, artist payouts, and admin management tools.
+  </p>
+  <div class="grid">
+    <div class="card"><h3>Music Streaming</h3><p>Browse, discover, and stream music with a modern player.</p></div>
+    <div class="card"><h3>Artist Dashboard</h3><p>Manage tracks, track analytics, and monitor earnings.</p></div>
+    <div class="card"><h3>PayPal Integration</h3><p>Automatic artist payouts and subscription management.</p></div>
+    <div class="card"><h3>Distribution</h3><p>Multi-platform distribution to Spotify, Apple Music, and more.</p></div>
+    <div class="card"><h3>Secure Auth</h3><p>OAuth authentication and role-based access control.</p></div>
+    <div class="card"><h3>Fast &amp; Scalable</h3><p>React 19, Express, tRPC, and a managed database.</p></div>
+  </div>
+
+  <h2>Tech stack</h2>
+  <div>
+    <span class="pill">React 19</span><span class="pill">TypeScript</span><span class="pill">Tailwind CSS 4</span>
+    <span class="pill">Vite</span><span class="pill">Express 4</span><span class="pill">tRPC 11</span>
+    <span class="pill">Node.js</span><span class="pill">MySQL / TiDB</span><span class="pill">Drizzle ORM</span>
+    <span class="pill">PayPal Live API</span><span class="pill">AWS S3</span><span class="pill">Manus OAuth</span>
+  </div>
+
+  <h2>Deployment requirements</h2>
+  <div class="warn">
+    <h3>⚠️ Full-stack application — cannot run on GitHub Pages</h3>
+    <p style="margin:6px 0 0;color:#c9d1d9">GitHub Pages / Vercel static hosting cannot run the Node.js backend, tRPC procedures, database queries, PayPal webhooks, or S3 uploads. Deploy the full stack to Railway, Render, Manus, or Fly.io.</p>
+    <ul>
+      <li>Railway — Node.js backend + database, free tier available (recommended)</li>
+      <li>Render — backend + database, free tier available</li>
+      <li>Manus — production-ready full stack</li>
+    </ul>
+  </div>
+
+  <h2>Quick start</h2>
+  <pre><code>git clone https://github.com/damoneward38/Check.git
+cd Check
+pnpm install
+pnpm db:push      # drizzle-kit generate &amp;&amp; drizzle-kit migrate
+pnpm dev          # NODE_ENV=development tsx watch server/_core/index.ts
+pnpm build        # vite build + esbuild server bundle
+pnpm test         # vitest run</code></pre>
+
+  <h2>Documentation</h2>
+  <p style="color:var(--muted);font-size:14px">Real project docs — select one to load its actual contents.</p>
+  <div class="docs">
+    <div class="doclist" id="doclist"></div>
+    <div class="viewer">
+      <div class="viewer-head">
+        <span id="vpath">README.md</span>
+        <a id="vraw" href="README.md" download>download ⭳</a>
+      </div>
+      <div class="viewer-body" id="vbody">Loading…</div>
+    </div>
+  </div>
+
+  <footer>damoneward38/Check · 1check / Gifted Eternity streaming platform</footer>
+</div>
+
+<script>
+const DEBUG = "";
+const DOCS = [
+  { grp: "Overview",
+    items: ["README.md","GITHUB_SUMMARY.md","IMPLEMENTATION_SUMMARY.md","MISSED_RECOMMENDATIONS.md","RECOMMENDATIONS_COMPLETION_STATUS.md","REMAINING_FEATURES.md","TOP_5_AND_HIGH_PRIORITY_COMPLETE.md"] },
+  { grp: "Implementation",
+    items: ["COMPLETE_IMPLEMENTATION_GUIDE.md","ADVANCED_FEATURES.md","PHASE_1_ROADMAP.md","PHASE_2_ROADMAP.md","PHASE_2_COMPLETE_IMPLEMENTATION.md","PHASE_2_DATABASE_SCHEMA.md","PHASE_2_SCHEMA_REFERENCE.md","PHASE_2_SAMPLE_DATA.md"] },
+  { grp: "Operations & Security",
+    items: ["ENVIRONMENT_SETUP.md","PRODUCTION_DATABASE_SETUP.md","DOMAIN_SSL_CONFIGURATION.md","S3_CDN_CONFIGURATION.md","MONITORING_AND_LOGGING.md","LOAD_TESTING.md","SECURITY_AUDIT.md","BACKUP_AND_DISASTER_RECOVERY.md","DEMO_CLEANUP_COMPLETE.md","DEMO_MODE_AUDIT.md","WEBSITE_PRODUCTION_DEPLOYMENT.md","MOBILE_APP_DEPLOYMENT.md"] },
+  { grp: "Mobile",
+    items: ["mobile/ANDROID_BUILD_COMPLETE.md","mobile/ANDROID_BUILD_CONFIGURATION.md","mobile/iOS_BUILD_COMPLETE.md","mobile/iOS_BUILD_CONFIGURATION.md","mobile/APP_STORE_SETUP_COMPLETE.md","mobile/APP_STORE_SUBMISSION_COMPLETE.md","mobile/APPLE_APP_STORE_SUBMISSION.md","mobile/GOOGLE_PLAY_STORE_SUBMISSION.md","mobile/APP_STORE_CREDENTIALS_SETUP.md","mobile/APP_ICONS_SPLASH_SCREENS.md","mobile/DEVICE_TESTING_COMPLETE.md","mobile/DEVICE_TESTING_GUIDE.md"] }
+];
+
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function inline(s){
+  s = esc(s);
+  s = s.replace(/`([^`]+)`/g,"<code>$1</code>");
+  s = s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
+  s = s.replace(/(^|[^*])\*([^*]+)\*/g,"$1<em>$2</em>");
+  s = s.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'<a href="$2" target="_blank">$1</a>');
+  return s;
+}
+
+function mdToHtml(md){
+  const lines = md.replace(/\r/g,"").split("\n");
+  let out = [], i = 0;
+  while(i < lines.length){
+    let line = lines[i];
+    if(/^```/.test(line)){
+      let code = []; i++;
+      while(i < lines.length && !/^```/.test(lines[i])){ code.push(lines[i]); i++; }
+      i++;
+      out.push("<pre><code>"+esc(code.join("\n"))+"</code></pre>");
+      continue;
+    }
+    if(/^\s*$/.test(line)){ i++; continue; }
+    if(/^(---+|\*\*\*+)\s*$/.test(line)){ out.push("<hr>"); i++; continue; }
+    let h = line.match(/^(#{1,6})\s+(.*)$/);
+    if(h){ out.push("<h"+h[1].length+">"+inline(h[2])+"</h"+h[1].length+">"); i++; continue; }
+    if(/^\s*\|.*\|\s*$/.test(line)){
+      let rows = [];
+      while(i < lines.length && /^\s*\|.*\|\s*$/.test(lines[i])){ rows.push(lines[i]); i++; }
+      let cells = r => r.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim());
+      let html = "<table>";
+      let body = cells(rows[0]); let start = 0;
+      if(rows[1] && /^[\s|:-]+$/.test(rows[1])){ out.push("<table><thead><tr>"+body.map(c=>"<th>"+inline(c)+"</th>").join("")+"</tr></thead><tbody>"); start = 2; }
+      else out.push("<table><tbody>");
+      for(let r=start;r<rows.length;r++) out.push("<tr>"+cells(rows[r]).map(c=>"<td>"+inline(c)+"</td>").join("")+"</tr>");
+      out.push("</tbody></table>");
+      continue;
+    }
+    if(/^\s*>\s?/.test(line)){
+      let b = [];
+      while(i < lines.length && /^\s*>\s?/.test(lines[i])){ b.push(lines[i].replace(/^\s*>\s?/,"")); i++; }
+      out.push("<blockquote>"+inline(b.join(" "))+"</blockquote>");
+      continue;
+    }
+    if(/^\s*([-*+])\s+/.test(line)){
+      let items = [];
+      while(i < lines.length && /^\s*([-*+])\s+/.test(lines[i])){ items.push(lines[i].replace(/^\s*[-*+]\s+/,"")); i++; }
+      out.push("<ul>"+items.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ul>");
+      continue;
+    }
+    if(/^\s*\d+\.\s+/.test(line)){
+      let items = [];
+      while(i < lines.length && /^\s*\d+\.\s+/.test(lines[i])){ items.push(lines[i].replace(/^\s*\d+\.\s+/,"")); i++; }
+      out.push("<ol>"+items.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ol>");
+      continue;
+    }
+    out.push("<p>"+inline(line)+"</p>");
+    i++;
+  }
+  return out.join("\n");
+}
+
+const listEl = document.getElementById("doclist");
+const bodyEl = document.getElementById("vbody");
+const pathEl = document.getElementById("vpath");
+const rawEl  = document.getElementById("vraw");
+
+DOCS.forEach(group => {
+  const g = document.createElement("div");
+  g.className = "grp"; g.textContent = group.grp;
+  listEl.appendChild(g);
+  group.items.forEach(path => {
+    const b = document.createElement("button");
+    b.textContent = path.split("/").pop().replace(/\.md$/,"").replace(/_/g," ");
+    b.dataset.path = path;
+    b.onclick = () => load(path, b);
+    listEl.appendChild(b);
+  });
+});
+
+async function load(path, btn){
+  document.querySelectorAll("#doclist button").forEach(x=>x.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  pathEl.textContent = path;
+  rawEl.href = path;
+  bodyEl.innerHTML = "Loading…";
+  try{
+    const r = await fetch(path + (DEBUG ? "?v="+Date.now() : ""));
+    if(!r.ok) throw new Error(r.status + " " + r.statusText);
+    bodyEl.innerHTML = mdToHtml(await r.text());
+    bodyEl.scrollTop = 0;
+  }catch(e){
+    bodyEl.innerHTML = "<p style='color:#f0883e'>Could not load <code>"+esc(path)+"</code> ("+esc(String(e))+
+      "). This viewer needs the files served over HTTP. <a href='"+esc(path)+"'>Open the raw file →</a></p>";
+  }
+}
+
+load("README.md", document.querySelector('#doclist button[data-path="README.md"]'));
+</script>
+</body>
+</html>

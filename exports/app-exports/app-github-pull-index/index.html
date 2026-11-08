@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gifted Eternity — Promotional Bots System</title>
+<style>
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#0d1117;color:#e6edf3}
+.wrap{max-width:1120px;margin:0 auto;padding:36px 24px}
+h1{font-size:28px;margin:0 0 4px}h1 b{color:#f0a832}
+p.sub{color:#8b949e;margin:0 0 26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px}
+.card h3{margin:0 0 6px;display:flex;align-items:center;gap:8px;font-size:16px}
+.card h3 .dot{width:9px;height:9px;border-radius:50%;background:#3fb950;display:inline-block}
+.card p{color:#8b949e;font-size:13px;margin:0 0 12px;min-height:34px}
+button{background:#238636;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer}
+button:hover{background:#2ea043}
+button.alt{background:#1f6feb}
+.actions{margin:22px 0;display:flex;gap:12px}
+.big{font-size:15px;padding:11px 22px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.log,.results{background:#0b0f14;border:1px solid #30363d;border-radius:12px;padding:16px;min-height:220px;max-height:340px;overflow:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6}
+.log div{border-bottom:1px dashed #21262d;padding:3px 0}
+.log .ok{color:#3fb950}.results img{width:112px;height:112px;border-radius:8px;object-fit:cover;margin:5px;border:1px solid #30363d}
+.results .row{display:flex;gap:10px;align-items:start;border-bottom:1px dashed #21262d;padding:6px 0}
+.results .row b{font-size:12px}.results .row span{color:#8b949e;font-size:11px}
+#mail .row{border-bottom:1px dashed #21262d;padding:5px 0}
+#mail .row b{color:#f0a832}
+pre{white-space:pre-wrap}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:#30363d;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Gifted Eternity ♪ <b>Promotional Bots System</b></h1>
+  <p class="sub">Six autonomous promo bots — one button runs the whole machine. Everything runs live in your browser.</p>
+
+  <div class="grid">
+    <div class="card"><h3><span class="dot"></span>Bot 1 · Content Manager</h3><p>Uploads &amp; tags tracks, organizes metadata.</p><button data-bot="1">Run bot</button></div>
+    <div class="card"><h3><span class="dot"></span>Bot 2 · Distribution</h3><p>Pushes releases to 5 platforms: Spotify, Apple Music, YT, SoundCloud, Bandcamp.</p><button data-bot="2">Run bot</button></div>
+    <div class="card"><h3><span class="dot"></span>Bot 3 · Marketing</h3><p>Schedules multi-channel hype campaigns from approved posts.</p><button data-bot="3">Run bot</button></div>
+    <div class="card"><h3><span class="dot"></span>Bot 4 · Email Responder</h3><p>Reads incoming mail, auto-replies via AI, delivers to inbox.</p><button data-bot="4">Run bot</button></div>
+    <div class="card"><h3><span class="dot"></span>Bot 5 · No-Repeat Post</h3><p>Edit-distance duplicate check before anything goes live.</p><button data-bot="5">Run bot</button></div>
+    <div class="card"><h3><span class="dot"></span>Bot 6 · AI Art Generator</h3><p>Generates pro album covers &amp; event art for every release.</p><button data-bot="6">Run bot</button></div>
+  </div>
+
+  <div class="actions">
+    <button class="big" id="cycle">▶ Run Full System Cycle (all 6 bots)</button>
+    <button class="big alt" id="status">Show status</button>
+  </div>
+
+  <div class="out">
+    <div><h3 style="margin-top:0">Live log</h3><div class="log" id="log"></div></div>
+    <div><h3 style="margin-top:0">Output · covers · mailbox</h3><div class="results" id="out"></div></div>
+  </div>
+</div>
+
+<script src="bots.bundle.js"></script>
+<script>
+(function () {
+  const B = window.GE_BOTS;
+  const logEl = document.getElementById("log");
+  const outEl = document.getElementById("out");
+  const realLog = console.log;
+  console.log = function () {
+    const msg = [].slice.call(arguments).join(" ");
+    realLog.apply(console, arguments);
+    const row = document.createElement("div");
+    row.textContent = "▸ " + msg;
+    if (/ok|COMPLETE/i.test(msg)) row.className = "ok";
+    logEl.prepend(row);
+  };
+
+  async function run(i, payload) {
+    console.log("Launching bot " + i + "…");
+    let r;
+    if (i === 1) r = await B.bots[1].uploadSongs();
+    if (i === 2) { const s = await B.songs(); r = await B.bots[2].distributeToAllPlatforms(s, await B.organize(s)); }
+    if (i === 3) { r = await B.bots[3].createMarketingCampaigns([{ content: 'New release out now: "Hallelujah" by Gospel Artist' }]); }
+    if (i === 4) { const e = await B.bots[4].collectEmails(); await B.bots[4].processEmailQueue(e); }
+    if (i === 5) { r = await Promise.all([
+      B.bots[5].validatePost({ content: "New release out now: \"Amazing Grace\" by Gospel Artist", platform: "all" }),
+      B.bots[5].validatePost({ content: "New release out now: \"Amazing Grace\" by Gospel Artist", platform: "all" })
+    ]); }
+    if (i === 6) { r = await B.bots[6].generatePromotionalArt("Amazing Grace", "Gospel Artist", "gospel"); draw([{ title: "Generated cover", base64: r }]); }
+    console.log("Bot " + i + " ok (" + (r ? (r.length || r) : "done") + ")");
+  }
+
+  function renderStatus() {
+    outEl.innerHTML = "";
+    const s = B.status();
+    const pre = document.createElement("pre");
+    pre.textContent = JSON.stringify(s, null, 2);
+    outEl.appendChild(pre);
+  }
+
+  function draw(art) {
+    outEl.innerHTML = "";
+    for (const a of (art || [])) {
+      const row = document.createElement("div");
+      row.className = "row";
+      const img = document.createElement("img");
+      img.src = "data:image/png;base64," + a.base64;
+      img.alt = a.title;
+      const meta = document.createElement("div");
+      meta.innerHTML = "<b>" + a.title.replace(/</g, "&lt;") + "</b><br><span>AI cover · generated in browser</span>";
+      row.appendChild(img); row.appendChild(meta);
+      outEl.appendChild(row);
+    }
+    const mb = window.__mailbox__ || [];
+    if (mb.length) {
+      const h = document.createElement("h3"); h.textContent = "📬 Sent emails"; outEl.appendChild(h);
+      mb.forEach(function (m) {
+        const row = document.createElement("div"); row.className = "row";
+        row.innerHTML = "<b>→ " + m.to + "</b><br><span>" + m.subject + " · " + m.sentAt + "</span>";
+        outEl.appendChild(row);
+      });
+    }
+  }
+
+  function showCycle(res) {
+    outEl.innerHTML = "";
+    const h = document.createElement("h3"); h.textContent = "Cycle results"; outEl.appendChild(h);
+    const pre = document.createElement("pre");
+    pre.textContent = JSON.stringify(res, null, 2);
+    outEl.appendChild(pre);
+    const img = document.querySelector("img");
+  }
+
+  document.getElementById("cycle").onclick = async function () {
+    const res = await B.runFullCycle();
+    showCycle(res);
+    drawRenderedArt();
+  };
+  document.getElementById("status").onclick = renderStatus;
+
+  document.querySelectorAll("button[data-bot]").forEach(function (btn) {
+    btn.onclick = function () { run(Number(btn.dataset.bot)); };
+  });
+
+  function drawRenderedArt() {
+    const files = (window.__virtualFS__ && window.__virtualFS__.files) || new Map();
+    const art = [];
+    files.forEach(function (v, k) { if (k.length > 40) art.push({ title: k, base64: v }); });
+    if (art.length) draw(art);
+  }
+
+  console.log("System ready — run a bot or the full cycle.");
+})();
+</script>
+</body>
+</html>

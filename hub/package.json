@@ -1,0 +1,19 @@
+{
+  "name": "app-containers-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared customer portal and registry for locally sourced app projects",
+  "scripts": {
+    "start": "node server.js",
+    "inventory": "node scripts/build-inventory.mjs",
+    "previews": "node scripts/build-shared-static-gateway.mjs",
+    "shared-gateway": "node scripts/build-shared-static-gateway.mjs",
+    "legacy-previews": "node scripts/build-static-previews.mjs",
+    "report": "node scripts/build-master-source-report.mjs",
+    "verify": "scripts/verify-all.sh"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module"
+}

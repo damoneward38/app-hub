@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>QuantumLearn</title>
+<meta name="description" content="An interactive educational platform exploring quantum physics, technology, and real-world applications with visualizers and simulators."/>
+<style>
+:root{
+  --bg:#05070d;--panel:#0b1120;--line:#1b2740;--fg:#e7eefc;--dim:#8aa0bf;
+  --accent:#38bdf8;--accent2:#a78bfa;--ok:#39d98a;--warn:#ffb020;--bad:#ff5c7a;
+  --font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);overflow-x:hidden}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.6}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+header{position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);background:rgba(5,7,13,.72);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px}
+.brand span{max-width:46vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#04101c;font-weight:900;font-size:13px;flex:none}
+.spacer{flex:1}
+.status{display:flex;align-items:center;gap:8px;font:600 12px/1 var(--mono);color:var(--dim)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.clock{font:600 12px/1 var(--mono);color:var(--dim);min-width:78px;text-align:right}
+main{flex:1;padding:40px 0 60px}
+.hero{display:grid;gap:16px;max-width:840px}
+.badge{display:inline-flex;gap:8px;align-items:center;width:max-content;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);font:700 10px/1 var(--mono);color:var(--accent);letter-spacing:1.5px;text-transform:uppercase}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02;margin:0;letter-spacing:-1.2px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:0;color:var(--dim);font-size:clamp(15px,1.6vw,18px);line-height:1.6;max-width:72ch}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px}
+button{font:700 13px/1 var(--font);padding:12px 18px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--fg);cursor:pointer;transition:.16s}
+button:hover{border-color:var(--accent);transform:translateY(-1px)}
+button.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#05101c;border:none}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(4,1fr);margin:34px 0}
+@media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:16px;padding:18px}
+.kpi .label{font:700 10px/1 var(--mono);color:var(--dim);letter-spacing:1.2px;text-transform:uppercase}
+.kpi .val{font-size:30px;font-weight:800;margin:11px 0 5px;letter-spacing:-.6px}
+.kpi .val small{font-size:12px;color:var(--dim);font-weight:600;margin-left:3px}
+.kpi .sub{font:700 10px/1 var(--mono);color:var(--ok);letter-spacing:.5px}
+.two{grid-template-columns:1.12fr .88fr;margin-bottom:14px}
+.three{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.two,.three{grid-template-columns:1fr}}
+h2{font-size:16px;margin:0 0 3px}
+.muted{color:var(--dim);font-size:13px;line-height:1.5;margin:0}
+.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
+.controls{display:grid;gap:14px}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font:600 12px/1 var(--mono);color:var(--dim);margin-bottom:9px}
+.ctl output{color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+.log{height:236px;overflow:auto;font:12px/1.7 var(--mono);background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:12px;padding:12px}
+.log div{display:flex;gap:8px;white-space:nowrap}
+.log .t{color:#5b7292;flex:none}
+.log .ok{color:var(--ok)}.log .warn{color:var(--warn)}.log .bad{color:var(--bad)}.log .info{color:var(--accent)}
+.mod{display:flex;gap:12px;align-items:flex-start}
+.icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:16px;flex:none}
+.mod b{display:block;margin-bottom:3px;font-size:14px}
+.mod p{margin:0;color:var(--dim);font-size:12.5px;line-height:1.5}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font:11.5px/1.5 var(--mono)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{padding:8px 12px;font-size:12px;border-radius:9px}
+.tab.active{border-color:var(--accent);color:var(--accent);background:rgba(255,255,255,.06)}
+.meter{height:8px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .35s}
+.chip{display:inline-block;padding:3px 9px;border:1px solid var(--line);border-radius:999px;font:700 9.5px/1.7 var(--mono);color:var(--dim);margin:2px 4px 2px 0;letter-spacing:.5px}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="app">
+<header><div class="wrap nav">
+  <div class="brand"><div class="logo">QL</div><span>QuantumLearn</span></div>
+  <div class="spacer"></div>
+  <div class="status"><span class="dot"></span><span id="state">ONLINE</span></div>
+  <div class="clock" id="clock">--:--:--</div>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <span class="badge">Quantum Education</span>
+    <h1>Learn quantum, <em>by playing</em>.</h1>
+    <p>An interactive educational platform exploring quantum physics, technology, and real-world applications with visualizers and simulators.</p>
+    <div class="actions" id="actions"></div>
+  </section>
+  <section class="grid kpis" id="kpis"></section>
+  <section class="grid two">
+    <div class="card">
+      <div class="panelhead"><div><h2>Quantum Lab</h2><p class="muted">Tune simulator parameters and lessons</p></div><span class="chip" id="modeChip">LIVE</span></div>
+      <div class="tabs" id="tabs"></div>
+      <div class="controls" id="controls"></div>
+      <div class="meter"><i id="meter"></i></div>
+    </div>
+    <div class="card">
+      <div class="panelhead"><div><h2>Telemetry</h2><p class="muted">Streaming synthetic events</p></div><button onclick="clearLog()">Clear</button></div>
+      <div class="log" id="log"></div>
+    </div>
+  </section>
+  <section class="grid three" id="modules" style="margin-top:14px"></section>
+</main>
+<footer><div class="wrap">Interactive quantum learning platform · self-contained build · <span id="stamp"></span></div></footer>
+</div>
+<script>
+const CONF = {"mode": "waves", "metrics": [{"label": "Lessons", "value": 64, "unit": "modules", "trend": "▲ available", "jitter": 1.28}, {"label": "Simulators", "value": 18, "unit": "interactive", "trend": "▲ running", "jitter": 1}, {"label": "Progress", "value": 42, "unit": "%", "trend": "▲ on track", "jitter": 1}, {"label": "Streak", "value": 9, "unit": "days", "trend": "▲ strong", "jitter": 1}], "modules": [{"icon": "◈", "name": "Visualizers", "desc": "See superposition, entanglement and tunneling."}, {"icon": "◎", "name": "Simulators", "desc": "Run experiments with live parameters."}, {"icon": "✦", "name": "Curriculum", "desc": "Structured path from basics to applied."}], "actions": ["Start lesson", "Run experiment", "Quiz me"], "tabs": [{"name": "Simulator", "controls": [{"label": "Probability", "min": 0, "max": 100, "value": 50, "unit": "%"}, {"label": "Energy level", "min": 1, "max": 10, "value": 4, "unit": ""}]}, {"name": "Lesson", "controls": [{"label": "Difficulty", "min": 1, "max": 5, "value": 2, "unit": ""}]}], "log": ["lesson 12 started", "superposition visualizer running", "energy level set 4", "quiz generated 5 items", "progress saved 42%", "streak extended 9d"]};
+const $ = (s, r) => (r || document).querySelector(s);
+const el = (t, cls, txt) => { const n = document.createElement(t); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+const fmt = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'k' : Math.round(n).toString();
+const rnd = (a,b) => a + Math.random()*(b-a);
+
+/* clock */
+function tickClock(){ const d = new Date(); $('#clock').textContent = d.toLocaleTimeString([], {hour12:false}); $('#stamp').textContent = d.toISOString().slice(0,19).replace('T',' ')+' UTC'; }
+tickClock(); setInterval(tickClock, 1000);
+
+/* KPIs */
+const kpiState = CONF.metrics.map(m => ({ ...m, v: m.value }));
+function renderKpis(){
+  const box = $('#kpis'); box.innerHTML = '';
+  kpiState.forEach(k => {
+    const c = el('div','card kpi');
+    c.appendChild(el('div','label',k.label));
+    const v = el('div','val'); v.innerHTML = '<span data-v></span><small>'+k.unit+'</small>'; v.querySelector('[data-v]').textContent = fmt(k.v);
+    c.appendChild(v);
+    c.appendChild(el('div','sub', k.trend || '▲ nominal'));
+    box.appendChild(c);
+  });
+}
+renderKpis();
+setInterval(() => {
+  kpiState.forEach(k => { k.v = Math.max(0, k.v + rnd(-1,1) * k.jitter); });
+  document.querySelectorAll('#kpis .val [data-v]').forEach((n,i) => n.textContent = fmt(kpiState[i].v));
+}, 1500);
+
+/* modules */
+CONF.modules.forEach(m => {
+  const c = el('div','card mod'); c.appendChild(el('div','icon',m.icon));
+  const t = el('div'); t.appendChild(el('b',null,m.name)); t.appendChild(el('p',null,m.desc)); c.appendChild(t);
+  $('#modules').appendChild(c);
+});
+
+/* actions */
+CONF.actions.forEach((a,i) => {
+  const b = el('button', i===0?'primary':null, a);
+  b.onclick = () => { log('info','action >> '+a); flash(a); };
+  $('#actions').appendChild(b);
+});
+function flash(msg){ const s=$('#state'); s.textContent='RUNNING'; setTimeout(()=>s.textContent='ONLINE',900); }
+
+/* log */
+const SEV = ['ok','info','info','warn','ok','bad'];
+function now(){ return new Date().toLocaleTimeString([], {hour12:false}); }
+function log(sev, msg){ const l=$('#log'); const row=el('div'); row.appendChild(el('span','t',now())); row.appendChild(el('span',sev,msg)); l.appendChild(row); while(l.children.length>60) l.removeChild(l.firstChild); l.scrollTop=l.scrollHeight; }
+function clearLog(){ $('#log').innerHTML=''; }
+function autoLog(){ log(SEV[Math.floor(Math.random()*SEV.length)], CONF.log[Math.floor(Math.random()*CONF.log.length)]); }
+CONF.actions.slice(0,2).forEach(a => log('info', a+' queued'));
+for(let i=0;i<4;i++) autoLog();
+setInterval(autoLog, 1900);
+
+/* tabs + controls */
+let activeTab = 0;
+function renderTabs(){
+  const tabs = $('#tabs'); tabs.innerHTML='';
+  CONF.tabs.forEach((t,i) => { const b=el('button','tab'+(i===activeTab?' active':''),t.name); b.onclick=()=>{activeTab=i;renderTabs();}; tabs.appendChild(b); });
+  const ctl = $('#controls'); ctl.innerHTML='';
+  const controls = CONF.tabs[activeTab].controls;
+  controls.forEach(c => {
+    const w = el('div','ctl');
+    const lab = el('label'); lab.appendChild(el('span',null,c.label)); const out=el('output'); out.textContent = c.value+c.unit; lab.appendChild(out);
+    const r = document.createElement('input'); r.type='range'; r.min=c.min; r.max=c.max; r.value=c.value;
+    r.oninput = () => { out.textContent = r.value+c.unit; $('#meter').style.width = Math.round((r.value-c.min)/(c.max-c.min)*100)+'%'; log('info', c.label+' set to '+r.value+c.unit); };
+    w.appendChild(lab); w.appendChild(r); ctl.appendChild(w);
+  });
+  const first = controls[0]; if(first) $('#meter').style.width = Math.round((first.value-first.min)/(first.max-first.min)*100)+'%';
+}
+renderTabs();
+
+/* canvas */
+const cv = $('#bg'), ctx = cv.getContext('2d');
+let W=0,H=0,t=0;
+function resize(){ W=cv.width=innerWidth*devicePixelRatio; H=cv.height=innerHeight*devicePixelRatio; cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px'; ctx.scale(1,1); }
+resize(); addEventListener('resize', resize);
+const ACC = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+const ACC2 = getComputedStyle(document.documentElement).getPropertyValue('--accent2').trim();
+function hexA(hex,a){ const h=hex.replace('#',''); const n=h.length===3?h.split('').map(x=>x+x).join(''):h; const b=parseInt(n,16); return 'rgba('+((b>>16)&255)+','+((b>>8)&255)+','+(b&255)+','+a+')'; }
+const mode = CONF.mode;
+const dots = Array.from({length:90}, () => ({x:Math.random(),y:Math.random(),vx:rnd(-.0006,.0006),vy:rnd(-.0006,.0006),r:rnd(1,2.6)}));
+function draw(){
+  t += 1;
+  ctx.clearRect(0,0,W,H);
+  const g = ctx.createLinearGradient(0,0,W,H); g.addColorStop(0, hexA(ACC,.10)); g.addColorStop(1, hexA(ACC2,.06));
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  if(mode==='particles'||mode==='orbits'){
+    dots.forEach(d=>{ d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>1)d.vx*=-1; if(d.y<0||d.y>1)d.vy*=-1;
+      const x=d.x*W,y=d.y*H; ctx.beginPath(); ctx.arc(x,y,d.r*devicePixelRatio,0,7); ctx.fillStyle=hexA(ACC,.85); ctx.fill(); });
+    if(mode==='orbits'){ ctx.strokeStyle=hexA(ACC2,.25); for(let i=0;i<5;i++){ ctx.beginPath(); ctx.arc(W/2,H*.42,(90+i*70)*devicePixelRatio+t*.2%(90),0,7); ctx.stroke(); } }
+  } else if(mode==='grid'){
+    ctx.strokeStyle=hexA(ACC,.22); ctx.lineWidth=1;
+    for(let i=0;i<26;i++){ const y=(H*.55)+Math.pow(i/26,2)*H*.55+ (t*1.2)%40; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    for(let x=-W;x<W*2;x+=90){ ctx.beginPath(); ctx.moveTo(W/2,H*.55); ctx.lineTo(x,H); ctx.stroke(); }
+  } else if(mode==='waves'){
+    for(let k=0;k<4;k++){ ctx.beginPath(); for(let x=0;x<=W;x+=12){ const y=H*.6+Math.sin(x*.006+t*.03+k)*40*devicePixelRatio*Math.sin(t*.01+k); ctx.lineTo(x,y); } ctx.strokeStyle=hexA(k%2?ACC:ACC2,.6-k*.12); ctx.lineWidth=2; ctx.stroke(); }
+  } else if(mode==='rain'){
+    ctx.font=(13*devicePixelRatio)+'px monospace'; ctx.fillStyle=hexA(ACC,.5);
+    for(let i=0;i<60;i++){ const x=(i*97 + (t*2)%W)%W; const y=(i*53 + t*3)%H; ctx.fillText(String.fromCharCode(0x30A0+((i+t)>>2)%90), x, y); }
+  } else if(mode==='tunnel'){
+    const cx=W/2, cy=H*.45;
+    for(let i=0;i<10;i++){ const r=(i*80 + t*1.4)%800; ctx.beginPath(); ctx.arc(cx,cy,r*devicePixelRatio*.5,0,7); ctx.strokeStyle=hexA(i%2?ACC:ACC2,.35); ctx.lineWidth=2; ctx.stroke(); }
+  } else { /* plasma */
+    for(let i=0;i<3;i++){ const x=W*(.5+.32*Math.sin(t*.004+i*2)); const y=H*(.5+.28*Math.cos(t*.005+i*2)); const rr=180*devicePixelRatio; const gr=ctx.createRadialGradient(x,y,0,x,y,rr); gr.addColorStop(0,hexA(i%2?ACC:ACC2,.28)); gr.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(x,y,rr,0,7); ctx.fill(); }
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>

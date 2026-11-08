@@ -1,0 +1,92 @@
+services:
+  anosera:
+    build:
+      context: ./build-contexts/anosera
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-anosera:local
+    container_name: app-anosera
+    ports: ["127.0.0.1:19100:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["runnable"]
+  zehav:
+    build:
+      context: ./build-contexts/zehav
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-zehav:local
+    container_name: app-zehav
+    ports: ["127.0.0.1:19101:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["runnable"]
+  tahnizhoo:
+    build:
+      context: ./build-contexts/tahnizhoo
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-tahnizhoo:local
+    container_name: app-tahnizhoo
+    ports: ["127.0.0.1:19102:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["runnable"]
+  interactive-renders:
+    build:
+      context: ./build-contexts/interactive-renders
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-interactive-renders:local
+    container_name: app-interactive-renders
+    ports: ["127.0.0.1:19103:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["runnable"]
+  appforge-ai:
+    build:
+      context: ./build-contexts/appforge-ai
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-appforge-ai:local
+    container_name: app-appforge-ai
+    ports: ["127.0.0.1:19104:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["runnable"]
+  glowing-tardigrade:
+    build:
+      context: ./build-contexts/glowing-tardigrade
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-glowing-tardigrade:local
+    container_name: app-glowing-tardigrade
+    ports: ["127.0.0.1:19105:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["runnable"]
+  todo-flow:
+    build:
+      context: ./build-contexts/todo-flow
+      dockerfile: ../../containers/vite-static.Dockerfile
+    image: app-todo-flow:local
+    container_name: app-todo-flow
+    ports: ["127.0.0.1:19106:8080"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=32m"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    profiles: ["runnable"]

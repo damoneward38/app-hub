@@ -1,0 +1,335 @@
+<!-- AI_INCLUDE_FULL: Common issues and fixes for audio, LLM, web UI, and performance -->
+# Troubleshooting
+
+## Startup Issues
+
+**"Connection refused" or "No LLM endpoints available"**
+- LLM server not running. Start LM Studio/llama-server first.
+- Wrong port in settings. Default expects `http://127.0.0.1:1234/v1`
+- Check LM Studio has "Start Server" enabled and "Allow LAN" if needed.
+
+**"Failed to load module" warnings on startup**
+- Usually harmless to core functionality. Missing optional dependencies for optional features.
+- If a specific feature is broken, check logs for the actual error.
+
+## Web UI Issues
+
+**403 Forbidden**
+- Try http:// and https://
+- Delete cookies for this site
+- Test in private browsing window
+- Reset password (see [Reset Password](#reset-password) below)
+- Restart Sapphire app
+
+**Blank page or "Unauthorized"**
+- Clear browser cookies for localhost:8073
+- Try incognito window
+- Reset password (see [Reset Password](#reset-password) below) and restart
+
+**Certificate warning on first visit**
+- Expected with self-signed certs. Accept once (Advanced → Proceed) and the browser remembers it.
+- Cert is persistent (valid 10 years), stored in `user/ssl/`. Not regenerated on restart.
+
+**UI loads but chat doesn't respond**
+- Check browser console (F12) for errors
+- Verify LLM server is responding: `curl http://127.0.0.1:1234/v1/models`
+
+## Audio Issues
+
+**Sample rate detection error on speakers**
+- Cheap USB speakers may not support certain sample rates, so choose "auto detect" or "default"
+- Auto detect will route through OS audio defaults, which can resample the audio to be compatible
+
+**Default audio seems to not work via TTS**
+- Settings > Audio - then change your device to auto-detect
+- Selecting specific audio devices like default or a specific mic can work too
+- Auto-detect sometimes fails test due to it being open, but it may actually work so try it
+
+**Wakeword recorder does not detect when to stop recording (webcam mic)**
+- Change your Recorder Background Percentile in STT settings higher
+- This is VAD voice activity detection thinking your BG noise is speech so it keeps recording
+- Lapel/lav and headsets mics may be ~10-20, but with webcam or other weak mics, raise to ~40
+
+**No TTS audio output**
+- Verify TTS is enabled in Settings > TTS
+- Check TTS server started: `grep "kokoro" user/logs/`
+- Test system audio: `aplay /usr/share/sounds/alsa/Front_Center.wav`
+- Check PulseAudio/PipeWire is running
+
+**STT not transcribing**
+- Check STT is enabled in Settings > STT
+- For GPU: verify CUDA is working (`nvidia-smi`)
+- Try CPU mode: set faster whisper device to cpu in settings
+- Turn up your mic volume to 70% or 100%
+- Check your OS/system default mic - it tries to read from this
+- If Web UI, check browser mic permissions AND windows mic permissions
+
+**Wake word not triggering**
+- Check which wakeword you are using in settings
+- Make sure you pip installed install/requirements-wakeword.txt
+- Wake word is enabled in settings (the model setting now hot-reloads — no restart needed)
+- Turn your mic volume up to 70-100%
+- Set system mic to the mic you want wakeword on
+- Try using Hey Mycroft as a wakeword instead of Hey Sapphire
+- Reduce sensitivity threshold to 0.5
+- Test a different mic
+
+**Switching to a different built-in wake word (`hey_mycroft`, `hey_jarvis`, `alexa`, etc.) didn't take effect**
+- Older Sapphire versions required a full app restart after changing `WAKEWORD_MODEL` — the running detector didn't reload. Fixed: the model now hot-swaps when you save the setting.
+- If you're on a build from before the fix, restart Sapphire once after the model change.
+- First time you select a new built-in, OpenWakeWord downloads the model (`hey_mycroft_v0.1.onnx` etc.) into its package directory — give it a few seconds before testing.
+
+**Adding a custom wake word**
+- Drop your `.onnx` or `.tflite` model into `user/wakeword/models/` and select it from the wakeword dropdown in settings.
+- The dropdown name is the **filename stem** — `my_word.onnx` shows up as `my_word`.
+- Built-in OpenWakeWord set: `alexa`, `hey_mycroft`, `hey_jarvis`, `hey_rhasspy`, `timer`, `weather`. Sapphire ships with `hey_sapphire`.
+
+**Training your own wake word**
+- OpenWakeWord (the engine Sapphire uses) supports custom-trained models. Project + training instructions: <https://github.com/dscripka/openWakeWord>
+- Fastest path is the official Colab notebook in that repo — generates a model from a phrase in ~1 hour, no audio recording required (it synthesizes training data with TTS).
+- Output is a `.onnx` file. Drop it into `user/wakeword/models/` and pick it from the dropdown.
+- For phrase quality tips and threshold tuning, see the `openWakeWord` docs and issues — the Sapphire side is just a thin loader.
+
+## Prompt issues
+**If you broke your default prompts**
+- Settings > System tab
+- You can reset all prompts to default, or merge the defaults back into yours
+
+## LLM issues
+**LM Studio (simple) test failing**
+- Open LM studio, click Developer in lower left to show advanced options, click green Developer tab, toggle server on, load a model
+- Go back to Sapphire: Settings > LLM > LM Studio > test button
+
+**Anthropic Claude not responding**
+- conda activate sapphire && pip install anthropic
+- Check API key (some are for Claude Code only)
+- Put new API key in Settings > LLM > Claude
+
+**No thinking/reasoning visible**
+- Not all models support thinking. Check provider supports it.
+- Claude: Enable "Extended Thinking" in LLM settings
+- GPT-5.x: Uses Responses API, set reasoning_summary to "detailed"
+- Gemini: Set reasoning_effort (low/medium/high) on thinking-enabled models (Gemini 2.5 Flash/Pro)
+- Local models via LM Studio: May need specific model that outputs `<think>` tags
+
+**Thinking breaks when switching providers**
+- Thinking should transfer between chats
+- Note, models cannot see their past think tags in some cases (Claude)
+- Check if the model you are on supports thinking
+
+**Claude prompt caching not working (always MISS)**
+- Spice changes system prompt every turn — disable if caching matters
+- Datetime injection also breaks cache
+- "State vars in prompt" breaks cache (changes on state updates)
+- Check logs for `[CACHE] Dynamic content detected - tools only, system prompt not cached`
+
+**Claude caching enabled but costs seem high**
+- First request is always a MISS (writing to cache costs 25% more)
+- Cache expires after TTL (5m default, can set to 1h)
+- If prompts change often, cache never gets reused
+
+## Tool/Function Issues
+
+**"No executor found for function"**
+- Function exists in toolset but Python file missing or has errors
+- Check `functions/` directory for the module
+- Look for import errors in logs
+
+**Web search returns no results**
+- Rate limited by DuckDuckGo. Wait and retry.
+- If using SOCKS proxy, verify it's working (see SOCKS.md)
+- Enable verbose tool debugging in settings for more logging
+
+## Continuity Issues
+
+**Task not running at scheduled time**
+- Check enabled toggle is on (green) in the Tasks tab
+- Verify cron syntax is correct (minute hour day month weekday)
+- Check cooldown hasn't blocked it (see Activity tab for "skipped - cooldown")
+- Low chance % may have rolled unfavorably (see Activity tab for "skipped - chance")
+
+**"Invalid cron schedule" error**
+- Cron format: `minute hour day month weekday`
+- Use `*` for any, `*/N` for every N, `1-5` for ranges
+- Example: `0 9 * * *` = 9:00 AM daily
+- Weekday: 0 or 7 = Sunday, 1-6 = Mon-Sat
+
+**Task runs but no TTS audio**
+- Check "Enable TTS" is checked in task editor
+- Verify TTS is working for regular chat first
+- Background tasks still use TTS if enabled
+
+**croniter not installed**
+- Run: `pip install croniter`
+- Continuity requires this package for cron parsing
+
+## Home Assistant Issues
+
+**Connection test failing**
+- Verify URL includes port (e.g., `http://192.168.1.50:8123`)
+- Check Home Assistant is running and accessible from this machine
+- Try the URL in a browser first
+
+**"401 Unauthorized" error**
+- Token is invalid or expired
+- Create a new Long-Lived Access Token in HA profile
+- Make sure you copied the full token (~180+ characters)
+
+**Token shows "too short" warning**
+- HA tokens are typically 180+ characters
+- If shorter, you may have copied it incorrectly
+- Create a new token and copy the entire string
+
+**Entity not found**
+- Check exact spelling (entity_id or friendly name)
+- Entity may be blacklisted - check blacklist patterns
+- Use `ha_list_lights_and_switches` to see available entities
+
+**Notifications not sending**
+- Find your service in HA: Developer Tools → Actions → search "notify"
+- Enter just the service name without "notify." prefix
+- Example: `mobile_app_pixel_7` not `notify.mobile_app_pixel_7`
+- Make sure HA companion app is installed on your phone
+
+**HA tools not available**
+- Add Home Assistant functions to your active toolset
+- Check Settings → Plugins → Home Assistant is configured
+- Test connection before trying to use tools
+
+## Performance Issues
+
+**Slow responses**
+- LLM is the bottleneck. Use a 4B or smaller model to test
+- Reduce `LLM_MAX_HISTORY` to send less context, it gets slower over time
+- Kokoro is slow(er) on my i5-8250u. Nvidia is way faster, or faster CPU too.
+
+**High memory usage**
+- Large LLM models need RAM. 4B model needs ~7GB after KV cache.
+- Use quantized models in Q4_K_M to reduce memory
+- STT with base Whisper models uses ~2-3GB.
+- TTS (Kokoro) uses ~2-3GB.
+
+### Troubleshoot Nvidia 5000 series on Linux
+Try Sapphire first. Most won't need this. Only do this if STT and TTS are not using your GPU. It's a nightly build of torch with cuda 12.8 that may work better with the Linux open-kernel drivers if you get stuck. Don't use this if you don't need it.
+
+```bash
+pip install torch torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
+```
+
+## Clean Reinstall
+
+Nuke the conda environment and reinstall from scratch. Your `user/` data is preserved. Use this if your pip packages are messed up. It just reinstalls the packages, doesn't touch Sapphire.
+
+```bash
+conda deactivate && conda remove -n sapphire --all -y && conda create -n sapphire python=3.11 -y && conda activate sapphire && pip install -r requirements.txt && python main.py
+```
+
+## Reset Password
+
+Delete the password hash file and restart Sapphire. This resets your login — you'll set a new password on next visit. Your chats, settings, and user data are untouched.
+
+**Linux:**
+```bash
+rm ~/.config/sapphire/secret_key
+```
+
+**macOS:**
+```bash
+rm ~/Library/Application\ Support/Sapphire/secret_key
+```
+
+**Windows (PowerShell):**
+```powershell
+Remove-Item "$env:APPDATA\Sapphire\secret_key"
+```
+
+**Docker:**
+```bash
+docker exec sapphire rm /home/sapphire/.config/sapphire/secret_key
+docker restart sapphire
+```
+
+Then restart Sapphire (or just the container for Docker).
+
+## Reset Everything (Delete data)
+
+Nuclear option - fresh start. Deletes all user data including chats, settings, and password.
+
+**Linux:**
+```bash
+pkill -f "python main.py"
+rm -rf user/
+rm ~/.config/sapphire/secret_key
+python main.py
+```
+
+**macOS:**
+```bash
+pkill -f "python main.py"
+rm -rf user/
+rm ~/Library/Application\ Support/Sapphire/secret_key
+python main.py
+```
+
+**Windows (PowerShell):**
+```powershell
+# Stop Sapphire first (close the terminal or Ctrl+C)
+Remove-Item -Recurse -Force user\
+Remove-Item "$env:APPDATA\Sapphire\secret_key"
+python main.py
+```
+
+**Docker:**
+```bash
+docker compose down
+rm -rf ~/sapphire/user/
+docker compose up -d
+```
+The config dir is a **persistent** volume (`sapphire-config` → `/home/sapphire/.config/sapphire`), so recreating the container does NOT reset the password. To reset it, delete the `secret_key` (the Docker command above) or remove the `sapphire-config` volume.
+
+You'll need to re-run setup and reconfigure settings.
+
+---
+
+## Boot crash with `malloc(): invalid size` on Linux (multi-GPU systems)
+
+**Symptom:** Sapphire crashes immediately at startup on a fresh install. Last log lines show wakeword model loading successfully, then:
+
+```
+Wakeword hot-started successfully
+malloc(): invalid size (unsorted)
+Fatal Python error: Aborted
+```
+
+The crash is in C-extension code (no Python traceback), and it's deterministic — happens every boot. Manually toggling wake word ON *after* boot works fine.
+
+**Cause:** Two separate audio libraries both default to GPU 0 and initialize at the same time:
+
+- **Kokoro** (TTS) loads as a subprocess, picks `cuda:0` by default
+- **Whisper** (STT) loads in the main process, defaults to `cuda:0`
+
+When both grab the same GPU during the boot init storm, their CUDA contexts conflict and corrupt the heap. The next allocation (often inside the wakeword model's first audio buffer) trips glibc's malloc integrity check and the process aborts.
+
+After boot, manually toggling features works because only one library initializes at a time — no concurrent grab.
+
+**Fix on multi-GPU systems:** put TTS and STT on different cards.
+
+In your settings (`user/settings.json` or via the Settings UI):
+
+```json
+{
+  "FASTER_WHISPER_CUDA_DEVICE": 0,
+  "KOKORO_CUDA_DEVICE": "1"
+}
+```
+
+`KOKORO_CUDA_DEVICE` accepts the device index as a string. It sets `CUDA_VISIBLE_DEVICES` on the Kokoro subprocess at the OS level, so Kokoro physically can't see the other GPU. Whisper uses `FASTER_WHISPER_CUDA_DEVICE` directly via PyTorch.
+
+Restart Sapphire after changing these. Verify in `user/logs/sapphire.log`:
+
+```
+Kokoro subprocess pinned to CUDA_VISIBLE_DEVICES=1
+Using CUDA device 0 (NVIDIA ...)   ← whisper
+```
+
+**Single-GPU systems:** leave both at default (empty `KOKORO_CUDA_DEVICE`, `FASTER_WHISPER_CUDA_DEVICE=0`). The race is less common with deferred-action sequencing (already in place for the boot init order), and there's no second GPU to escape to. If you still hit the crash, disable wake word at boot and toggle it on manually after Sapphire is up — that bypasses the concurrent-init window entirely.

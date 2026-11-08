@@ -1,0 +1,252 @@
+{
+  "devices": [
+    {
+      "id": "dev_aff2aba8277f",
+      "name": "Davids iPhone",
+      "platform": "ios",
+      "tokenHash": "48bc35d700772acc7393bd2cf3c67af9088177435020be1e553a98229072df61",
+      "pairedAt": "2026-09-18T15:34:00+0000",
+      "lastSeen": "2026-09-18T15:39:00+0000"
+    },
+    {
+      "id": "dev_51be7f2f1f86",
+      "name": "neural-core",
+      "platform": "orchestrator",
+      "tokenHash": "ccc7ffaea746029ccc2292a6eb0e0b0c1f290f4342ab3ff863c44a1d5b23356f",
+      "pairedAt": "2026-09-18T15:46:08+0000",
+      "lastSeen": "2026-09-21T11:09:55+0000"
+    },
+    {
+      "id": "dev_3f79fdf625cd",
+      "name": "Proxy Test",
+      "platform": "web",
+      "tokenHash": "312356b3bc629e2de5191c5afc3996789cb815fdaae8f564e12fec808efdaa5c",
+      "pairedAt": "2026-09-18T15:55:48+0000",
+      "lastSeen": "2026-09-18T15:55:48+0000"
+    },
+    {
+      "id": "dev_744d708f5c6a",
+      "name": "Safari Phone",
+      "platform": "web",
+      "tokenHash": "ba84f871e6dafcdab730a1149b26e2ad8cc0c5dade54a4adf53ce4dd58899b25",
+      "pairedAt": "2026-09-18T16:06:17+0000",
+      "lastSeen": "2026-09-18T16:12:35+0000"
+    },
+    {
+      "id": "dev_b09856418367",
+      "name": "Button Test",
+      "platform": "web",
+      "tokenHash": "a0d6207d2ad172c43d6c2d7e92e1039747c74e5355784e4d867e1fabb30a2976",
+      "pairedAt": "2026-09-18T16:08:28+0000",
+      "lastSeen": "2026-09-18T16:09:13+0000"
+    },
+    {
+      "id": "dev_eb47256685b0",
+      "name": "diag",
+      "platform": "web",
+      "tokenHash": "39af325ed11b8d8bc8e4a152d1eb6b1fc1634a610db1f6d6eee098318fe8debb",
+      "pairedAt": "2026-09-18T16:10:25+0000",
+      "lastSeen": "2026-09-18T16:10:25+0000"
+    },
+    {
+      "id": "dev_f18bfa960590",
+      "name": "diag2",
+      "platform": "web",
+      "tokenHash": "cd9c918d21917679c6e3aa505c9869d24863b6e024c7a778087a67529027fc7a",
+      "pairedAt": "2026-09-18T16:14:27+0000",
+      "lastSeen": "2026-09-18T16:14:27+0000"
+    },
+    {
+      "id": "dev_5c5d371fb18d",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "5936526b48f6c75dd2ef4eec6cf62bad467cc585cfdd48708c5d71f4d55e706e",
+      "pairedAt": "2026-09-18T16:23:10+0000",
+      "lastSeen": "2026-09-18T16:23:11+0000"
+    },
+    {
+      "id": "dev_fe3a2b1c37b4",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "e2f69f85eaf29d17d0e1ef232b887e5e79590c69d233860ab6855b6b07739d6b",
+      "pairedAt": "2026-09-18T16:24:54+0000",
+      "lastSeen": "2026-09-18T16:28:04+0000"
+    },
+    {
+      "id": "dev_1131ab2eebf5",
+      "name": "audit-pair",
+      "platform": "web",
+      "tokenHash": "66f4998fbfd2b345502af00263376134deed7ef30f83bf967b85325054114266",
+      "pairedAt": "2026-09-18T16:28:02+0000",
+      "lastSeen": "2026-09-18T16:28:02+0000"
+    },
+    {
+      "id": "dev_00813d3739d4",
+      "name": "e2e-suite",
+      "platform": "web",
+      "tokenHash": "14b84a3e64da0364b30867a7da8adcad3edd58f34003425446e3f068d143a913",
+      "pairedAt": "2026-09-18T16:28:24+0000",
+      "lastSeen": "2026-09-18T16:30:22+0000"
+    },
+    {
+      "id": "dev_725af520f9b2",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "ee4a71074dc88d013a447ad2ca608b4c661732e551aeed6be68f0f75c00a32f9",
+      "pairedAt": "2026-09-18T16:30:25+0000",
+      "lastSeen": "2026-09-18T16:32:53+0000"
+    },
+    {
+      "id": "dev_1be46bff6729",
+      "name": "audit-pair",
+      "platform": "web",
+      "tokenHash": "194ae4deed1ba114c23c70c70483d328f9458896084a026d696fe56c803fafbe",
+      "pairedAt": "2026-09-18T16:32:51+0000",
+      "lastSeen": "2026-09-18T16:32:51+0000"
+    },
+    {
+      "id": "dev_08961ebef956",
+      "name": "diag3",
+      "platform": "web",
+      "tokenHash": "cb26c668b53f49414d6c60671b722b3ee14ef20b15523f412ac25b3e8def1c1f",
+      "pairedAt": "2026-09-18T16:33:05+0000",
+      "lastSeen": "2026-09-18T16:33:05+0000"
+    },
+    {
+      "id": "dev_c0decf8b2534",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "798c2d649f2bd7c7d27034c250b1c6ab751ded3ebb3c1cea9ab57b7ce4e1d0ab",
+      "pairedAt": "2026-09-18T16:34:43+0000",
+      "lastSeen": "2026-09-18T16:36:51+0000"
+    },
+    {
+      "id": "dev_4784999b7711",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "ef1e92f912a889c626c22c16bd67499386f00ecd20e7c374b9a153fcd35ea608",
+      "pairedAt": "2026-09-18T16:39:15+0000",
+      "lastSeen": "2026-09-18T16:39:16+0000"
+    },
+    {
+      "id": "dev_e97a0e3d4b9b",
+      "name": "audit-pair",
+      "platform": "web",
+      "tokenHash": "dcf1287286064312bde53fd99f95aaa689c1021854d5ce1c1e7f20be75b4195c",
+      "pairedAt": "2026-09-18T16:41:27+0000",
+      "lastSeen": "2026-09-18T16:41:27+0000"
+    },
+    {
+      "id": "dev_e6ea221e6320",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "50630d70d08fef6ce23be93edbe2aa78bdb85e4f737a99a91b2636f660b02deb",
+      "pairedAt": "2026-09-18T16:45:44+0000",
+      "lastSeen": "2026-09-18T16:45:45+0000"
+    },
+    {
+      "id": "dev_1ffabce204e2",
+      "name": "audit-pair",
+      "platform": "web",
+      "tokenHash": "6353efcc583995635ad3037b17a7dc0806ce6cec9c36d433314ea9ab3aa5e739",
+      "pairedAt": "2026-09-18T16:47:41+0000",
+      "lastSeen": "2026-09-18T16:47:41+0000"
+    },
+    {
+      "id": "dev_eca3482c8193",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "191ceaa79054539d3c19124c05b02095b02bf46d1ac07e168b112cf1bf066bbe",
+      "pairedAt": "2026-09-18T16:48:25+0000",
+      "lastSeen": "2026-09-18T16:48:26+0000"
+    },
+    {
+      "id": "dev_52789d9567e3",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "a99a7453572314ca5d7b8ef5ac59643988358ab149398ea7abed813a189671d0",
+      "pairedAt": "2026-09-18T16:48:33+0000",
+      "lastSeen": "2026-09-18T16:48:34+0000"
+    },
+    {
+      "id": "dev_aad139d0b718",
+      "name": "audit-pair",
+      "platform": "web",
+      "tokenHash": "38f07a7f94d0f285e3a57e59a7a4c621da328a85c536f1a797280a5e2ef54b98",
+      "pairedAt": "2026-09-18T16:49:31+0000",
+      "lastSeen": "2026-09-18T16:49:31+0000"
+    },
+    {
+      "id": "dev_53f3e85dd879",
+      "name": "audit-pair",
+      "platform": "web",
+      "tokenHash": "8b3937ed76e772b832472565fb467ca8900d4f70717c0e56b1bcbb9419c49924",
+      "pairedAt": "2026-09-18T16:53:36+0000",
+      "lastSeen": "2026-09-18T16:53:36+0000"
+    },
+    {
+      "id": "dev_e1bae19da258",
+      "name": "render-router",
+      "platform": "web",
+      "tokenHash": "3ec71a63e0df495f78451fe076cf1b3de83882f7eb82c68b65ee2f476b298af5",
+      "pairedAt": "2026-09-18T16:54:02+0000",
+      "lastSeen": "2026-09-18T16:54:03+0000"
+    },
+    {
+      "id": "dev_5ca08561facb",
+      "name": "audit-pair",
+      "platform": "web",
+      "tokenHash": "afbdc934702152002c36c13e452610bbe68aa0d2c07049db5ca2d3c0684b479e",
+      "pairedAt": "2026-09-18T16:54:56+0000",
+      "lastSeen": "2026-09-18T16:54:56+0000"
+    },
+    {
+      "id": "dev_81569f95b730",
+      "name": "diag5",
+      "platform": "web",
+      "tokenHash": "377fc3cf9933533a2d92c55796870383ad095e1600a557270d1c8e0c38e33a7a",
+      "pairedAt": "2026-09-18T17:05:26+0000",
+      "lastSeen": "2026-09-18T17:05:26+0000"
+    },
+    {
+      "id": "dev_10dc8e580655",
+      "name": "diag6",
+      "platform": "web",
+      "tokenHash": "3dff7a50009c73d0442a9e82e802a5f88082b80ff8396a9333a82519ee66dbba",
+      "pairedAt": "2026-09-18T17:06:46+0000",
+      "lastSeen": "2026-09-18T17:06:46+0000"
+    },
+    {
+      "id": "dev_cd8970d316f1",
+      "name": "Sapphire",
+      "platform": "assistant",
+      "tokenHash": "9154fc0b6a260864a7329eb7bf2c1be5bc45b34313d183caba64940e742192e3",
+      "pairedAt": "2026-09-18T17:07:05+0000",
+      "lastSeen": "2026-09-18T17:07:50+0000"
+    },
+    {
+      "id": "dev_11cc16350dd4",
+      "name": "Sapphire",
+      "platform": "assistant",
+      "tokenHash": "24fcc61e6edb2e604a2b92d6c97d3d86198af0475d102372a1bdfac8ce6f23ad",
+      "pairedAt": "2026-09-18T17:12:44+0000",
+      "lastSeen": "2026-09-18T17:12:53+0000"
+    },
+    {
+      "id": "dev_0a1591d1c586",
+      "name": "Sapphire",
+      "platform": "assistant",
+      "tokenHash": "ae92fa95c0cc700561bb36b747ad6c126085800a8c072487f0fa24325493669d",
+      "pairedAt": "2026-09-18T17:13:11+0000",
+      "lastSeen": "2026-09-18T17:13:17+0000"
+    },
+    {
+      "id": "dev_fa3775f4709b",
+      "name": "e2e-suite",
+      "platform": "web",
+      "tokenHash": "549b305931ddd698c7775e62b41c1ebb09b383ce95d21e64721ba29fb19e76a4",
+      "pairedAt": "2026-09-18T20:04:02+0000",
+      "lastSeen": "2026-09-18T20:05:32+0000"
+    }
+  ]
+}

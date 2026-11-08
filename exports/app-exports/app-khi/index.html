@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MENAHEL — The Controller of AI Power</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='50%25' font-size='90' text-anchor='middle' dominant-baseline='central'%3E%D7%9E%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+    <style>
+        /* ============================================================
+           MENAHEL — THE CONTROLLER OF AI POWER
+           Red · Black · Gold
+           Full 3D Futuristic Platform
+           ============================================================ */
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        :root {
+            --red: #ef4444;
+            --red2: #dc2626;
+            --gold: #fbbf24;
+            --gold2: #f59e0b;
+            --black: #000000;
+            --dark: #050505;
+            --dark2: #0a0000;
+            --dark3: #0f0500;
+            --white: #f1f1f1;
+            --gray: #374151;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--dark);
+            color: var(--white);
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ——— CANVAS ——— */
+        #menahel-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ——— APP WRAPPER ——— */
+        #app {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+           NAV
+           ============================================================ */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 40px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(251,191,36,0.2);
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-shadow: 0 0 20px rgba(251,191,36,0.6);
+        }
+
+        .nav-logo span { color: var(--red); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--red), var(--red2)) !important;
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(239,68,68,0.4);
+            transition: all 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            box-shadow: 0 0 40px rgba(239,68,68,0.7) !important;
+            transform: translateY(-1px);
+        }
+
+        /* ============================================================
+           PAGE 1 - HERO
+           ============================================================ */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 60px;
+            position: relative;
+            background:
+                radial-gradient(ellipse at 50% -10%, rgba(239,68,68,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(251,191,36,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(239,68,68,0.05) 0%, transparent 50%),
+                var(--dark);
+        }
+
+        /* ——— ENERGY RINGS ——— */
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ringPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .ring1 { width:280px; height:280px; border-color:rgba(239,68,68,0.3); animation-delay:0s; }
+        .ring2 { width:480px; height:480px; border-color:rgba(251,191,36,0.15); animation-delay:1s; }
+        .ring3 { width:680px; height:680px; border-color:rgba(239,68,68,0.08); animation-delay:2s; }
+        .ring4 { width:880px; height:880px; border-color:rgba(251,191,36,0.04); animation-delay:3s; }
+
+        @keyframes ringPulse {
+            0%,100% { transform:translate(-50%,-50%) scale(1); opacity:1; }
+            50% { transform:translate(-50%,-50%) scale(1.06); opacity:0.4; }
+        }
+
+        /* ——— HERO CONTENT ——— */
+        .hero-tag {
+            display: inline-block;
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.4);
+            color: var(--red);
+            font-size: 0.65rem;
+            padding: 6px 18px;
+            border-radius: 20px;
+            letter-spacing: 0.14em;
+            margin-bottom: 24px;
+            animation: tagGlow 2s infinite alternate;
+        }
+
+        @keyframes tagGlow {
+            from { box-shadow: 0 0 10px rgba(239,68,68,0.2); }
+            to { box-shadow: 0 0 30px rgba(239,68,68,0.6); }
+        }
+
+        .hero-hebrew {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(251,191,36,0.4);
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3.5rem, 12vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .hero-title-red {
+            color: var(--red);
+            text-shadow:
+                0 0 40px rgba(239,68,68,0.8),
+                0 0 80px rgba(239,68,68,0.4);
+            animation: redPulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes redPulse {
+            from { text-shadow: 0 0 30px rgba(239,68,68,0.6), 0 0 60px rgba(239,68,68,0.3); }
+            to { text-shadow: 0 0 60px rgba(239,68,68,1), 0 0 120px rgba(239,68,68,0.6); }
+        }
+
+        .hero-title-gold {
+            color: var(--gold);
+            text-shadow:
+                0 0 40px rgba(251,191,36,0.8),
+                0 0 80px rgba(251,191,36,0.4);
+        }
+
+        .hero-meaning {
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .hero-sub {
+            font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+            color: #4b5563;
+            letter-spacing: 0.06em;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        /* ——— BUTTONS ——— */
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--red), var(--red2));
+            color: white;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            box-shadow:
+                0 0 30px rgba(239,68,68,0.5),
+                0 0 60px rgba(239,68,68,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 60px rgba(239,68,68,0.8), 0 0 120px rgba(239,68,68,0.4);
+            transform: translateY(-3px);
+        }
+
+        .btn-gold {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold2));
+            color: #000;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            box-shadow: 0 0 30px rgba(251,191,36,0.5);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 0 60px rgba(251,191,36,0.8);
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: var(--gold);
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(251,191,36,0.5);
+            box-shadow: 0 0 20px rgba(251,191,36,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            background: rgba(251,191,36,0.1);
+            box-shadow: 0 0 40px rgba(251,191,36,0.3);
+            transform: translateY(-3px);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        /* ——— STATS ——— */
+        .hero-stats {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-n {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(251,191,36,0.6);
+        }
+
+        .stat-l { font-size: 0.6rem; color: #374151; letter-spacing: 0.1em; margin-top: 3px; }
+
+        .stat-div {
+            width: 1px; height: 35px;
+            background: linear-gradient(to bottom, transparent, rgba(251,191,36,0.2), transparent);
+        }
+
+        /* ——— SCROLL ——— */
+        .scroll-ind {
+            position: absolute;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.55rem;
+            color: #374151;
+            letter-spacing: 0.12em;
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        .scroll-line {
+            width: 1px; height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        @keyframes scrollBounce {
+            0%,100% { transform:translateX(-50%) translateY(0); }
+            50% { transform:translateX(-50%) translateY(8px); }
+        }
+
+        /* ============================================================
+           PAGE 2 - FEATURES
+           ============================================================ */
+        .features-section {
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background:
+                radial-gradient(ellipse at 0% 50%, rgba(239,68,68,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 50%, rgba(251,191,36,0.05) 0%, transparent 50%),
+                var(--dark);
+        }
+
+        .section-wrap {
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: var(--red);
+            font-size: 0.62rem;
+            padding: 5px 16px;
+            border-radius: 20px;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.4rem, 4vw, 2.6rem);
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 0.06em;
+            margin-bottom: 10px;
+        }
+
+        .gold-text {
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(251,191,36,0.4);
+        }
+
+        .red-text {
+            color: var(--red);
+            text-shadow: 0 0 20px rgba(239,68,68,0.4);
+        }
+
+        .section-sub { font-size: 0.72rem; color: #4b5563; }
+
+        /* ——— FEATURE CARDS ——— */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) { .features-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) and (min-width: 769px) { .features-grid { grid-template-columns: repeat(2,1fr); } }
+
+        .feature-card {
+            background: rgba(10,0,0,0.8);
+            border: 1px solid rgba(239,68,68,0.15);
+            border-radius: 20px;
+            padding: 24px 20px;
+            transition: all 0.3s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--red), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(239,68,68,0.4);
+            box-shadow: 0 0 30px rgba(239,68,68,0.1);
+            /* transform: translateY(-4px) perspective(800px) rotateX(2deg); */ /* Handled by JS */
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+
+        .feature-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc { font-size: 0.67rem; color: #4b5563; line-height: 1.7; }
+
+        /* ——— MODULES GRID ——— */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) { .modules-grid { grid-template-columns: 1fr; } }
+
+        .module-card {
+            background: rgba(10,0,0,0.9);
+            border: 1px solid rgba(251,191,36,0.15);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            border-color: rgba(251,191,36,0.4);
+            box-shadow: 0 0 20px rgba(251,191,36,0.1);
+            /* transform: translateX(4px); */ /* Handled by JS */
+        }
+
+        .module-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+        .module-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 3px;
+        }
+
+        .module-desc { font-size: 0.62rem; color: #4b5563; line-height: 1.4; }
+
+        .module-status {
+            margin-left: auto;
+            font-size: 0.55rem;
+            color: var(--gold);
+            background: rgba(251,191,36,0.1);
+            border: 1px solid rgba(251,191,36,0.3);
+            padding: 3px 8px;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+           PAGE 3 - PRICING
+           ============================================================ */
+        .pricing-section {
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(239,68,68,0.08) 0%, transparent 60%),
+                var(--dark);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+        .price-card {
+            background: rgba(10,0,0,0.9);
+            border: 1px solid rgba(239,68,68,0.2);
+            border-radius: 20px;
+            padding: 28px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .price-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 40px rgba(239,68,68,0.2);
+            /* transform: translateY(-4px); */ /* Handled by JS */
+        }
+
+        .price-featured {
+            border-color: var(--gold) !important;
+            box-shadow: 0 0 40px rgba(251,191,36,0.2);
+            transform: scale(1.03);
+        }
+
+        .price-featured:hover {
+            box-shadow: 0 0 60px rgba(251,191,36,0.4);
+            transform: scale(1.03) translateY(-4px);
+        }
+
+        .price-badge {
+            position: absolute;
+            top: -12px; left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--gold), var(--gold2));
+            color: #000;
+            font-size: 0.55rem;
+            font-family: 'Orbitron', monospace;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            box-shadow: 0 0 20px rgba(251,191,36,0.5);
+        }
+
+        .price-top { display:flex; align-items:center; gap:10px; }
+        .price-emoji { font-size:1.5rem; }
+
+        .price-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .price-amount {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .price-amount span { font-size:0.75rem; color:#4b5563; font-weight:400; }
+
+        .price-features { display:flex; flex-direction:column; gap:8px; flex:1; }
+
+        .pf {
+            font-size: 0.65rem;
+            color: #6b7280;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            line-height: 1.4;
+        }
+
+        .price-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            transition: all 0.3s;
+            margin-top: auto;
+            cursor: pointer;
+            border: none;
+        }
+
+        .price-btn:hover { transform:translateY(-2px); filter:brightness(1.2); }
+
+        /* ——— ENTERPRISE CARDS (annual) ——— */
+        .enterprise-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        @media (max-width: 768px) { .enterprise-grid { grid-template-columns: 1fr; } }
+
+        .section-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.68rem;
+            color: var(--gold);
+            letter-spacing: 0.15em;
+            border-left: 3px solid var(--gold);
+            padding-left: 12px;
+            margin-bottom: 4px;
+        }
+
+        /* ——— PAYPAL CHECKOUT ——— */
+        .checkout-wrap {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .checkout-card {
+            background: rgba(10,0,0,0.95);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            box-shadow: 0 0 60px rgba(239,68,68,0.1);
+        }
+
+        .checkout-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(239,68,68,0.15);
+        }
+
+        .checkout-plan {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            margin-bottom: 4px;
+        }
+
+        .checkout-price {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+
+        .checkout-features { display:flex; flex-direction:column; gap:8px; }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(239,68,68,0.3), transparent);
+        }
+
+        .paypal-label {
+            font-size: 0.65rem;
+            color: #4b5563;
+            text-align: center;
+            letter-spacing: 0.06em;
+        }
+
+        #paypal-button-container { width: 100%; }
+
+        .secure-msg {
+            font-size: 0.58rem;
+            color: #374151;
+            text-align: center;
+        }
+
+        /* ——— SUCCESS ——— */
+        .success-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .success-ring {
+            position: absolute;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            border: 1px solid rgba(251,191,36,0.3);
+            animation: successRing 2s ease-in-out infinite;
+        }
+
+        @keyframes successRing {
+            0%,100% { transform:scale(1); opacity:1; }
+            50% { transform:scale(1.1); opacity:0.3; }
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            filter: drop-shadow(0 0 30px var(--gold));
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%,100% { filter:drop-shadow(0 0 20px var(--gold)); }
+            50% { filter:drop-shadow(0 0 50px var(--gold)); }
+        }
+
+        .success-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 0.06em;
+        }
+
+        .success-sub { font-size:0.75rem; color:#4b5563; max-width:400px; line-height:1.6; }
+
+        /* ——— FOOTER ——— */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(239,68,68,0.1);
+            background: rgba(0,0,0,0.5);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            margin-bottom: 6px;
+            text-shadow: 0 0 20px rgba(251,191,36,0.3);
+        }
+
+        .footer-sub { font-size:0.58rem; color:#374151; letter-spacing:0.06em; }
+
+        /* ——— BACK BTN ——— */
+        .back-btn {
+            background: transparent;
+            color: #4b5563;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 7px 16px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .back-btn:hover { color: var(--white); border-color: #374151; }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar { width:4px; }
+        ::-webkit-scrollbar-track { background:#000; }
+        ::-webkit-scrollbar-thumb { background:var(--red); border-radius:4px; }
+    </style>
+</head>
+<body class="antialiased">
+    <canvas id="menahel-canvas"></canvas>
+    <div id="app">
+        <!-- Content will be rendered here by JavaScript -->
+    </div>
+
+    <script>
+        'use strict';
+
+        // ============================================================
+        // MENAHEL PARTICLE ENGINE
+        // Red and Gold particles falling from the sky
+        // Energy beams · 3D tilt cards · Full GPU power
+        // ============================================================
+
+        const PARTICLES = {
+
+            canvas: null,
+            ctx: null,
+            particles: [],
+            beams: [],
+            W: 0, H: 0,
+
+            symbols: ['מ','נ','ה','ל','⮡','◆','▲','●','✦','⚡','◰','◎'],
+            colors: ['#ef4444','#dc2626','#fbbf24','#f59e0b','#991b1b','#fcd34d'],
+
+            init() {
+                this.canvas = document.getElementById('menahel-canvas');
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+                this.spawn(100);
+                this.spawnBeams(10);
+                this.loop();
+                window.addEventListener('resize', () => this.resize());
+                this.init3DTilt();
+            },
+
+            resize() {
+                this.W = this.canvas.width = window.innerWidth;
+                this.H = this.canvas.height = window.innerHeight;
+            },
+
+            spawn(n) {
+                for (let i = 0; i < n; i++) {
+                    const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+                    this.particles.push({
+                        x: Math.random() * this.W,
+                        y: Math.random() * this.H,
+                        vy: 0.4 + Math.random() * 1.4,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        size: 8 + Math.random() * 14,
+                        opacity: 0.1 + Math.random() * 0.5,
+                        color,
+                        symbol: this.symbols[Math.floor(Math.random() * this.symbols.length)],
+                        pulse: Math.random() * Math.PI * 2
+                    });
+                }
+            },
+
+            spawnBeams(n) {
+                for (let i = 0; i < n; i++) {
+                    this.beams.push({
+                        x: Math.random() * this.W,
+                        y: Math.random() * this.H,
+                        speed: 1 + Math.random() * 2,
+                        length: 80 + Math.random() * 250,
+                        color: this.colors[Math.floor(Math.random() * this.colors.length)],
+                        width: 0.5 + Math.random() * 1.5
+                    });
+                }
+            },
+
+            loop() {
+                this.ctx.clearRect(0, 0, this.W, this.H);
+                this.drawBeams();
+                this.drawParticles();
+                requestAnimationFrame(() => this.loop());
+            },
+
+            drawBeams() {
+                this.beams.forEach(b => {
+                    const grad = this.ctx.createLinearGradient(b.x, b.y, b.x, b.y + b.length);
+                    grad.addColorStop(0, 'transparent');
+                    grad.addColorStop(0.4, b.color + '55');
+                    grad.addColorStop(1, 'transparent');
+                    this.ctx.save();
+                    this.ctx.strokeStyle = grad;
+                    this.ctx.lineWidth = b.width;
+                    this.ctx.shadowColor = b.color;
+                    this.ctx.shadowBlur = 8;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(b.x, b.y);
+                    this.ctx.lineTo(b.x, b.y + b.length);
+                    this.ctx.stroke();
+                    this.ctx.restore();
+                    b.y += b.speed;
+                    if (b.y > this.H) b.y = -b.length;
+                });
+            },
+
+            drawParticles() {
+                this.particles.forEach(p => {
+                    p.pulse += 0.02;
+                    const glow = Math.sin(p.pulse) * 0.3 + 0.7;
+                    this.ctx.save();
+                    this.ctx.globalAlpha = p.opacity * glow;
+                    this.ctx.fillStyle = p.color;
+                    this.ctx.shadowColor = p.color;
+                    this.ctx.shadowBlur = 12;
+                    this.ctx.font = `${p.size}px Courier New`;
+                    this.ctx.fillText(p.symbol, p.x, p.y);
+                    this.ctx.restore();
+                    p.y += p.vy;
+                    p.x += p.vx;
+                    if (p.y > this.H) { p.y = -20; p.x = Math.random() * this.W; }
+                    if (p.x < 0 || p.x > this.W) p.vx *= -1;
+                });
+            },
+
+            init3DTilt() {
+                document.addEventListener('mouseover', e => {
+                    const card = e.target.closest('.feature-card, .price-card, .module-card');
+                    if (!card) return;
+                    card.addEventListener('mousemove', this.tilt);
+                    card.addEventListener('mouseleave', this.untilt);
+                });
+            },
+
+            tilt(e) {
+                const rect = this.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dx = (e.clientX - cx) / (rect.width / 2);
+                const dy = (e.clientY - cy) / (rect.height / 2);
+                this.style.transform = `perspective(800px) rotateX(${dy * -10}deg) rotateY(${dx * 10}deg) scale(1.04) translateY(-4px)`;
+            },
+
+            untilt() {
+                this.style.transform = '';
+            }
+        };
+
+        // ============================================================
+        // MENAHEL - THE CONTROLLER OF AI POWER
+        // Full 3D Platform · Red Black Gold
+        // PayPal Connected · All Pricing Built In
+        // DGX Management · AI Orchestration · GPU Control
+        // ============================================================
+
+        const MENAHEL = {
+
+            currentPage: 'landing',
+            selectedPlan: null,
+
+            plans: [
+                {
+                    id: 'starter', name: 'Starter', emoji: '🔴',
+                    price: '299.00', period: 'mo', color: '#ef4444',
+                    features: ['DGX System Monitoring','Real-time GPU Telemetry','5 AI Job Schedules','Basic Analytics','Email Support']
+                },
+                {
+                    id: 'pro', name: 'Pro', emoji: '⭐',
+                    price: '999.00', period: 'mo', color: '#fbbf24',
+                    featured: true,
+                    features: ['Everything in Starter','Unlimited AI Jobs','CUDA Kernel Management','Priority Support','API Access']
+                },
+                {
+                    id: 'enterprise', name: 'Enterprise', emoji: '👑',
+                    price: '2999.00', period: 'mo', color: '#dc2626',
+                    features: ['Everything in Pro','Full DGX Cluster Control','Custom Integrations','Dedicated Manager','SLA Guarantee']
+                },
+                {
+                    id: 'datacenter', name: 'Data Center', emoji: '🏢',
+                    price: '50000.00', period: 'mo', color: '#fbbf24',
+                    features: ['Unlimited DGX Systems','Full Infrastructure Control','Docker Orchestration','24/7 Support','Custom SLA']
+                },
+                {
+                    id: 'government', name: 'Government', emoji: '🏛️',
+                    price: '500000.00', period: 'year', color: '#ef4444',
+                    features: ['Classified AI Workloads','Air-gapped Deployment','Full Security Clearance','Dedicated Team','Custom Build']
+                },
+                {
+                    id: 'military', name: 'Military', emoji: '⚔️',
+                    price: '1000000.00', period: 'year', color: '#dc2626',
+                    features: ['Top Secret Grade','Mission Critical AI','Real-time Battlefield Data','Zero Downtime SLA','Full Custom Integration']
+                }
+            ],
+
+            features: [
+                { icon:'🖥️', title:'DGX System Monitor', desc:'Real-time monitoring of all NVIDIA DGX AI supercomputers. GPU load, VRAM, temperature, and clock speed live.' },
+                { icon:'⚡', title:'CUDA GPU Acceleration', desc:'Direct CUDA kernel execution and GPU memory pooling. Neural ops — MatMul, ReLU, Bias — all optimized.' },
+                { icon:'🗓️', title:'AI Job Scheduler', desc:'Schedule and distribute AI training jobs across multiple DGX systems automatically with priority queuing.' },
+                { icon:'🔒', title:'Zero Trust Security', desc:'Hardware-verified identity. AES-256 encryption on all data. Role-based access control for every user.' },
+                { icon:'🌐', title:'Global Mesh Network', desc:'Connect DGX systems across data centers worldwide. 2.4M nodes. 180 countries. 99.99% uptime.' },
+                { icon:'🤖', title:'AI Orchestration', desc:'Execute complex multi-module AI workflows with a single natural language command. Full automation.' },
+                { icon:'📈', title:'Live Telemetry', desc:'Real-time data visualization of all GPU metrics, job queues, network throughput, and system health.' },
+                { icon:'🐳', title:'Docker Integration', desc:'Full Docker containerization. One command starts every service — Node.js, MongoDB, Redis, React.' },
+                { icon:'💉', title:'Drug Discovery Module', desc:'VQE quantum simulations for pharmaceutical research. Molecular pipeline and energy state visualization.' }
+            ],
+
+            modules: [
+                { icon:'🖥️', name:'DGX Manager', desc:'Monitor and control all DGX AI supercomputers', status:'LIVE' },
+                { icon:'⚡', name:'CUDA Platform', desc:'GPU memory management and neural network operations', status:'LIVE' },
+                { icon:'🗓️', name:'Job Scheduler', desc:'Distribute AI workloads across multiple systems', status:'LIVE' },
+                { icon:'🔒', name:'SecureCore', desc:'Zero trust access and AES-256 encryption layer', status:'LIVE' },
+                { icon:'🌐', name:'GlobalMesh', desc:'Worldwide distributed computing network', status:'LIVE' },
+                { icon:'🤖', name:'AI Orchestrator', desc:'Natural language AI workflow automation', status:'LIVE' },
+                { icon:'📈', name:'Telemetry Hub', desc:'Real-time metrics and data visualization', status:'LIVE' },
+                { icon:'🐳', name:'Docker Bridge', desc:'Full containerization and deployment automation', status:'LIVE' }
+            ],
+
+            init() {
+                this.renderLanding();
+            },
+
+            // ============================================================
+            // LANDING PAGE
+            // ============================================================
+            renderLanding() {
+                document.getElementById('app').innerHTML = `
+                    <nav class="nav">
+                        <a href="#" class="nav-logo" onclick="MENAHEL.scrollTo('hero-section'); return false;">
+                            מ MENAHEL<span>AI</span>
+                        </a>
+                        <div class="nav-links">
+                            <a href="#" onclick="MENAHEL.scrollTo('features-section'); return false;">Features</a>
+                            <a href="#" onclick="MENAHEL.scrollTo('pricing-section'); return false;">Pricing</a>
+                            <a href="#" class="nav-cta" onclick="MENAHEL.scrollTo('pricing-section'); return false;">Get Access</a>
+                        </div>
+                    </nav>
+
+                    <section id="hero-section" class="hero-section">
+                        <div class="ring ring1"></div>
+                        <div class="ring ring2"></div>
+                        <div class="ring ring3"></div>
+                        <div class="ring ring4"></div>
+
+                        <div class="relative z-10">
+                            <span class="hero-tag">⚡ NVIDIA DGX AI MANAGEMENT PLATFORM</span>
+                            <h2 class="hero-hebrew">מְנַהֵל — THE CONTROLLER</h2>
+                            <h1 class="hero-title">
+                                <span class="hero-title-red">MENA</span><span class="hero-title-gold">HEL</span>
+                            </h1>
+                            <p class="hero-meaning">"The Controller of AI Power"</p>
+                            <p class="hero-sub">
+                                Manage · Monitor · Orchestrate · Dominate · Every NVIDIA DGX System. One Platform.
+                            </p>
+
+                            <div class="hero-btns">
+                                <button class="btn-primary" onclick="MENAHEL.scrollTo('pricing-section'); return false;">
+                                    ⚡ Get Access Now
+                                </button>
+                                <button class="btn-outline" onclick="MENAHEL.scrollTo('features-section'); return false;">
+                                    Explore Features →
+                                </button>
+                            </div>
+
+                            <div class="hero-stats">
+                                <div>
+                                    <div class="stat-n">2.4M</div>
+                                    <div class="stat-l">Global Nodes</div>
+                                </div>
+                                <div class="stat-div"></div>
+                                <div>
+                                    <div class="stat-n">180+</div>
+                                    <div class="stat-l">Countries</div>
+                                </div>
+                                <div class="stat-div"></div>
+                                <div>
+                                    <div class="stat-n">99.9%</div>
+                                    <div class="stat-l">Uptime</div>
+                                </div>
+                                <div class="stat-div"></div>
+                                <div>
+                                    <div class="stat-n">∞</div>
+                                    <div class="stat-l">AI Power</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scroll-ind">
+                            SCROLL
+                            <div class="scroll-line"></div>
+                        </div>
+                    </section>
+
+                    <section id="features-section" class="features-section">
+                        <div class="section-wrap">
+                            <div class="text-center">
+                                <span class="section-tag">⚡ PLATFORM FEATURES</span>
+                                <h2 class="section-title">Built For <span class="gold-text">AI Domination</span></h2>
+                                <p class="section-sub">
+                                    Everything you need to control the most powerful AI infrastructure on earth
+                                </p>
+                            </div>
+
+                            <div class="features-grid">
+                                ${this.features.map(f => `
+                                    <div class="feature-card">
+                                        <div class="feature-icon gold-text">${f.icon}</div>
+                                        <h3 class="feature-title">${f.title}</h3>
+                                        <p class="feature-desc">${f.desc}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="text-center mt-10">
+                                <span class="section-tag">📊 SYSTEM MODULES</span>
+                                <h2 class="section-title">All 8 Modules <span class="red-text">Active</span></h2>
+                            </div>
+
+                            <div class="modules-grid">
+                                ${this.modules.map(m => `
+                                    <div class="module-card">
+                                        <div class="module-icon gold-text">${m.icon}</div>
+                                        <div>
+                                            <h3 class="module-name">${m.name}</h3>
+                                            <p class="module-desc">${m.desc}</p>
+                                        </div>
+                                        <span class="module-status">${m.status}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="pricing-section" class="pricing-section">
+                        <div class="section-wrap">
+                            <div class="text-center">
+                                <span class="section-tag">💰 PRICING</span>
+                                <h2 class="section-title">Choose Your <span class="gold-text">Level of Control</span></h2>
+                                <p class="section-sub">
+                                    Select a plan · Pay with PayPal · Instant access · Cancel anytime
+                                </p>
+                            </div>
+
+                            <h3 class="section-label mt-8">🗓️ MONTHLY PLANS</h3>
+                            <div class="pricing-grid">
+                                ${this.plans.filter(p => p.period === 'mo').map(p => this.renderPriceCard(p)).join('')}
+                            </div>
+
+                            <h3 class="section-label mt-8">🏢 ANNUAL LICENSES</h3>
+                            <div class="pricing-grid">
+                                ${this.plans.filter(p => p.period === 'year').map(p => this.renderPriceCard(p)).join('')}
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer class="footer">
+                        <div class="footer-logo">מ MENAHEL<span>AI</span></div>
+                        <p class="footer-sub">© 2024 MENAHEL. The Controller of AI Power. All rights reserved.</p>
+                    </footer>
+                `;
+            },
+
+            renderPriceCard(p) {
+                const price = this.formatPrice(p.price, p.period);
+                return `
+                    <div class="price-card ${p.featured ? 'price-featured' : ''}">
+                        ${p.featured ? '<span class="price-badge">MOST POPULAR</span>' : ''}
+                        <div class="price-top">
+                            <span class="price-emoji" style="color: ${p.color};">${p.emoji}</span>
+                            <h3 class="price-name" style="color: ${p.color};">${p.name}</h3>
+                        </div>
+                        <div class="price-amount" style="color: ${p.color};">
+                            ${price}
+                        </div>
+                        <div class="price-features">
+                            ${p.features.map(f => `
+                                <div class="pf">
+                                    <span class="text-green-500">✓</span> ${f}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="price-btn" style="background: linear-gradient(135deg, ${p.color}, ${p.color}D0); color: ${p.featured ? '#000' : 'white'};"
+                            onclick="MENAHEL.selectPlan('${p.id}');">
+                            Get ${p.name} Access
+                        </button>
+                    </div>
+                `;
+            },
+
+            formatPrice(price, period) {
+                const n = parseFloat(price);
+                if (n >= 1000000) return `$${(n/1000000).toFixed(0)}M<span>/${period}</span>`;
+                if (n >= 1000) return `$${(n/1000).toFixed(0)}K<span>/${period}</span>`;
+                return `$${n}<span>/${period}</span>`;
+            },
+
+            selectPlan(planId) {
+                this.selectedPlan = this.plans.find(p => p.id === planId);
+                this.renderCheckout();
+            },
+
+            // ============================================================
+            // PAYPAL CHECKOUT
+            // ============================================================
+            renderCheckout() {
+                const plan = this.selectedPlan;
+                const price = this.formatPrice(plan.price, plan.period);
+
+                document.getElementById('app').innerHTML = `
+                    <nav class="nav">
+                        <a href="#" class="nav-logo" onclick="MENAHEL.renderLanding(); return false;">
+                            מ MENAHEL<span>AI</span>
+                        </a>
+                        <button class="back-btn" onclick="MENAHEL.renderLanding();">← Back</button>
+                    </nav>
+
+                    <section class="hero-section min-h-screen flex items-center justify-center py-20">
+                        <div class="checkout-wrap">
+                            <div class="checkout-card">
+                                <div class="text-center">
+                                    <span class="section-tag">💳 SECURE CHECKOUT</span>
+                                    <h2 class="section-title">Complete Your <span class="gold-text">Access</span></h2>
+                                </div>
+
+                                <div class="checkout-header">
+                                    <span class="price-emoji" style="font-size: 2.5rem; color: ${plan.color};">${plan.emoji}</span>
+                                    <div>
+                                        <h3 class="checkout-plan" style="color: ${plan.color};">${plan.name} Plan</h3>
+                                        <div class="checkout-price" style="color: ${plan.color};">
+                                            ${price.replace('<span>','').replace('</span>','')}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="checkout-features">
+                                    ${plan.features.map(f => `
+                                        <div class="pf">
+                                            <span class="text-green-500">✓</span> ${f}
+                                        </div>
+                                    `).join('')}
+                                </div>
+
+                                <div class="divider"></div>
+
+                                <p class="paypal-label">Complete payment securely with PayPal</p>
+                                <div id="paypal-button-container"></div>
+                                <p class="secure-msg">🔒 Secured by PayPal · AES-256 Encryption · Cancel anytime</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer class="footer">
+                        <div class="footer-logo">מ MENAHEL<span>AI</span></div>
+                        <p class="footer-sub">© 2024 MENAHEL. The Controller of AI Power. All rights reserved.</p>
+                    </footer>
+                `;
+
+                this.loadPayPal();
+            },
+
+            loadPayPal() {
+                const plan = this.selectedPlan;
+                // Replace 'YOUR_PAYPAL_CLIENT_ID' with your actual PayPal client ID
+                if (!window.paypal) {
+                    console.error("PayPal SDK not loaded. Please check your client-id.");
+                    alert("Payment processing is temporarily unavailable. Please try again later.");
+                    return;
+                }
+
+                paypal.Buttons({
+                    style: { layout:'vertical', color:'gold', shape:'rect', label:'paypal' },
+
+                    createOrder(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                description: `MENAHEL - ${plan.name} Plan`,
+                                amount: { currency_code: 'USD', value: plan.price }
+                            }]
+                        });
+                    },
+
+                    onApprove(data, actions) {
+                        return actions.order.capture().then(details => {
+                            MENAHEL.onSuccess(details);
+                        });
+                    },
+
+                    onCancel() { console.log('Payment cancelled by user.'); },
+                    onError(err) { console.error(err); alert('Payment error. Please try again.'); }
+
+                }).render('#paypal-button-container');
+            },
+
+            onSuccess(details) {
+                const plan = this.selectedPlan;
+                localStorage.setItem('menahel_paid', 'true');
+                localStorage.setItem('menahel_plan', plan.name);
+                localStorage.setItem('menahel_email', details.payer.email_address || '');
+                localStorage.setItem('menahel_name', details.payer.name?.given_name || '');
+
+                document.getElementById('app').innerHTML = `
+                    <nav class="nav">
+                        <a href="#" class="nav-logo" onclick="MENAHEL.renderLanding(); return false;">
+                            מ MENAHEL<span>AI</span>
+                        </a>
+                    </nav>
+
+                    <section class="hero-section min-h-screen flex items-center justify-center py-20">
+                        <div class="success-wrap">
+                            <div class="success-ring"></div>
+                            <div class="success-icon">👑</div>
+                            <h2 class="success-title">Access Granted</h2>
+                            <p class="section-sub">${plan.emoji} ${plan.name} — ACTIVE</p>
+                            <p class="success-sub">Welcome to MENAHEL. You now control the AI. Your access is live.</p>
+                            <button class="btn-primary" onclick="MENAHEL.renderLanding();">
+                                ⚡ Enter MENAHEL →
+                            </button>
+                        </div>
+                    </section>
+
+                    <footer class="footer">
+                        <div class="footer-logo">מ MENAHEL<span>AI</span></div>
+                        <p class="footer-sub">© 2024 MENAHEL. The Controller of AI Power. All rights reserved.</p>
+                    </footer>
+                `;
+            },
+
+            scrollTo(id) {
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            PARTICLES.init();
+            MENAHEL.init();
+        });
+    </script>
+</body>
+</html>

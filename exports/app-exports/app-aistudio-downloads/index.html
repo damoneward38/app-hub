@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AISTUDIO-DOWNLOADS — code snippet gallery</title>
+<style>
+  :root{color-scheme:dark;--bg:#0d1117;--panel:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:1040px;margin:0 auto;padding:52px 24px 80px}
+  header{border-bottom:1px solid #21262d;padding-bottom:24px;margin-bottom:26px}
+  .badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:12px;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+  h1{font-size:34px;margin:0 0 8px;letter-spacing:-.5px}h1 b{color:var(--accent)}
+  .t{font-size:17px;color:var(--muted);margin:0}
+  .layout{display:grid;grid-template-columns:340px 1fr;gap:18px;margin-top:20px}
+  @media(max-width:860px){.layout{grid-template-columns:1fr}}
+  .filelist{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;align-self:start}
+  .filelist .grp{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:8px 10px 6px;font-weight:700}
+  .fbtn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;color:var(--text);font:inherit;padding:10px;border-radius:8px;cursor:pointer}
+  .fbtn:hover{background:#1c2128}
+  .fbtn.active{background:#1f6feb22;border:1px solid #1f6feb55;color:var(--accent)}
+  .fbtn .ext{display:inline-block;min-width:44px;text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:700;border-radius:5px;padding:2px 6px;background:#1c2128;border:1px solid var(--line);color:#f0883e}
+  .fbtn .nm{font-family:ui-monospace,Menlo,monospace;font-size:13px}
+  .fbtn .sz{margin-left:auto;color:var(--muted);font-size:11.5px}
+  .viewer{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-height:560px}
+  .vhead{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:12px 16px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--muted);flex-wrap:wrap}
+  .vhead .actions a{margin-left:12px}
+  .vbody{padding:18px 20px;overflow:auto;max-height:620px}
+  .vbody pre{margin:0;background:#0b0f14;border:1px solid var(--line);border-radius:8px;padding:16px 18px;overflow-x:auto}
+  .vbody code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.65;color:#c9d1d9;white-space:pre}
+  .meta{color:var(--muted);font-size:13.5px;margin-top:14px}
+  footer{margin-top:44px;color:#484f58;font-size:13px;border-top:1px solid #21262d;padding-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">Downloads · snippets</div>
+    <h1><b>AISTUDIO-DOWNLOADS</b></h1>
+    <p class="t">Code snippets exported from AI Studio — browse, preview, and download each real file below.</p>
+  </header>
+
+  <p class="meta">
+    Source: <a href="https://github.com/damoneward38/AISTUDIO-DOWNLOADS" target="_blank">github.com/damoneward38/AISTUDIO-DOWNLOADS</a>
+    · Clone: <code>git clone https://github.com/damoneward38/AISTUDIO-DOWNLOADS.git</code>
+  </p>
+
+  <div class="layout">
+    <div class="filelist" id="filelist">
+      <div class="grp">Files (4)</div>
+    </div>
+    <div class="viewer">
+      <div class="vhead">
+        <span id="vname">ai_studio_code.py</span>
+        <span class="actions">
+          <a id="vraw" href="ai_studio_code.py" target="_blank">open raw ↗</a>
+          <a id="vdl" href="ai_studio_code.py" download>download ⭳</a>
+        </span>
+      </div>
+      <div class="vbody" id="vbody"><pre><code>Loading…</code></pre></div>
+    </div>
+  </div>
+
+  <footer>damoneward38/AISTUDIO-DOWNLOADS · real snippet files served from this directory</footer>
+</div>
+
+<script>
+const FILES = [
+  { name: "ai_studio_code.py",  ext: "PY",  desc: "Prefect flow that routes AI calls through the gateway service." },
+  { name: "ai_studio_code.sh",  ext: "SH",  desc: "Container + orchestration quick-start commands (docker compose, Prefect)." },
+  { name: "ai_studio_code.txt", ext: "TXT", desc: "React Three Fiber crate component with a canvas label texture." },
+  { name: "ai_studio_code.css", ext: "CSS", desc: "Styles for a fixed on-screen console panel." }
+];
+
+const listEl = document.getElementById("filelist");
+const nameEl = document.getElementById("vname");
+const bodyEl = document.getElementById("vbody");
+const rawEl  = document.getElementById("vraw");
+const dlEl   = document.getElementById("vdl");
+
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function humanSize(n){
+  return n < 1024 ? n + " B" : (n/1024).toFixed(1) + " KB";
+}
+
+FILES.forEach(f => {
+  const b = document.createElement("button");
+  b.className = "fbtn";
+  b.innerHTML = '<span class="ext">'+f.ext+'</span><span class="nm">'+f.name+'</span><span class="sz"></span>';
+  b.onclick = () => view(f, b);
+  listEl.appendChild(b);
+  fetch(f.name,{method:"HEAD"}).then(r=>{
+    const len = r.headers.get("content-length");
+    if(len) b.querySelector(".sz").textContent = humanSize(+len);
+  }).catch(()=>{});
+});
+
+async function view(f, btn){
+  document.querySelectorAll(".fbtn").forEach(x=>x.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  nameEl.textContent = f.name;
+  rawEl.href = f.name;
+  dlEl.href = f.name;
+  bodyEl.innerHTML = "<pre><code>Loading…</code></pre>";
+  try{
+    const r = await fetch(f.name);
+    if(!r.ok) throw new Error(r.status + " " + r.statusText);
+    bodyEl.innerHTML = "<pre><code>"+esc(await r.text())+"</code></pre>";
+  }catch(e){
+    bodyEl.innerHTML = "<pre><code style='color:#f0883e'>Could not load "+esc(f.name)+" ("+esc(String(e))+"). "+
+      "Serve this directory over HTTP to preview it.</code></pre>";
+  }
+}
+
+view(FILES[0], document.querySelector(".fbtn"));
+</script>
+</body>
+</html>

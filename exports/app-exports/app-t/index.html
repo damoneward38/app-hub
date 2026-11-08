@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WellnessIQ</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a1a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, #0f3460, #16213e);
+        }
+        .button-gradient {
+            background: linear-gradient(135deg, #4ade80, #22d3ee);
+        }
+        .section-gradient {
+            background: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="header-gradient p-6 text-center">
+        <h1 class="text-4xl font-bold text-white">WellnessIQ</h1>
+        <p class="text-sm text-gray-300 mt-2">Your Personal Wellness Guide</p>
+    </header>
+    <main class="flex-1 overflow-auto p-4">
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Fitness Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 section-gradient rounded-lg">
+                    <h3 class="text-lg font-bold">Today's Workout Plan</h3>
+                    <div class="mt-2">
+                        <p>Focus: Full Body HIIT</p>
+                        <p>Duration: 45 minutes</p>
+                        <p>Exercises: 6</p>
+                    </div>
+                </div>
+                <div class="p-4 section-gradient rounded-lg">
+                    <h3 class="text-lg font-bold">Today's Stats</h3>
+                    <div class="mt-2">
+                        <p>Steps: 7432</p>
+                        <p>Calories Burned: 1847</p>
+                        <p>Water Glasses: 6</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Nutrition Dashboard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 section-gradient rounded-lg">
+                    <h3 class="text-lg font-bold">Daily Calorie Intake</h3>
+                    <p>Calories Consumed: 1240 / 1800</p>
+                </div>
+                <div class="p-4 section-gradient rounded-lg">
+                    <h3 class="text-lg font-bold">Macro Nutrients</h3>
+                    <p>Protein: 78g / 100g</p>
+                    <p>Carbs: 145g / 180g</p>
+                    <p>Fat: 42g / 60g</p>
+                </div>
+            </div>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="button-gradient text-white p-3 rounded-lg">📷 Scan Meal</button>
+                <button class="button-gradient text-white p-3 rounded-lg">💪 Start Workout</button>
+                <button class="button-gradient text-white p-3 rounded-lg">🌿 Natural Remedies</button>
+                <button class="button-gradient text-white p-3 rounded-lg">🩺 Connect Doctor</button>
+            </div>
+        </section>
+    </main>
+    <footer class="p-4 text-center text-gray-500">
+        <p>&copy; 2023 WellnessIQ - All Rights Reserved</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Example: Fetch and display user data
+            const user = {
+                name: 'Alex',
+                age: 28,
+                weight: 185,
+                height: 70,
+                bodyType: 'mesomorph'
+            };
+
+            // Example: Update UI with user data
+            console.log(`Welcome ${user.name}!`);
+        });
+    </script>
+</body>
+</html>

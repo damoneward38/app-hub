@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gifted Eternity Platform — music, AI bots &amp; creator monetization</title>
+<style>
+  :root{color-scheme:dark;--bg:#0d1117;--panel:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#f778ba;--green:#3fb950}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:56px 24px 80px}
+  header{border-bottom:1px solid #21262d;padding-bottom:26px;margin-bottom:30px}
+  .badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:12px;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+  h1{font-size:38px;margin:0 0 8px;letter-spacing:-.5px}
+  .t{font-size:18px;color:var(--muted);margin:0;max-width:720px}
+  h2{font-size:21px;margin:38px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card h3{margin:0 0 6px;font-size:15px;color:var(--accent)}
+  .card p{margin:0;font-size:13.5px;color:var(--muted)}
+  .pill{display:inline-block;background:#1c2128;border:1px solid var(--line);border-radius:6px;padding:4px 10px;margin:3px 5px 3px 0;font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+  pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px 17px;overflow-x:auto}
+  pre code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.7}
+  .tree{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#c9d1d9;white-space:pre;overflow-x:auto}
+  .tree b{color:var(--accent)}
+  .note{background:#12211a;border:1px solid #1f4d33;border-left:3px solid var(--green);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:14px;color:#c9d1d9}
+  footer{margin-top:48px;color:#484f58;font-size:13px;border-top:1px solid #21262d;padding-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">Full-stack · Next.js + tRPC + Drizzle</div>
+    <h1>Gifted Eternity Platform</h1>
+    <p class="t">A full-stack platform for music sales, AI bots, subscriptions, and creator monetization.</p>
+  </header>
+
+  <h2>Features</h2>
+  <div class="grid">
+    <div class="card"><h3>Gospel Music Marketplace</h3><p>Song sales at $1 per track.</p></div>
+    <div class="card"><h3>AI Bot Subscriptions</h3><p>Tiered bot access with gated features.</p></div>
+    <div class="card"><h3>Knowledge Base Training</h3><p>Upload and train bots on custom content.</p></div>
+    <div class="card"><h3>Artist Dashboards</h3><p>Analytics and management for creators.</p></div>
+    <div class="card"><h3>Monetization &amp; Payouts</h3><p>PayPal-backed payments and payouts.</p></div>
+    <div class="card"><h3>Engagement Tracking</h3><p>User activity and engagement metrics.</p></div>
+  </div>
+
+  <h2>Tech stack</h2>
+  <div>
+    <span class="pill">Next.js</span><span class="pill">tRPC</span><span class="pill">Drizzle ORM</span>
+    <span class="pill">PostgreSQL</span><span class="pill">PayPal SDK</span><span class="pill">Stripe</span>
+    <span class="pill">React</span><span class="pill">TypeScript</span>
+  </div>
+
+  <h2>Setup</h2>
+  <pre><code>pnpm install
+pnpm db:push
+npm run build
+npm run test</code></pre>
+
+  <h2>Repository layout</h2>
+  <div class="tree"><b>client/src</b>
+  components/  BotMarketplaceFilter.tsx · ContentMasterBotStore.tsx · KnowledgeBaseUpload.tsx
+  pages/       BotStore.tsx · BotStoreSimple.tsx
+<b>server</b>
+  routers/     botAnalytics · botCheckout · botPurchase · contentMaster · knowledgeBase
+  contentMaster/  bulkImportService.ts · paymentService.ts
+  services/    botCheckout.ts · hasActiveSubscription.ts · analyticsService.ts
+  webhooks/    PayPal route
+  *.test.ts    botStore · contentMaster · botCheckout
+  services/drizzle/  artist_dashboard_schema · user_engagement_schema · upload_schema</div>
+
+  <div class="note">
+    <strong>Running it:</strong> this is a full-stack app. The repo here contains the React <code>client/src</code>
+    and Node/tRPC <code>server</code> source; install dependencies with <code>pnpm install</code> (or <code>npm install</code>),
+    push the Drizzle schema to PostgreSQL, then run the dev/build scripts. Static hosting alone cannot run the
+    server, database, or PayPal webhooks — deploy to a Node host (Railway, Render, Fly.io) plus a PostgreSQL database.
+  </div>
+
+  <footer>Gifted Eternity Platform · client + server source tree</footer>
+</div>
+</body>
+</html>

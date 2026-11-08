@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Kept outside Integrav/ on purpose: that folder is file-system
+	     synchronized, so a plist in there would also be copied as a bundle
+	     resource and collide with the processed Info.plist.
+
+	     The bridge runs on the user's own machine and is reached over plain
+	     HTTP on the local network. NSAllowsLocalNetworking permits exactly
+	     that — private ranges and .local — while leaving App Transport
+	     Security fully enforced for everything on the public internet. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+</dict>
+</plist>
