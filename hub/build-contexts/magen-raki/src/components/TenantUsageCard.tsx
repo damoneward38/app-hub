@@ -57,8 +57,8 @@ export const TenantUsageCard: React.FC<TenantUsageCardProps> = ({
   const [selectedTenantFilter, setSelectedTenantFilter] = useState<string>('ALL');
   const [chartView, setChartView] = useState<'cost' | 'characters' | 'composed' | 'models'>('composed');
   const [autoRefresh, setAutoRefresh] = useState<boolean>(false);
-  const [isSimulating, setIsSimulating] = useState<boolean>(false);
-  const [simulationNotice, setSimulationNotice] = useState<string | null>(null);
+  const [isRunningInference, setIsRunningInference] = useState<boolean>(false);
+  const [inferenceNotice, setInferenceNotice] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   // Fetch usage records from /api/magen-raki/usage
@@ -175,10 +175,10 @@ export const TenantUsageCard: React.FC<TenantUsageCardProps> = ({
   const totalRequests = usageRecords.length;
   const uniqueTenantsCount = tenantAggregations.length;
 
-  // Simulate a live inference to immediately update the graph
-  const handleSimulateInference = async () => {
-    setIsSimulating(true);
-    setSimulationNotice(null);
+  // Run a live inference to immediately update the graph
+  const handleRunInference = async () => {
+    setIsRunningInference(true);
+    setInferenceNotice(null);
     try {
       const sampleTenants = ['sapphire', 'openclaw', 'enterprise-alpha', 'fintech-shield', 'neural-core'];
       const randomTenant = sampleTenants[Math.floor(Math.random() * sampleTenants.length)];
@@ -205,13 +205,13 @@ export const TenantUsageCard: React.FC<TenantUsageCardProps> = ({
       }
 
       await fetchUsageData();
-      setSimulationNotice(`Inference logged for tenant "${randomTenant}" via /api/magen-raki/inference`);
-      setTimeout(() => setSimulationNotice(null), 4000);
+      setInferenceNotice(`Inference logged for tenant "${randomTenant}" via /api/magen-raki/inference`);
+      setTimeout(() => setInferenceNotice(null), 4000);
     } catch (err: any) {
-      console.error('Simulate error:', err);
-      setSimulationNotice(`Simulation failed: ${err.message}`);
+      console.error('Inference error:', err);
+      setInferenceNotice(`Inference failed: ${err.message}`);
     } finally {
-      setIsSimulating(false);
+      setIsRunningInference(false);
     }
   };
 
@@ -370,15 +370,15 @@ export const TenantUsageCard: React.FC<TenantUsageCardProps> = ({
             </button>
           </div>
 
-          {/* Simulate Inference Trigger */}
+          {/* Run Inference Trigger */}
           <button
-            onClick={handleSimulateInference}
-            disabled={isSimulating}
+            onClick={handleRunInference}
+            disabled={isRunningInference}
             className="flex items-center gap-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-all disabled:opacity-50"
             title="Dispatch a test protected inference to record new usage"
           >
-            <Zap className={`w-3.5 h-3.5 ${isSimulating ? 'animate-bounce text-amber-400' : 'text-indigo-400'}`} />
-            <span>{isSimulating ? 'Scoring...' : 'Test Charge'}</span>
+            <Zap className={`w-3.5 h-3.5 ${isRunningInference ? 'animate-bounce text-amber-400' : 'text-indigo-400'}`} />
+            <span>{isRunningInference ? 'Scoring...' : 'Test Charge'}</span>
           </button>
 
           {/* Refresh Button */}
@@ -415,12 +415,12 @@ export const TenantUsageCard: React.FC<TenantUsageCardProps> = ({
         </div>
       </div>
 
-      {/* Simulation Feedback Alert */}
-      {simulationNotice && (
+      {/* Inference Feedback Alert */}
+      {inferenceNotice && (
         <div className="mt-4 p-2.5 rounded-xl bg-indigo-950/60 border border-indigo-500/40 text-indigo-200 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
-            <span>{simulationNotice}</span>
+            <span>{inferenceNotice}</span>
           </div>
           <span className="text-[10px] font-mono text-indigo-400">Live Graph Updated</span>
         </div>

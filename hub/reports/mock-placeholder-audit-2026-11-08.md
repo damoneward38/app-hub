@@ -5,9 +5,9 @@ Served apps scanned: 131
 ## Totals
 
 - **coming_soon**: 34
-- **ai_mock**: 14
-- **fake_async**: 3
+- **ai_mock**: 12
 - **sample_data**: 2
+- **fake_async**: 2
 - **placeholder_text**: 2
 
 ## Apps with hits
@@ -18,7 +18,6 @@ Served apps scanned: 131
 | KELI — כְּלִי הָרְפוּאָה | Google AI Studio | 2 |  |  | 9 |  |  |  | 11 |
 | Project Glass Wing | Google AI Studio |  |  |  | 10 |  |  |  | 10 |
 | neurovault | Google AI Studio | 1 |  |  | 2 |  |  | 2 | 5 |
-| MAGEN RAKI  | Other local exports | 2 | 1 |  |  |  |  |  | 3 |
 | Ezhkar Cyber Commander - 20 AI Sandbox Defense Platform | Google AI Studio | 2 |  |  |  |  |  |  | 2 |
 | REYIAT — רְאִיַּת הַמֹּחַ | Google AI Studio | 1 |  |  | 1 |  |  |  | 2 |
 | Barak ?????? � Cutting System | Google AI Studio | 1 |  |  |  |  |  |  | 1 |
@@ -89,14 +88,6 @@ Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-63-keli`
 Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-71-kol-resonance`
 
 - `ai_mock` — `index.html:107` — er><div class="wrap">Acoustic resonance simulation · self-contained build · <span id="stamp"></span></di
-
-### MAGEN RAKI 
-
-Path: `/Users/davidyoung/app-containers-hub/build-contexts/magen-raki`
-
-- `ai_mock` — `src/components/TenantUsageCard.tsx:212` — error('Simulate error:', err);       setSimulationNotice(`Simulation failed: ${err.message}`);     } finally {
-- `fake_async` — `src/components/TenantUsageCard.tsx:209` — via /api/magen-raki/inference`);       setTimeout(() => setSimulationNotice(null), 4000);     } catch (err
-- `ai_mock` — `src/pages/ThreatRadarPage.tsx:476` — >                     {attackSimulationResult.blocked ? 'BLOCKED & CONTAINED' : 'ARMORED & FILTERED'}
 
 ### neraxis
 

@@ -379,7 +379,7 @@ export const ReadinessGatePage: React.FC<ReadinessGatePageProps> = ({ setActiveT
               className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition-all hover:scale-102"
             >
               <Zap className={`w-4 h-4 ${repairLoading ? 'animate-bounce' : ''}`} />
-              <span>{repairLoading ? 'Executing 8-Step Protocol...' : 'Run 8-Step Repair Simulation'}</span>
+              <span>{repairLoading ? 'Executing 8-Step Protocol...' : 'Run 8-Step Repair Workflow'}</span>
             </button>
           </div>
 

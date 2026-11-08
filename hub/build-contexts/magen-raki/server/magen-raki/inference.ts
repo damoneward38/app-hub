@@ -1,27 +1,20 @@
 import axios from "axios";
-import { GoogleGenAI } from "@google/genai";
 import { cacheKey, getCached, setCached } from "./warmCache.js";
 import { scoreInference, hardenRequest } from "./riskHardening.js";
 import { recordUsage } from "./usageMeter.js";
 import { recordHeartbeat } from "./heartbeat.js";
 import type { InferenceRequest, InferenceResult } from "./types.js";
 
-const DEFAULT_OLLAMA_URL = "http://127.0.0.1:11434";
-const DEFAULT_MODEL = "llama3:latest";
+const OLLAMA_CANDIDATES = [
+  process.env.OLLAMA_URL,
+  "http://host.docker.internal:11434",
+  "http://127.0.0.1:11434",
+  "http://localhost:11434",
+].filter(Boolean) as string[];
+const DEFAULT_MODEL = process.env.OLLAMA_MODEL || "llama3.2";
 
-function getGeminiClient(): GoogleGenAI | null {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || apiKey === "MY_GEMINI_API_KEY") {
-    return null;
-  }
-  return new GoogleGenAI({
-    apiKey: apiKey,
-    httpOptions: {
-      headers: {
-        "User-Agent": "aistudio-build",
-      },
-    },
-  });
+function ollamaEndpoints(preferred?: string): string[] {
+  return Array.from(new Set([preferred, ...OLLAMA_CANDIDATES].filter(Boolean) as string[]));
 }
 
 export async function runProtectedInference(
@@ -39,7 +32,7 @@ export async function runProtectedInference(
   }
 
   const modelName = request.model || DEFAULT_MODEL;
-  const endpoint = (request.metadata?.ollamaUrl as string) || DEFAULT_OLLAMA_URL;
+  const preferredEndpoint = request.metadata?.ollamaUrl as string | undefined;
   const key = cacheKey(modelName, request.prompt);
 
   const cached = getCached<InferenceResult>(key);
@@ -57,41 +50,30 @@ export async function runProtectedInference(
   }
 
   let output = "";
-
-  // Attempt local Ollama endpoint (e.g. user terminal or container localhost)
-  try {
-    const response = await axios.post(
-      `${endpoint}/api/generate`,
-      {
-        model: modelName,
-        prompt,
-        stream: false,
-      },
-      {
-        timeout: 4000,
-      }
-    );
-    output = response.data?.response || "";
-  } catch (err: any) {
-    // If local Ollama is not running in current container, fallback to Gemini / Nero-4.0
-    const gemini = getGeminiClient();
-    if (gemini) {
-      try {
-        const genResponse = await gemini.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: prompt,
-          config: {
-            systemInstruction:
-              "You are Neural Core Engine Nero-4.0 running under Magen-Raki Six 686 hardware security shielding. Provide concise, safe, high-assurance responses.",
-          },
-        });
-        output = genResponse.text || "";
-      } catch (geminiErr: any) {
-        output = `[Nero-4.0 Hardware Protected Enclave Response] Processed inference under Magen-Raki Shield. Risk Score: ${risk.score}/100 (${risk.level}). Output generated in isolated execution sandbox.`;
-      }
-    } else {
-      output = `[Nero-4.0 Hardware Protected Enclave Response] Processed inference safely under Magen-Raki Shield. Risk Score: ${risk.score}/100 (${risk.level}). Containment: ${risk.contained ? "ACTIVE" : "STANDARD"}.`;
+  const failures: string[] = [];
+  for (const endpoint of ollamaEndpoints(preferredEndpoint)) {
+    try {
+      const response = await axios.post(
+        `${endpoint}/api/generate`,
+        {
+          model: modelName,
+          prompt,
+          stream: false,
+        },
+        {
+          timeout: 120000,
+        }
+      );
+      output = String(response.data?.response || "").trim();
+      if (output) break;
+      failures.push(`${endpoint}: empty response`);
+    } catch (error: any) {
+      failures.push(`${endpoint}: ${error?.code || error?.message || "unreachable"}`);
     }
+  }
+
+  if (!output) {
+    throw new Error(`Local Ollama is unavailable for Magen-Raki inference. Tried ${failures.join("; ")}`);
   }
 
   const latencyMs = Math.round(performance.now() - started);

@@ -22,7 +22,7 @@ magenRakiRouter.post("/inference", async (req, res) => {
     }
 
     const result = await runProtectedInference({
-      model: model || "llama3:latest",
+      model: model || process.env.OLLAMA_MODEL || "llama3.2",
       prompt,
       tenantId: tenantId || "default",
       metadata,
