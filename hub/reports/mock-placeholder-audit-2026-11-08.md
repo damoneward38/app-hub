@@ -65,15 +65,15 @@ Path: `/Users/davidyoung/app-containers-hub/build-contexts/tahnizhoo`
 
 Path: `/Users/davidyoung/GitHub-Pull/AISTUDIO-APPS/as-03-tan-h-zoo`
 
-- `ai_mock` — `assets/index-Dmmz5lPR.js:9` — ble:`core-sec-001 (CVE Hunter Lead)`,details:`Scanned 12 dependencies and master audio format
-- `ai_mock` — `assets/index-Dmmz5lPR.js:41` — children:[(0,L.jsxs)(`span`,{children:[`SIMULATED API RESPONSE: HTTP `,ge.status,` `,ge.error]}),(0,L.
-- `ai_mock` — `assets/index-Dmmz5lPR.js:72` — :`text-slate-400 text-[11px]`,children:`Simulates a request against an enterprise-gated endpoint with an
-- `ai_mock` — `assets/index-Dmmz5lPR.js:72` — xt-slate-500 uppercase block`,children:`SIMULATED ENDPOINT RESPONSE:`}),(0,L.jsx)(`pre`,{className:`text-sl
-- `ai_mock` — `assets/index-Dmmz5lPR.js:254` — child_process.exec", "raw_sql"]}`,sampleResponse:`{"scanned_files": 142, "taint_paths_found": 0, "s
-- `ai_mock` — `assets/index-Dmmz5lPR.js:385` — -emerald-400 block font-bold`,children:`SIMULATED EXECUTION RESPONSE (LOCAL OLLAMA / LOCALHOST BRIDGE):`}),(
-- `ai_mock` — `assets/index-Dmmz5lPR.js:394` — ifest unpack verified. 5 virtual files scanned for AST taint. Result: CLEAN.`),we(n=>({...n,[e]:{s
-- `fake_async` — `assets/index-Dmmz5lPR.js:72` — {navigator.clipboard.writeText(n),a(!0),setTimeout(()=>a(!1),2e3)},className:`p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition`,ti
-- `sample_data` — `assets/index-Dmmz5lPR.js:125` — . Evaluating suite: case_reasoning (450 test items)... [==================================
+- `ai_mock` — `assets/index-D33FPiFj.js:9` — ble:`core-sec-001 (CVE Hunter Lead)`,details:`Scanned 12 dependencies and master audio format
+- `ai_mock` — `assets/index-D33FPiFj.js:41` — children:[(0,L.jsxs)(`span`,{children:[`SIMULATED API RESPONSE: HTTP `,ge.status,` `,ge.error]}),(0,L.
+- `ai_mock` — `assets/index-D33FPiFj.js:72` — :`text-slate-400 text-[11px]`,children:`Simulates a request against an enterprise-gated endpoint with an
+- `ai_mock` — `assets/index-D33FPiFj.js:72` — xt-slate-500 uppercase block`,children:`SIMULATED ENDPOINT RESPONSE:`}),(0,L.jsx)(`pre`,{className:`text-sl
+- `ai_mock` — `assets/index-D33FPiFj.js:254` — child_process.exec", "raw_sql"]}`,sampleResponse:`{"scanned_files": 142, "taint_paths_found": 0, "s
+- `ai_mock` — `assets/index-D33FPiFj.js:385` — -emerald-400 block font-bold`,children:`SIMULATED EXECUTION RESPONSE (LOCAL OLLAMA / LOCALHOST BRIDGE):`}),(
+- `ai_mock` — `assets/index-D33FPiFj.js:394` — ifest unpack verified. 5 virtual files scanned for AST taint. Result: CLEAN.`),we(n=>({...n,[e]:{s
+- `fake_async` — `assets/index-D33FPiFj.js:72` — {navigator.clipboard.writeText(n),a(!0),setTimeout(()=>a(!1),2e3)},className:`p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition`,ti
+- `sample_data` — `assets/index-D33FPiFj.js:125` — . Evaluating suite: case_reasoning (450 test items)... [==================================
 
 ### APP Vault
 
