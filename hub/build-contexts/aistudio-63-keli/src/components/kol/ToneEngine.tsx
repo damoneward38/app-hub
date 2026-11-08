@@ -9,14 +9,14 @@ import {
 
 /* ── Frequency Database ──────────────────────────────────── */
 const FREQUENCIES = [
-  { hz: 7.83,  name: "Schumann",   color: "#10b981", effect: "Earth baseline" },
-  { hz: 40,    name: "Gamma Lock", color: "#f59e0b", effect: "Brain coherence" },
-  { hz: 111,   name: "Pyramid",    color: "#fbbf24", effect: "King's Chamber" },
-  { hz: 174,   name: "Pain Relief",color: "#6366f1", effect: "Natural anesthetic" },
-  { hz: 285,   name: "Tissue",     color: "#06b6d4", effect: "Restoration" },
-  { hz: 432,   name: "Natural",    color: "#fbbf24", effect: "Harmonic tuning" },
-  { hz: 528,   name: "DNA Repair", color: "#fbbf24", effect: "Regeneration" },
-  { hz: 963,   name: "Crown",      color: "#f0abfc", effect: "Pineal activation" },
+  { hz: 7.83,  name: "Schumann",   color: "#10b981", effect: "Audio preset" },
+  { hz: 40,    name: "Gamma Lock", color: "#f59e0b", effect: "Audio preset" },
+  { hz: 111,   name: "Pyramid",    color: "#fbbf24", effect: "Historical label" },
+  { hz: 174,   name: "Pain Relief",color: "#6366f1", effect: "Unverified claim" },
+  { hz: 285,   name: "Tissue",     color: "#06b6d4", effect: "Unverified claim" },
+  { hz: 432,   name: "Natural",    color: "#fbbf24", effect: "Tuning option" },
+  { hz: 528,   name: "528Hz",      color: "#fbbf24", effect: "Unverified claim" },
+  { hz: 963,   name: "Crown",      color: "#f0abfc", effect: "Unverified claim" },
 ];
 
 export default function ToneEngine() {

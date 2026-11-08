@@ -27,38 +27,38 @@ import { loginWithGoogle, auth } from "../lib/firebase";
 /* ── Complete frequency database ─────────────────────────── */
 const ALL_FREQUENCIES = [
   // Schumann / Earth
-  { hz: 7.83,  name: "Schumann",        color: "#10b981", category: "earth",       effect: "Earth heartbeat. Brain lock. Essential baseline."               },
-  { hz: 8.22,  name: "Antarctic",       color: "#38bdf8", category: "earth",       effect: "Pole-specific Schumann. Antarctic receiver frequency."          },
+  { hz: 7.83,  name: "Schumann",        color: "#10b981", category: "earth",       effect: "Earth-ionosphere resonance. Audio preset only."               },
+  { hz: 8.22,  name: "Antarctic",       color: "#38bdf8", category: "earth",       effect: "Schumann-resonance variant. Audio preset only."          },
   // Brain waves
-  { hz: 0.5,   name: "Epsilon",         color: "#6366f1", category: "brainwave",   effect: "Deepest quantum coherence. Beyond delta sleep."                 },
-  { hz: 2,     name: "Delta Deep",      color: "#6366f1", category: "brainwave",   effect: "Deep healing sleep. Growth hormone. Maximum repair."            },
-  { hz: 4,     name: "Theta Gate",      color: "#8b5cf6", category: "brainwave",   effect: "Meditation. Memory. Subconscious access."                       },
-  { hz: 10,    name: "Alpha Peak",      color: "#06b6d4", category: "brainwave",   effect: "Flow state. Anti-anxiety. Serotonin release."                   },
-  { hz: 14,    name: "Beta Focus",      color: "#10b981", category: "brainwave",   effect: "Active thinking. Alert. Cognitive function."                    },
-  { hz: 40,    name: "Gamma Lock",      color: "#f59e0b", category: "brainwave",   effect: "MIT confirmed. Brain cleaning. Alzheimer's prevention. Peak."   },
+  { hz: 0.5,   name: "Epsilon",         color: "#6366f1", category: "brainwave",   effect: "Very low-frequency audio preset. No quantum or sleep effect is measured."                 },
+  { hz: 2,     name: "Delta Deep",      color: "#6366f1", category: "brainwave",   effect: "Low-frequency audio preset. No sleep or hormone effect is measured."            },
+  { hz: 4,     name: "Theta Gate",      color: "#8b5cf6", category: "brainwave",   effect: "Audio preset for meditation context. No memory or subconscious effect is measured."                       },
+  { hz: 10,    name: "Alpha Peak",      color: "#06b6d4", category: "brainwave",   effect: "Audio preset. No anxiety or neurotransmitter effect is measured."                   },
+  { hz: 14,    name: "Beta Focus",      color: "#10b981", category: "brainwave",   effect: "Audio preset. No cognitive effect is measured."                    },
+  { hz: 40,    name: "Gamma Lock",      color: "#f59e0b", category: "brainwave",   effect: "Preclinical gamma research context. Not an Alzheimer's treatment; no effect measured."   },
   // Healing
-  { hz: 32,    name: "Nitric Oxide",    color: "#ef4444", category: "healing",     effect: "Blood vessel dilation. Circulation. O2 delivery."              },
-  { hz: 54,    name: "Heart Resonance", color: "#f43f5e", category: "healing",     effect: "Heart muscle resonance. HRV improvement."                      },
-  { hz: 111,   name: "Pyramid Gate",   color: "#fbbf24", category: "ancient",     effect: "King's Chamber freq. Right brain. Initiation state."            },
-  { hz: 136.1, name: "OM Tone",        color: "#f97316", category: "planetary",   effect: "Earth-Sun orbital tone. Universal OM. Grounding."               },
+  { hz: 32,    name: "Nitric Oxide",    color: "#ef4444", category: "healing",     effect: "Audio preset. No nitric-oxide, circulation, or oxygen effect is measured."              },
+  { hz: 54,    name: "Heart Resonance", color: "#f43f5e", category: "healing",     effect: "Audio preset. No cardiac or HRV effect is measured."                      },
+  { hz: 111,   name: "Pyramid Gate",   color: "#fbbf24", category: "ancient",     effect: "Historical/anecdotal association. Audio preset only."            },
+  { hz: 136.1, name: "OM Tone",        color: "#f97316", category: "planetary",   effect: "Audio preset. No orbital or grounding effect is measured."               },
   // Solfeggio
-  { hz: 174,   name: "Pain Relief",    color: "#6366f1", category: "solfeggio",   effect: "Natural anesthetic. Organs feel safe. Trauma release."          },
-  { hz: 285,   name: "Tissue Repair",  color: "#06b6d4", category: "solfeggio",   effect: "Cellular restructuring. Wound healing. Organ restoration."      },
-  { hz: 396,   name: "Liberation",     color: "#7c3aed", category: "solfeggio",   effect: "Fear and guilt release. PTSD. Root energy grounding."           },
-  { hz: 417,   name: "Transform",      color: "#8b5cf6", category: "solfeggio",   effect: "Break old patterns. Facilitate change. Clear trauma."           },
-  { hz: 432,   name: "David Harp",     color: "#fbbf24", category: "ancient",     effect: "Natural tuning. Drives out fear. Heart coherence. DNA harmony." },
-  { hz: 528,   name: "DNA Repair",     color: "#fbbf24", category: "solfeggio",   effect: "DNA repair confirmed. Oxytocin. Cellular regeneration."         },
-  { hz: 639,   name: "Connection",     color: "#ec4899", category: "solfeggio",   effect: "Cell communication. Relationships. Heart coherence."            },
-  { hz: 741,   name: "Detox",          color: "#84cc16", category: "solfeggio",   effect: "Cellular toxin clearing. EMF protection. Expression."           },
-  { hz: 852,   name: "Intuition",      color: "#a78bfa", category: "solfeggio",   effect: "Third eye. Intuition. Higher self communication."               },
-  { hz: 963,   name: "Crown",          color: "#f0abfc", category: "consciousness", effect: "Pineal activation. Unity consciousness. Crown chakra."        },
+  { hz: 174,   name: "Pain Relief",    color: "#6366f1", category: "solfeggio",   effect: "Audio preset. No anesthetic, pain, or trauma effect is measured."          },
+  { hz: 285,   name: "285Hz Preset",   color: "#06b6d4", category: "solfeggio",   effect: "Audio preset. No tissue, wound-healing, or organ effect is measured."      },
+  { hz: 396,   name: "Liberation",     color: "#7c3aed", category: "solfeggio",   effect: "Audio preset. No trauma, PTSD, or grounding effect is measured."           },
+  { hz: 417,   name: "Transform",      color: "#8b5cf6", category: "solfeggio",   effect: "Audio preset. No behavioral or trauma effect is measured."           },
+  { hz: 432,   name: "David Harp",     color: "#fbbf24", category: "ancient",     effect: "Alternative tuning preference. No health or DNA effect is measured." },
+  { hz: 528,   name: "528Hz Preset",    color: "#fbbf24", category: "solfeggio",   effect: "Biological effects are unverified; audio preset only."         },
+  { hz: 639,   name: "Connection",     color: "#ec4899", category: "solfeggio",   effect: "Audio preset. No relationship or cellular effect is measured."            },
+  { hz: 741,   name: "741Hz Preset",    color: "#84cc16", category: "solfeggio",   effect: "Audio preset. No detox or EMF effect is measured."           },
+  { hz: 852,   name: "Intuition",      color: "#a78bfa", category: "solfeggio",   effect: "Audio preset. No intuition or 'third eye' effect is measured."               },
+  { hz: 963,   name: "Crown",          color: "#f0abfc", category: "consciousness", effect: "Audio preset. No pineal or consciousness effect is measured."        },
   // Rife research
-  { hz: 728,   name: "Rife General",   color: "#ef4444", category: "rife",        effect: "Rife MOR — general pathogen. Research only."                    },
-  { hz: 784,   name: "Rife Secondary", color: "#f97316", category: "rife",        effect: "Rife secondary frequency. Research only."                       },
-  { hz: 880,   name: "Rife Tertiary",  color: "#fbbf24", category: "rife",        effect: "Rife tertiary support. Research only."                          },
-  { hz: 1550,  name: "Rife Prostate",  color: "#3b82f6", category: "rife",        effect: "Rife prostate MOR. Research only."                              },
-  { hz: 2008,  name: "Rife Sarcoma",   color: "#a855f7", category: "rife",        effect: "Rife sarcoma MOR. Research only."                               },
-  { hz: 2128,  name: "Rife Carcinoma", color: "#ef4444", category: "rife",        effect: "Rife carcinoma MOR. Research only."                             },
+  { hz: 728,   name: "Rife General",   color: "#ef4444", category: "rife",        effect: "Historical concept with no established medical efficacy. Research only."                    },
+  { hz: 784,   name: "Rife Secondary", color: "#f97316", category: "rife",        effect: "Historical concept, no established medical efficacy. Research only."                       },
+  { hz: 880,   name: "Rife Tertiary",  color: "#fbbf24", category: "rife",        effect: "Historical concept, no established medical efficacy. Research only."                          },
+  { hz: 1550,  name: "Rife Prostate",  color: "#3b82f6", category: "rife",        effect: "Historical concept, no established medical efficacy. Research only."                              },
+  { hz: 2008,  name: "Rife Sarcoma",   color: "#a855f7", category: "rife",        effect: "Historical concept, no established medical efficacy. Research only."                               },
+  { hz: 2128,  name: "Rife Carcinoma", color: "#ef4444", category: "rife",        effect: "Historical concept, no established medical efficacy. Research only."                             },
 ];
 
 /* ── Healing protocols ───────────────────────────────────── */
@@ -70,7 +70,7 @@ const PROTOCOLS = [
     freqs:   [7.83, 40, 528, 285, 432, 174],
     o2:      90,
     duration: 60,
-    desc:    "Complete cellular restoration. Brain gamma lock. DNA repair. O2 amplification.",
+    desc:    "Audio and oxygen concepts for education only; no cellular response is measured.",
     targets: ["brain","heart","liver","lung-left","lung-right"],
   },
   {
@@ -80,28 +80,28 @@ const PROTOCOLS = [
     freqs:   [40, 7.83, 528, 963],
     o2:      100,
     duration: 45,
-    desc:    "Gamma coherence. Microtubule activation. Pineal opening. Maximum brain state.",
+    desc:    "40Hz audio preset with a visual highlight. No neural or pineal effect is measured.",
     targets: ["brain"],
   },
   {
-    name:    "Cancer Support",
+    name:    "Cancer Support (Research Only)",
     hebrew:  "תְּמִיכָה בְּסַרְטָן",
     color:   "#ef4444",
     freqs:   [728, 528, 285, 40, 7.83],
     o2:      100,
     duration: 60,
-    desc:    "Rife + immune + DNA repair. Research frequencies. Consult physician.",
+    desc:    "Experimental audio presets only. Clinical benefit is not established; consult a licensed clinician for medical concerns.",
     targets: ["liver","lung-left","lung-right","brain"],
     warning: true,
   },
   {
-    name:    "Detox + Liver",
+    name:    "Detox Label + Liver",
     hebrew:  "נִקּוּי כָּבֵד",
     color:   "#f97316",
     freqs:   [741, 528, 396, 432, 285],
     o2:      80,
     duration: 45,
-    desc:    "741Hz cellular toxin clearing. Liver and kidney restoration.",
+    desc:    "741Hz audio preset. No detox or organ-restoration effect is measured.",
     targets: ["liver","kidney-left","kidney-right"],
   },
   {
@@ -111,17 +111,17 @@ const PROTOCOLS = [
     freqs:   [54, 32, 432, 528],
     o2:      100,
     duration: 30,
-    desc:    "Heart resonance. Nitric oxide. Blood vessel restoration. Circulation boost.",
+    desc:    "Audio presets. No nitric-oxide, blood-vessel, or circulation effect is measured.",
     targets: ["heart"],
   },
   {
-    name:    "Pain Relief",
+    name:    "Pain Preset",
     hebrew:  "הַקְלָעַת כְּאֵב",
     color:   "#06b6d4",
     freqs:   [174, 285, 432, 7.83],
     o2:      70,
     duration: 30,
-    desc:    "174Hz natural anesthetic. Full body pain elimination protocol.",
+    desc:    "174Hz audio preset. No anesthetic or pain-relief effect is measured.",
     targets: ["brain","small-intestine"],
   },
   {
@@ -131,17 +131,17 @@ const PROTOCOLS = [
     freqs:   [0.5, 2, 174, 7.83],
     o2:      60,
     duration: 45,
-    desc:    "Delta induction. Maximum healing sleep. Brainstem regulation.",
+    desc:    "Low-frequency audio preset. No sleep or brainstem effect is measured.",
     targets: ["brain","brainstem"],
   },
   {
-    name:    "Immune Activation",
+    name:    "Immune Preset",
     hebrew:  "הַפְעָלַת חִיסּוּן",
     color:   "#a855f7",
     freqs:   [528, 40, 7.83, 285],
     o2:      100,
     duration: 45,
-    desc:    "40Hz activates microglia. 528Hz DNA integrity. Full immune system boost.",
+    desc:    "Audio presets. No microglia, DNA, or immune effect is measured.",
     targets: ["spleen","brain","lymph"],
   },
 ];
@@ -480,13 +480,13 @@ function GhostAI({
     const target   = selectedOrgan?.name ?? selectedBrain?.name ?? "full body";
 
     if (activeFreqs.includes(40)) {
-      return `${freqList} active → ${target}. 40Hz gamma confirmed to activate microglia and immune cells. Neural cleaning in progress.`;
+      return `${freqList} active → ${target}. 40Hz audio preset active. Preclinical gamma research is not an established immune therapy; no effect is measured.`;
     }
     if (activeFreqs.includes(528)) {
-      return `${freqList} active → ${target}. 528Hz DNA repair frequency active. Cellular reconstruction signal detected.`;
+      return `${freqList} active → ${target}. 528 Hz audio preset active. Visualization only — no cellular response is measured.`;
     }
     if (activeFreqs.includes(7.83)) {
-      return `${freqList} active → ${target}. Schumann resonance locked. Brain synchronized to Earth baseline.`;
+      return `${freqList} active → ${target}. Schumann audio preset active. No brain synchronization is measured.`;
     }
     return `${freqList} active → ${target}. Frequencies broadcasting. O₂ at ${o2Level}%. Brain state: ${brainState}.`;
   }, [activeFreqs, selectedOrgan, selectedBrain, brainState, o2Level]);

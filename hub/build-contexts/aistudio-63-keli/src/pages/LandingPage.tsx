@@ -24,8 +24,8 @@ const SYSTEMS = [
     sub:     "Acoustic Body Chamber",
     color:   "#06b6d4",
     icon:    <Radio size={20} />,
-    desc:    "20+ organs mapped in 3D. Click any organ. Exact healing frequencies fire from 48 transducers. Cancer cells shatter. Healthy cells untouched.",
-    stat:    "FDA Confirmed",
+    desc:    "20+ organs mapped in 3D. Select an organ to explore audio presets and visualized transducer beams. Educational simulation only; no therapeutic or cellular effect is measured.",
+    stat:    "Educational Simulation",
     emoji:   "🔊",
   },
   {
@@ -35,8 +35,8 @@ const SYSTEMS = [
     sub:     "3D Brain Map",
     color:   "#7c3aed",
     icon:    <Brain size={20} />,
-    desc:    "19 brain regions in 3D. Pineal gland visible inside. Click any region. Frequencies activate that exact area. Watch coherence build in real time.",
-    stat:    "Orch-OR Theory",
+    desc:    "19 brain regions in 3D. Select a region to play an audio preset and highlight it in the model. This is a visualization, not a neural measurement.",
+    stat:    "3D Visualization",
     emoji:   "🧠",
   },
   {
@@ -46,8 +46,8 @@ const SYSTEMS = [
     sub:     "Hyperbaric O₂ System",
     color:   "#38bdf8",
     icon:    <Wind size={20} />,
-    desc:    "Pure oxygen floods the chamber. Cancer cells anaerobic — cannot survive. Telomeres lengthen +20-38%. Combined with sound: maximum cellular effect.",
-    stat:    "Tel Aviv 2020",
+    desc:    "Illustrative oxygen-session visualization only. This app does not control oxygen delivery or a pressurized chamber; no biological effect is measured.",
+    stat:    "Simulation Only",
     emoji:   "💨",
   },
 ];
@@ -55,44 +55,44 @@ const SYSTEMS = [
 const FEATURES = [
   {
     icon:    <Volume2 size={22} />,
-    title:   "26 Healing Frequencies",
-    desc:    "Complete database. Solfeggio. Schumann. Rife. Binaural. Planetary. Ancient. Every frequency that research has ever confirmed.",
+    title:   "26 Audio Presets",
+    desc:    "Complete database. Solfeggio. Schumann. Rife. Binaural. Planetary. Ancient. A catalog of audio presets and frequency concepts; evidence varies and many claimed effects remain unverified.",
     color:   "#06b6d4",
   },
   {
     icon:    <Brain size={22} />,
     title:   "3D Brain Targeting",
-    desc:    "Click the pineal gland. 963Hz fires. See it activate in 3D. Click the hippocampus. Theta waves entrain. Watch memory centers light up.",
+    desc:    "Click a region to play an audio preset and highlight it in the 3D model. The display is illustrative, not a neural measurement.",
     color:   "#7c3aed",
   },
   {
     icon:    <Radio size={22} />,
     title:   "3D Body Organ Map",
-    desc:    "Heart beats. Lungs breathe. Click the liver. Healing frequencies load. 48 virtual transducers fire beams toward your target organ.",
+    desc:    "Heart and lungs animate. Select an organ to load audio presets and display virtual transducer beams. Visualization only.",
     color:   "#10b981",
   },
   {
     icon:    <Wind size={22} />,
     title:   "Oxygen Amplification",
-    desc:    "O₂ ramps to 100% during session. Every frequency is amplified inside pressurized oxygen. Effect multiplied exponentially.",
+    desc:    "Illustrative oxygen-session visualization only. This app does not control oxygen delivery or a pressurized chamber; clinical oxygen therapy requires qualified medical supervision.",
     color:   "#38bdf8",
   },
   {
     icon:    <Cpu size={22} />,
     title:   "RUACH AI Analysis",
-    desc:    "AI reads every session. Tells you what each frequency is doing. Which organs are responding. Adapts protocol to your state in real time.",
+    desc:    "AI can summarize entered session notes. It does not measure organ response, diagnose conditions, or prescribe treatment.",
     color:   "#a855f7",
   },
   {
     icon:    <Activity size={22} />,
     title:   "Live Brain State",
-    desc:    "Brain state monitored throughout. Peak Cognition. Deep Meditation. Earth Locked. State updates every 2 seconds based on frequencies playing.",
+    desc:    "The displayed state is a visualization derived from the selected preset, not EEG or any biological sensor data.",
     color:   "#f59e0b",
   },
   {
     icon:    <Shield size={22} />,
     title:   "8 Complete Protocols",
-    desc:    "Full Body Heal. Brain Quantum. Cancer Support. Detox. Cardiovascular. Pain Relief. Deep Sleep. Immune Activation. All pre-built.",
+    desc:    "Eight pre-built audio-preset collections for exploration. Cancer Support is labeled research-only; none are clinical treatments.",
     color:   "#ef4444",
   },
   {
@@ -105,43 +105,43 @@ const FEATURES = [
 
 const PROOF = [
   {
-    title:   "Histotripsy — FDA Approved",
+    title:   "Histotripsy — FDA Procedure, Not This App",
     org:     "HistoSonics / FDA 2023",
     color:   "#22c55e",
     emoji:   "✅",
-    desc:    "Focused ultrasound destroys liver tumor cells. No surgery. No radiation. Sound only. First FDA-approved acoustic cancer therapy.",
+    desc:    "Histotripsy is a specialized procedure for specific indications, performed by trained clinicians. This app is educational only and does not deliver ultrasound or treat cancer; verify current indications with official FDA labeling.",
     confirmed: true,
   },
   {
-    title:   "HBOT Telomere +20-38%",
+    title:   "HBOT Telomere Study",
     org:     "Tel Aviv University 2020",
     color:   "#38bdf8",
     emoji:   "🧬",
-    desc:    "60 sessions of hyperbaric oxygen. Telomere length increased 20-38%. Senescent cells decreased 37%. Never achieved by any other intervention.",
-    confirmed: true,
+    desc:    "A small 2020 study reported telomere changes after a hyperbaric-oxygen course. Independent replication and clinical significance are not established, and this app does not provide HBOT.",
+    confirmed: false,
   },
   {
-    title:   "40Hz Immune Activation",
+    title:   "40Hz Gamma Research",
     org:     "MIT Tsai Lab 2016-2024",
     color:   "#f59e0b",
     emoji:   "⚡",
-    desc:    "40Hz gamma activates microglia and immune cells. Amyloid plaque reduction confirmed. Multiple peer-reviewed publications.",
-    confirmed: true,
+    desc:    "Preclinical research has studied 40 Hz gamma stimulation in animal models. It is not an established Alzheimer's treatment or prevention, and this app does not deliver stimulation therapy.",
+    confirmed: false,
   },
   {
-    title:   "528Hz DNA Repair",
+    title:   "528Hz Audio Preset — Unverified",
     org:     "Dr. Glen Rein — JASA",
     color:   "#fbbf24",
     emoji:   "🔬",
-    desc:    "528Hz increases UV absorption by DNA 5-9%. DNA repair enzyme activity confirmed. Published in Journal of Acoustical Society.",
-    confirmed: true,
+    desc:    "Reliable clinical evidence has not established that 528 Hz audio repairs DNA. This preset is for audio exploration only; no biological effect is measured.",
+    confirmed: false,
   },
   {
     title:   "Rife Frequencies",
     org:     "Dr. Royal Rife 1930s",
     color:   "#a855f7",
     emoji:   "📡",
-    desc:    "Mortal Oscillatory Rates identified for specific pathogens. Physics confirmed. Research suppressed 1939. Being re-validated today.",
+    desc:    "A historical concept with no established medical efficacy. Frequencies are provided for research/education only and are not a treatment.",
     confirmed: false,
   },
   {
@@ -149,8 +149,8 @@ const PROOF = [
     org:     "Penrose & Hameroff",
     color:   "#7c3aed",
     emoji:   "🧠",
-    desc:    "Microtubules maintain quantum coherence in neurons. 40Hz gamma locks this state. Brain becomes quantum computer.",
-    confirmed: true,
+    desc:    "A theoretical proposal about consciousness, not an experimentally established mechanism. 'Quantum' language in this app is illustrative.",
+    confirmed: false,
   },
 ];
 
@@ -243,14 +243,14 @@ const PRICING = [
 ];
 
 const WHO_BUYS = [
-  { emoji:"🏥", who:"Oncology Clinics",      pays:"$997-$4,997/mo",   color:"#ef4444", why:"Histotripsy complement. Frequency therapy platform. Patient outcome tracking. Non-invasive protocols."     },
-  { emoji:"🔬", who:"Cancer Research Labs",  pays:"$4,997/mo+",       color:"#a855f7", why:"Frequency response data across cancer types. NIH grant potential. Rife validation. Clinical trial support."  },
-  { emoji:"🧠", who:"Neuroscience Labs",     pays:"$997-$4,997/mo",   color:"#7c3aed", why:"Orch-OR research. 40Hz gamma studies. Quantum coherence measurement. Brain-frequency interaction data."      },
-  { emoji:"💎", who:"Longevity Clinics",     pays:"$197-$997/mo",     color:"#38bdf8", why:"HBOT telomere protocols. DNA repair frequencies. Anti-aging combined therapy. Full body optimization."       },
-  { emoji:"🏃", who:"Athletic Performance",  pays:"$197/mo",          color:"#10b981", why:"Recovery acceleration. 40Hz cognitive optimization. Muscle repair protocols. Concussion recovery."           },
-  { emoji:"🛡️", who:"Military Medicine",     pays:"Government",       color:"#fbbf24", why:"Non-drug pain elimination. Battlefield wound healing. Cognitive protection. Operator performance."            },
-  { emoji:"🌿", who:"Integrative Medicine",  pays:"$197/mo",          color:"#06b6d4", why:"Evidence-based frequency protocols. Patient education. Complement to conventional treatment."                },
-  { emoji:"💊", who:"Pharma Companies",      pays:"$50K-$500K",       color:"#f97316", why:"Frequency response data for drug development. Clinical trial support. Rife frequency validation."            },
+  { emoji:"🏥", who:"Wellness Clinics",      pays:"$997-$4,997/mo",   color:"#ef4444", why:"Educational audio and visualization demos for patient conversation. Not a therapy platform and not a medical device."     },
+  { emoji:"🔬", who:"Research Labs",         pays:"$4,997/mo+",       color:"#a855f7", why:"Explore labeled audio presets and visualization concepts. No biological measurements, outcome tracking, or clinical-trial support."  },
+  { emoji:"🧠", who:"Neuroscience Educators",pays:"$997-$4,997/mo",   color:"#7c3aed", why:"Illustrative 3D brain regions and audio presets for teaching. No neural or quantum-coherence measurement."      },
+  { emoji:"💎", who:"Longevity Clinics",     pays:"$197-$997/mo",     color:"#38bdf8", why:"Educational audio presets and wellness visualization. No anti-aging, telomere, or DNA-repair effects are established by this app."       },
+  { emoji:"🏃", who:"Performance Coaches",   pays:"$197/mo",          color:"#10b981", why:"Audio presets and visualization for demonstration. No recovery, cognitive, or injury-treatment claims are made."           },
+  { emoji:"🛡️", who:"Training Programs",     pays:"Government",       color:"#fbbf24", why:"Illustrative audio and 3D models for education. Not a treatment for pain, wounds, or cognitive conditions."            },
+  { emoji:"🌿", who:"Integrative Education", pays:"$197/mo",          color:"#06b6d4", why:"Patient-education demos that clearly label unverified frequency claims. Not a complement to or substitute for medical treatment."                },
+  { emoji:"💊", who:"Demo Partners",         pays:"$50K-$500K",       color:"#f97316", why:"Explore UI/visualization concepts only. No frequency-response data, drug-development support, or clinical validation."            },
 ];
 
 /* ── Animated healing pod ────────────────────────────────── */
@@ -857,7 +857,7 @@ export default function LandingPage() {
             className="text-lg md:text-2xl mb-3 tracking-[0.1em] uppercase"
             style={{ color: "rgba(226,232,240,0.45)", fontWeight: 300 }}
           >
-            The Frequency That Heals Only What Is Broken
+            Explore Sound and Signal Concepts
           </motion.p>
 
           {/* Active system */}
@@ -956,10 +956,10 @@ export default function LandingPage() {
           >
             {[
               { v: "3",      l: "Systems Unified",    c: "#06b6d4" },
-              { v: "FDA",    l: "Histotripsy Approved",c: "#22c55e" },
-              { v: "26",     l: "Healing Frequencies", c: "#7c3aed" },
-              { v: "+38%",   l: "Telomere Lengthening",c: "#38bdf8" },
-              { v: "40Hz",   l: "Brain Coherence Lock",c: "#f59e0b" },
+              { v: "0",      l: "Biological Sensors",  c: "#22c55e" },
+              { v: "26",     l: "Audio Presets",       c: "#7c3aed" },
+              { v: "3",      l: "Visualization Modes", c: "#38bdf8" },
+              { v: "40Hz",   l: "Audio Preset",        c: "#f59e0b" },
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <div className="text-2xl md:text-3xl font-bold font-mono"
@@ -1153,7 +1153,7 @@ export default function LandingPage() {
               <span className="text-emerald-400">Behind It</span>
             </h2>
             <p className="text-white/40 max-w-2xl mx-auto leading-relaxed">
-              Not alternative medicine. Confirmed physics. Published research. Real results.
+              Research context, clearly labeled. This app is an educational audio and visualization demo, not a medical device.
             </p>
           </motion.div>
 
@@ -1358,19 +1358,19 @@ export default function LandingPage() {
                     hz:    40,
                     name:  "Gamma Brain Lock",
                     color: "#f59e0b",
-                    desc:  "MIT confirmed. Microtubule coherence. Immune activation. 40 minutes daily.",
+                    desc:  "Audio preset with a visual highlight. Not an established immune or neural therapy; no biological effect is measured.",
                   },
                   {
                     hz:    528,
-                    name:  "DNA Repair",
+                    name:  "528Hz Preset",
                     color: "#fbbf24",
-                    desc:  "Confirmed by Dr. Glen Rein. UV absorption by DNA increases. Cellular repair.",
+                    desc:  "Audio preset only. DNA-repair claims are unverified and no biological effect is measured.",
                   },
                   {
                     hz:    7.83,
                     name:  "Schumann Earth",
                     color: "#10b981",
-                    desc:  "Earth heartbeat. Brain lock frequency. Essential before any session.",
+                    desc:  "Schumann resonance is an Earth-ionosphere phenomenon. This is an audio preset, not brain synchronization.",
                   },
                 ].map((freq, i) => (
                   <motion.div
