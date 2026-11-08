@@ -1,0 +1,6 @@
+{
+  "name": "Magen-Rakiʿ (מגן-רקיע)",
+  "description": "Sky-Shield for AI — Neural Core Engine (Nero-4.0), Six 686 Hardware & Software Governor, 12-Assertion Readiness Gate, and CI/CD Governance Pipeline with auto-rollback.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

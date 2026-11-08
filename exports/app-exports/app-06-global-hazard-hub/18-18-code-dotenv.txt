@@ -1,0 +1,11 @@
+# MongoDB
+MONGO_URI=mongodb://mongo:27017/env_events
+
+# Mapbox token (https://account.mapbox.com/)
+MAPBOX_TOKEN=pk.XXXXXX
+
+# TF‑Serving URL (only used by API)
+TF_URL=http://tf-serving:8501
+
+# Notification endpoint (only used by API)
+NOTIFY_URL=http://notify:5001/notify

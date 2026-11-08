@@ -1,0 +1,77 @@
+// hazard-processor.js
+const { KafkaStreams } = require('kafka-streams');
+const tf = require('@tensorflow/tfjs-node'); // or tfjs-serving
+const axios = require('axios');
+
+const streamsConfig = {
+  noptions: {
+    "metadata.broker.list": "kafka:9092",
+    "group.id": "hazard-processor",
+    "client.id": "processor-01",
+    "event_cb": true,
+    "compression.codec": "gzip",
+    "api.version.request": true,
+    "socket.keepalive.enable": true,
+    "reconnect.backoff.ms": 1000,
+    "message.send.max.retries": 3,
+    "protocol.version.request": true,
+    "enable.auto.commit": false,
+  },
+  tconf: {}
+};
+
+// Define stream
+const kafkaStreams = new KafkaStreams(streamsConfig);
+const stream = kafkaStreams.getKStream('hazard-events');
+
+stream
+  .map((message) => JSON.parse(message.value.toString()))
+  .reduce((state, event) => {
+    // Keep the most recent event per device
+    state[event.id] = event;
+    return state;
+  })
+  .map((stateMap) => Object.values(stateMap))
+  .filter(events => events.length)
+  .forEach(async (events) => {
+    // Use the most recent item to build a feature vector
+    const e = events[events.length - 1];
+    const features = [
+      e.magnitude || 0,
+      e.pressure || 1013,
+      e.wind || 0,
+      e.type === 'earthquake' ? 1 : 0,
+      e.type === 'tornado' ? 1 : 0,
+      e.type === 'hurricane' ? 1 : 0
+    ];
+
+    // gRPC call to TF‑Serving (assuming model `env_pred`)
+    const res = await axios.post(
+      'http://tf-serving:8501/v1/models/env_pred:predict',
+      { instances: [features] },
+      { timeout: 2000 }
+    );
+
+    const label = res.data.predictions[0][0];
+    const timeToEvent = res.data.predictions[0][1];
+    const confidence = res.data.predictions[0][2];
+
+    if (label===1 && timeToEvent <= 30) {
+      // Trigger alert event
+      await axios.post('http://notify:5001/notify', {
+        id: e.id,
+        type: e.type,
+        lat: e.lat,
+        lon: e.lon,
+        confidence,
+        timeToEvent
+      });
+    }
+
+    // Store the enriched event for history
+    await axios.post('http://api:3000/api/store',
+      { ...e, label, timeToEvent, confidence }
+    );
+  });
+
+stream.start();

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Reader - Gifted Eternity Story Time</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .reader { max-width: 820px; margin: 0 auto; padding: 24px; }
+        .reader h2 { margin-bottom: 4px; }
+        .reader .meta { color: #666; margin-bottom: 20px; }
+        .reader img { width: 100%; max-height: 360px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
+        .reader .story-text { line-height: 1.8; font-size: 1.08rem; white-space: pre-wrap; }
+        .reader .controls { display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap; }
+        .reader button { padding: 10px 18px; border-radius: 10px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-size: 1rem; }
+        .reader button.primary { background: #6c5ce7; color: #fff; border-color: #6c5ce7; }
+        .reader a { color: #6c5ce7; }
+        .status { color: #888; font-size: .9rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Gifted Eternity Story Time</h1>
+            <ul>
+                <li><a href="story-time.html">Home</a></li>
+                <li><a href="catalog.html">Stories Catalog</a></li>
+                <li><a href="cart.html">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="reader">
+        <a href="catalog.html">&larr; Back to catalog</a>
+        <h2 id="story-title">Loading…</h2>
+        <p class="meta" id="story-meta"></p>
+        <img id="story-cover" src="images/covers/placeholder-cover.png" alt="Story cover">
+        <p id="story-description"></p>
+        <div class="controls">
+            <button class="primary" id="read-ai">Read with AI</button>
+            <button id="read-aloud">Read aloud</button>
+            <button id="stop-aloud">Stop</button>
+        </div>
+        <p class="status" id="status"></p>
+        <div class="story-text" id="story-text"></div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Gifted Eternity Story Time</p>
+    </footer>
+    <script src="js/stories-data.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id'), 10);
+        const story = (window.storyData || []).find(s => s.id === id);
+        const titleEl = document.getElementById('story-title');
+        const metaEl = document.getElementById('story-meta');
+        const descEl = document.getElementById('story-description');
+        const coverEl = document.getElementById('story-cover');
+        const textEl = document.getElementById('story-text');
+        const statusEl = document.getElementById('status');
+
+        if (!story) {
+            titleEl.textContent = 'Story not found';
+            descEl.textContent = 'That story does not exist in the catalog.';
+        } else {
+            titleEl.textContent = story.title;
+            metaEl.textContent = story.category;
+            descEl.textContent = story.description;
+            coverEl.alt = story.title;
+            coverEl.src = story.image;
+            coverEl.onerror = () => { coverEl.src = 'images/covers/placeholder-cover.png'; };
+            document.title = story.title + ' - Gifted Eternity Story Time';
+            loadStory();
+        }
+
+        async function requestStory() {
+            const messages = [
+                { role: 'system', content: 'You are a gentle children\'s storyteller. Write an original, age-appropriate bedtime story of about 500 words. Use short paragraphs and a calm, warm tone.' },
+                { role: 'user', content: 'Write a story titled "' + story.title + '" in the ' + story.category + ' category. Theme: ' + story.description }
+            ];
+            const bridge = window.OllamaAI;
+            if (bridge && typeof bridge.chat === 'function') {
+                return bridge.chat(messages, { model: 'llama3.2', max_tokens: 900 });
+            }
+            const res = await fetch('http://localhost:8780/api/ai/chat', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ messages, stream: false, model: 'llama3.2', options: { num_predict: 900 } })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+            return data.message && data.message.content;
+        }
+
+        async function loadStory() {
+            const cacheKey = 'ge_story_' + story.id;
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) {
+                textEl.textContent = cached;
+                statusEl.textContent = 'Loaded from your local library.';
+                return;
+            }
+            document.getElementById('read-ai').disabled = true;
+            statusEl.textContent = 'Writing your story with the local model…';
+            try {
+                const text = await requestStory();
+                textEl.textContent = text || 'The local model returned an empty story.';
+                if (text) {
+                    localStorage.setItem(cacheKey, text);
+                    statusEl.textContent = 'Story generated with llama3.2.';
+                }
+            } catch (error) {
+                statusEl.textContent = 'Could not reach the local story model: ' + (error.message || error);
+            } finally {
+                document.getElementById('read-ai').disabled = false;
+            }
+        }
+
+        document.getElementById('read-ai').addEventListener('click', () => {
+            if (story) {
+                localStorage.removeItem('ge_story_' + story.id);
+                textEl.textContent = '';
+                loadStory();
+            }
+        });
+
+        document.getElementById('read-aloud').addEventListener('click', () => {
+            if (!window.speechSynthesis || !textEl.textContent) return;
+            const utterance = new SpeechSynthesisUtterance(textEl.textContent);
+            utterance.rate = 0.95;
+            utterance.pitch = 1.05;
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        });
+
+        document.getElementById('stop-aloud').addEventListener('click', () => {
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+        });
+    </script>
+</body>
+</html>

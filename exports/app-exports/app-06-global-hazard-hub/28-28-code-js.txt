@@ -1,0 +1,10 @@
+const tf = require('@tensorflow/tfjs-node');
+
+// Load a pre‑trained model (don’t forget to ship it in `/ml/model.json`)
+const modelPath = 'file://./model/model.json';
+const model = await tf.loadLayersModel(modelPath);
+
+exports.predictRisk = async (featureVector) => {
+  const tensor = tf.tensor2d([featureVector]);
+  return model.predict(tensor);
+};

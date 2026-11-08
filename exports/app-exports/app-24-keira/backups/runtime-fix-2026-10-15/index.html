@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KEIRA — AI Assistant Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#0a0a0f;color:#d4d4d8;font-family:'Inter','SF Pro',system-ui,sans-serif;overflow:hidden}
+#app{display:grid;grid-template-rows:52px 1fr 140px;height:100%}
+nav{background:#111118;border-bottom:1px solid #1e1e28;display:flex;align-items:center;padding:0 24px;gap:20px}
+nav h1{font-size:16px;font-weight:700;color:#a78bfa;letter-spacing:3px}
+nav .badge{padding:2px 10px;border-radius:12px;font-size:10px;font-weight:600;letter-spacing:1px}
+nav .badge.live{background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.3)}
+nav .badge.warn{background:rgba(234,179,8,0.15);color:#eab308;border:1px solid rgba(234,179,8,0.3)}
+nav .clock{margin-left:auto;font-family:'Fira Code',monospace;font-size:12px;color:#555}
+#main{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:#1e1e28;overflow:hidden}
+.card{background:#111118;padding:20px;display:flex;flex-direction:column}
+.card h2{font-size:11px;color:#666;letter-spacing:2px;margin-bottom:14px;font-weight:600}
+.big-val{font-size:48px;font-weight:700;color:#e0e0e0;letter-spacing:-2px;line-height:1}
+.big-val.green{color:#22c55e}
+.big-val.amber{color:#eab308}
+.big-val.red{color:#ef4444}
+.big-val.purple{color:#a78bfa}
+.big-label{font-size:11px;color:#555;margin-top:6px}
+.sub-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto}
+.sub-stat{background:#0a0a0f;border:1px solid #1e1e28;border-radius:8px;padding:12px}
+.sub-stat .v{font-size:22px;font-weight:700}
+.sub-stat .l{font-size:9px;color:#555;letter-spacing:1px;margin-top:2px}
+.drift-chart{flex:1;position:relative;margin-top:12px}
+.drift-chart canvas{width:100%!important;height:100%!important}
+.service-list{flex:1;overflow-y:auto}
+.svc{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid #1e1e28;font-size:12px}
+.svc .dot{width:8px;height:8px;border-radius:50%;margin-right:10px;flex-shrink:0}
+.svc .name{flex:1;color:#aaa}
+.svc .status{font-family:monospace;font-size:11px}
+#terminal{background:#08080d;border-top:1px solid #1e1e28;display:flex;flex-direction:column}
+#terminal .term-header{padding:8px 24px;font-size:10px;color:#555;letter-spacing:1.5px;border-bottom:1px solid #1a1a22;display:flex;align-items:center;justify-content:space-between}
+#terminal .term-header .run-btn{background:#1a1d24;color:#a78bfa;border:1px solid rgba(167,139,250,0.3);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:10px}
+#terminal .term-header .run-btn:hover{background:rgba(167,139,250,0.15)}
+#term-body{flex:1;overflow-y:auto;padding:8px 24px;font-family:'Fira Code',monospace;font-size:11.5px;line-height:1.7}
+#term-body .prompt{color:#a78bfa}
+#term-body .cmd{color:#888}
+#term-body .out{color:#22c55e}
+#term-body .err{color:#ef4444}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#252530;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="app">
+  <nav>
+    <h1>KEIRA</h1>
+    <span class="badge live" id="badge-status">SYSTEM OK</span>
+    <span class="badge warn" id="badge-lock">UNLOCKED</span>
+    <span class="clock" id="clock"></span>
+  </nav>
+  <div id="main">
+    <div class="card">
+      <h2>SYSTEM STATUS</h2>
+      <div class="big-val green" id="sys-status">OK</div>
+      <div class="big-label">Uptime: <span id="uptime">0h 0m</span></div>
+      <div class="sub-stats">
+        <div class="sub-stat"><div class="v" id="ss-cpu" style="color:#a78bfa">0%</div><div class="l">CPU USAGE</div></div>
+        <div class="sub-stat"><div class="v" id="ss-mem" style="color:#38bdf8">0%</div><div class="l">MEMORY</div></div>
+        <div class="sub-stat"><div class="v" id="ss-proc" style="color:#22c55e">0</div><div class="l">PROCESSES</div></div>
+        <div class="sub-stat"><div class="v" id="ss-net" style="color:#eab308">0ms</div><div class="l">LATENCY</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>DRIFT MONITOR — SENTINEL</h2>
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <span class="big-val" id="drift-val" style="font-size:36px">0.00%</span>
+        <span style="font-size:11px;color:#555">Limit: 0.05%</span>
+      </div>
+      <div class="big-label" id="drift-status" style="color:#22c55e">Within tolerance</div>
+      <div class="drift-chart"><canvas id="driftCanvas"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>VAULT — TRADE LEDGER</h2>
+      <div class="big-val purple" id="vault-total">$0</div>
+      <div class="big-label">Sum of COMPLETED trades</div>
+      <div class="service-list" id="svc-list"></div>
+    </div>
+  </div>
+  <div id="terminal">
+    <div class="term-header">
+      <span>psql — empire_foundation</span>
+      <button class="run-btn" onclick="runVaultQuery()">Run Vault Query</button>
+    </div>
+    <div id="term-body"></div>
+  </div>
+</div>
+<script>
+const termBody=document.getElementById('term-body');
+const services=['OpenAssistant','AutoGPT','Translator','VisionAI','Summarizer','Planner','Reviewer','MemoryHub','Reasoner','Scheduler','Embedder','Writer','Analyzer','Critic','Coder'];
+let uptimeStart=Date.now();
+let driftHistory=new Array(60).fill(0);
+let vaultData={};
+function init(){
+  services.forEach((s,i)=>{
+    vaultData[s]={amount:Math.floor(Math.random()*50000+10000),status:'COMPLETED'};
+  });
+  buildServiceList();
+  addTermLine('prompt','psql -d empire_foundation');
+  addTermLine('out','Connected to database "empire_foundation".');
+  runVaultQuery();
+  setInterval(tick,1000);
+  tick();
+  drawDriftChart();
+  window.addEventListener('resize',drawDriftChart);
+}
+function tick(){
+  updateClock();updateSystem();updateDrift();updateVault();
+}
+function updateClock(){
+  let now=new Date();
+  document.getElementById('clock').textContent=now.toLocaleTimeString('en-GB',{hour12:false})+' UTC';
+}
+function updateSystem(){
+  let el=document.getElementById('uptime');
+  let secs=Math.floor((Date.now()-uptimeStart)/1000);
+  el.textContent=`${Math.floor(secs/3600)}h ${Math.floor((secs%3600)/60)}m`;
+  let cpu=Math.random()*35+5,mem=Math.random()*30+20,lat=Math.floor(Math.random()*40+8);
+  document.getElementById('ss-cpu').textContent=cpu.toFixed(0)+'%';
+  document.getElementById('ss-mem').textContent=mem.toFixed(0)+'%';
+  document.getElementById('ss-proc').textContent=services.length+Math.floor(Math.random()*5);
+  document.getElementById('ss-net').textContent=lat+'ms';
+  let locked=Math.random()<0.03;
+  let badge=document.getElementById('badge-lock');
+  if(locked){badge.className='badge warn';badge.textContent='LOCKED';document.getElementById('sys-status').textContent='LOCKED';document.getElementById('sys-status').className='big-val red'}
+  else{badge.className='badge live';badge.textContent='UNLOCKED';document.getElementById('sys-status').textContent='OK';document.getElementById('sys-status').className='big-val green'}
+}
+function updateDrift(){
+  let val=(Math.random()*0.048).toFixed(4);
+  driftHistory.push(parseFloat(val));if(driftHistory.length>60)driftHistory.shift();
+  document.getElementById('drift-val').textContent=val+'%';
+  let el=document.getElementById('drift-val');
+  let st=document.getElementById('drift-status');
+  if(parseFloat(val)>0.04){el.style.color='#eab308';st.textContent='WARNING — approaching limit';st.style.color='#eab308'}
+  else{el.style.color='#22c55e';st.textContent='Within tolerance';st.style.color='#22c55e'}
+  drawDriftChart();
+}
+function drawDriftChart(){
+  let canvas=document.getElementById('driftCanvas');
+  let rect=canvas.parentElement.getBoundingClientRect();
+  canvas.width=rect.width*devicePixelRatio;canvas.height=rect.height*devicePixelRatio;
+  let c=canvas.getContext('2d');
+  c.scale(devicePixelRatio,devicePixelRatio);
+  let W=rect.width,H=rect.height;
+  c.clearRect(0,0,W,H);
+  c.strokeStyle='rgba(167,139,250,0.15)';c.lineWidth=1;
+  let limitY=H*0.05;
+  c.beginPath();c.moveTo(0,limitY);c.lineTo(W,limitY);c.stroke();
+  c.fillStyle='rgba(234,179,8,0.3)';c.font='9px sans-serif';c.fillText('LIMIT 0.05%',4,limitY-4);
+  let maxV=0.055;
+  c.beginPath();
+  driftHistory.forEach((v,i)=>{
+    let x=i/(driftHistory.length-1)*W;let y=H-(v/maxV)*H*0.9-H*0.05;
+    i===0?c.moveTo(x,y):c.lineTo(x,y);
+  });
+  c.strokeStyle='#a78bfa';c.lineWidth=1.5;c.stroke();
+  c.lineTo(W,H);c.lineTo(0,H);c.closePath();
+  c.fillStyle='rgba(167,139,250,0.06)';c.fill();
+}
+function updateVault(){
+  let total=Object.values(vaultData).reduce((s,v)=>s+v.amount,0);
+  document.getElementById('vault-total').textContent='$'+total.toLocaleString();
+  if(Math.random()<0.1){
+    let keys=Object.keys(vaultData);
+    let k=keys[Math.floor(Math.random()*keys.length)];
+    vaultData[k].amount+=Math.floor(Math.random()*2000-500);
+    buildServiceList();
+  }
+}
+function buildServiceList(){
+  let list=document.getElementById('svc-list');
+  list.innerHTML='';
+  Object.entries(vaultData).forEach(([name,d])=>{
+    let healthy=Math.random()>0.1;
+    list.innerHTML+=`<div class="svc"><span class="dot" style="background:${healthy?'#22c55e':'#ef4444'}"></span><span class="name">${name}</span><span class="status" style="color:${healthy?'#22c55e':'#ef4444'}">$${d.amount.toLocaleString()}</span></div>`;
+  });
+}
+function addTermLine(cls,text){
+  let d=document.createElement('div');d.className=cls;d.textContent=text;termBody.appendChild(d);termBody.scrollTop=termBody.scrollHeight;
+}
+function runVaultQuery(){
+  let cmd="SELECT SUM(amount) as total_vault_value FROM trade_ledger WHERE status = 'COMPLETED';";
+  addTermLine('prompt','empire_foundation=# ');
+  addTermLine('cmd',cmd);
+  setTimeout(()=>{
+    let total=Object.values(vaultData).reduce((s,v)=>s+v.amount,0);
+    addTermLine('out',' total_vault_value');
+    addTermLine('out','------------------');
+    addTermLine('out','     $'+total.toLocaleString());
+    addTermLine('out','(1 row)');
+    addTermLine('cmd','');
+  },150);
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "תכנית הצופה (Taḥnīʿ Hâzoo) - Blueprint & Cyber-Security Swarm",
+  "description": "Go-High-Level-style business blueprint planner and 200-agent cybersecurity swarm orchestrator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

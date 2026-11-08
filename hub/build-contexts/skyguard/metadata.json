@@ -1,0 +1,6 @@
+{
+  "name": "SkyGuard - מגן‑רקיע",
+  "description": "Enterprise Cyber Security, Privacy & 78-Feature Compliance Platform with White-Label Solutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

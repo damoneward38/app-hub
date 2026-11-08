@@ -1,0 +1,5 @@
+if ('serviceWorker' in navigator && 'SyncManager' in window) {
+  navigator.serviceWorker.ready
+    .then((registration) => registration.sync.register('syncPoints'))
+    .catch(console.error);
+}

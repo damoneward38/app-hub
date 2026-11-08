@@ -1,0 +1,6 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? '/api';
+
+export async function fetchRealtimeData() {
+  const res = await fetch(`${API_URL}/realtime`);
+  return res.json();
+}

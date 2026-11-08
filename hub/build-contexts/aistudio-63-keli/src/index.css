@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Frank+Ruhl+Libre:wght@400;700;900&family=Cinzel+Decorative:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-hebrew: "Frank Ruhl Libre", serif;
+  --font-ancient: "Cinzel Decorative", serif;
+
+  --color-keli-void: #000508;
+  --color-keli-deep: #000d10;
+  --color-keli-core: #001a20;
+  --color-keli-sonic: #06b6d4;
+  --color-keli-heal: #10b981;
+  --color-keli-cancer: #ef4444;
+  --color-keli-healthy: #22c55e;
+  --color-keli-rife: #a855f7;
+  --color-keli-gold: #fbbf24;
+  --color-keli-signal: #e2e8f0;
+  --color-keli-ghost: rgba(6, 182, 212, 0.1);
+  --color-keli-oxygen: #38bdf8;
+  --color-keli-plasma: #7c3aed;
+  --color-keli-border: rgba(6, 182, 212, 0.15);
+  --color-keli-card: rgba(0, 13, 16, 0.8);
+
+  --animate-sonic-pulse: sonic-pulse 2s ease-out infinite;
+  --animate-cancer-shake: cancer-shake 0.3s ease-in-out infinite;
+  --animate-heal-glow: heal-glow 2s ease-in-out infinite;
+  --animate-beam-travel: beam-travel 0.5s ease-out forwards;
+  --animate-cell-burst: cell-burst 0.8s ease-out forwards;
+  --animate-oxygen-bubble: oxygen-bubble 2s ease-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-scan-body: scan-body 3s linear infinite;
+
+  @keyframes sonic-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(3); opacity: 0; }
+  }
+  @keyframes cancer-shake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2px, 2px); }
+    50% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, -2px); }
+  }
+  @keyframes heal-glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.9); }
+  }
+  @keyframes beam-travel {
+    0% { transform: scaleY(0); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 0; }
+  }
+  @keyframes cell-burst {
+    0% { transform: scale(1); opacity: 1; border-radius: 50%; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(0); opacity: 0; }
+  }
+  @keyframes oxygen-bubble {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    100% { transform: translateY(-60px) scale(0.3); opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes scan-body {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  body {
+    @apply font-display bg-keli-void min-h-screen text-keli-signal overflow-x-hidden;
+  }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #000508; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #06b6d4, #10b981, #a855f7);
+    border-radius: 2px;
+  }
+  ::selection {
+    background: rgba(6, 182, 212, 0.3);
+    color: #ffffff;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: var(--color-keli-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-keli-border);
+  }
+  .glass-card {
+    background: var(--color-keli-card);
+    border: 1px solid var(--color-keli-border);
+    border-radius: 12px;
+    padding: 16px;
+    backdrop-filter: blur(10px);
+  }
+  .pane {
+    background-color: var(--color-keli-void);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .text-neon-sonic { color: #06b6d4; text-shadow: 0 0 15px rgba(6, 182, 212, 0.9), 0 0 30px rgba(6, 182, 212, 0.4); }
+  .text-neon-heal { color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.9), 0 0 30px rgba(16, 185, 129, 0.4); }
+  .text-neon-rife { color: #a855f7; text-shadow: 0 0 15px rgba(168, 85, 247, 0.9), 0 0 30px rgba(168, 85, 247, 0.4); }
+  .text-neon-gold { color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.9), 0 0 30px rgba(251, 191, 36, 0.4); }
+
+  .keli-grid {
+    background-image:
+      linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .keli-gradient {
+    background: radial-gradient(ellipse at top, #001a20 0%, #000508 70%);
+  }
+
+  .holo-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(6, 182, 212, 0.07) 25%,
+      rgba(16, 185, 129, 0.09) 50%,
+      rgba(168, 85, 247, 0.07) 75%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 4s linear infinite;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-keli-heal);
+    box-shadow: 0 0 8px var(--color-keli-heal);
+    display: inline-block;
+  }
+
+  .freq-tag {
+    @apply font-mono text-[11px] bg-keli-sonic/10 border border-keli-sonic/20 text-keli-sonic px-1.5 py-0.5 rounded;
+  }
+
+  .label-mono {
+    @apply font-mono text-[10px] text-white/30 uppercase tracking-widest mb-2 block;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: rgba(0, 5, 8, 0.95);
+    backdrop-filter: blur(40px);
+    border-bottom: 1px solid var(--color-keli-border);
+  }
+
+  .btn-keli {
+    @apply relative overflow-hidden px-8 py-3 rounded-lg font-bold text-white transition-all cursor-pointer border-none;
+    background: linear-gradient(135deg, #06b6d4, #10b981, #a855f7);
+    background-size: 200% 200%;
+    animation: shimmer 3s linear infinite;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+  }
+  .btn-keli:hover {
+    box-shadow: 0 0 40px rgba(6, 182, 212, 0.6);
+    transform: translateY(-1px);
+  }
+}
+

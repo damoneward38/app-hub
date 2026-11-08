@@ -1,0 +1,32 @@
+import GlobeMap from "../components/GlobeMap";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface Hazard {
+  id: string;
+  type: string;
+  coordinates: [number, number];
+  properties: { [k: string]: any };
+}
+
+export default function Home() {
+  const [hazards, setHazards] = useState<Hazard[]>([]);
+
+  // Pull 200 latest events on mount & every 15 s
+  const fetchEvents = async () => {
+    const { data } = await axios.get("/api/events?limit=200");
+    setHazards(data);
+  };
+  useEffect(() => {
+    fetchEvents();
+    const timer = setInterval(fetchEvents, 15000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <GlobeMap
+      hazards={hazards}
+      styleMapboxToken={process.env.MAPBOX_TOKEN ?? ""}
+    />
+  );
+}

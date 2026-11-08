@@ -1,0 +1,14 @@
+{
+  "name": "env-hazard",
+  "private": true,
+  "workspaces": ["frontend", "server", "notify"],
+  "scripts": {
+    "dev": "docker compose up -d",
+    "build": "docker compose build",
+    "start": "docker compose up"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "dotenv": "^16.3.1"
+  }
+}

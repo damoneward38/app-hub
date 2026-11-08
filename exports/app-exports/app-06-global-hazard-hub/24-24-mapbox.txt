@@ -1,0 +1,39 @@
+import { useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
+
+export default function MapBox({ speciesFeature }: { speciesFeature?: any }) {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const map = useRef<mapboxgl.Map | null>(null);
+
+  useEffect(() => {
+    if (map.current) return; // initialize once
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current!,
+      style: 'mapbox://styles/mapbox/dark-v12',
+      center: [0, 20],
+      zoom: 2,
+      minZoom: 1,
+    });
+
+    if (speciesFeature) {
+      map.current.on('load', () => {
+        map.current!.addSource('species', {
+          type: 'geojson',
+          data: speciesFeature,
+        });
+        map.current!.addLayer({
+          id: 'species-layer',
+          type: 'circle',
+          source: 'species',
+          paint: { 'circle-radius': 6, 'circle-color': '#ff9900' },
+        });
+      });
+    }
+    return () => map.current?.remove();
+  }, [speciesFeature]);
+
+  return <div ref={mapContainer} style={{width:'100%',height:'calc(100vh - 65px)'}} />;
+}

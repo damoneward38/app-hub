@@ -1,0 +1,25 @@
+{
+  "name": "neural-engine",
+  "version": "1.0.0",
+  "description": "Production-ready GPT-4o Neural Engine",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**/*.ts"
+  },
+  "dependencies": {
+    "openai": "^4.28.0",
+    "dotenv": "^16.4.1",
+    "tiktoken": "^1.0.15",
+    "winston": "^3.11.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.5",
+    "ts-node": "^10.9.2",
+    "eslint": "^8.56.0"
+  }
+}

@@ -1,0 +1,19 @@
+import { useEffect } from 'react';
+
+export default function ARViewer() {
+  useEffect(() => {
+    const viewer = (
+      <a-scene
+        vr-mode-ui="enabled: true"
+        embedded
+        renderer="antialias: true; alpha: true; logarithmicDepthBuffer: true"
+      >
+        <a-entity gps-projected-camera></a-entity>
+        {/* Add other entities e.g. 3D models, points, text */}
+      </a-scene>
+    );
+    document.body.appendChild(viewer);
+  }, []);
+
+  return null; // no React UI needed
+}

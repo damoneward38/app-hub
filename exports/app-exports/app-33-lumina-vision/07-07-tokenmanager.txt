@@ -1,0 +1,111 @@
+import { encoding_for_model } from "tiktoken";
+import { Message, TokenLimitError } from "../types";
+import { logger } from "../utils/logger";
+
+// ─── Token Manager ─────────────────────────────────────────────────────────────
+export class TokenManager {
+  private readonly MODEL_TOKEN_LIMITS: Record<string, number> = {
+    "gpt-4o":          128000,
+    "gpt-4o-mini":     128000,
+    "gpt-4-turbo":     128000,
+    "gpt-4":            8192,
+    "gpt-3.5-turbo":   16385,
+  };
+
+  // GPT-4o uses cl100k_base encoding
+  private encoder = encoding_for_model("gpt-4o" as any);
+
+  /**
+   * Counts tokens for a plain string.
+   */
+  countTextTokens(text: string): number {
+    return this.encoder.encode(text).length;
+  }
+
+  /**
+   * Counts total tokens for a message array.
+   * Accounts for the message formatting overhead (~4 tokens per message).
+   */
+  countMessageTokens(messages: Message[]): number {
+    let total = 3; // Every reply primed with <|start|>assistant<|message|>
+
+    for (const message of messages) {
+      total += 4; // Message structure overhead
+      total += this.countTextTokens(message.content);
+      total += this.countTextTokens(message.role);
+      if (message.name) {
+        total += this.countTextTokens(message.name);
+        total -= 1; // Name offsets the role cost
+      }
+    }
+
+    return total;
+  }
+
+  /**
+   * Returns the maximum token limit for a given model.
+   */
+  getModelLimit(model: string): number {
+    return this.MODEL_TOKEN_LIMITS[model] ?? 8192;
+  }
+
+  /**
+   * Validates that message tokens don't exceed model + maxTokens budget.
+   * Throws TokenLimitError if limit is exceeded.
+   */
+  validateTokenBudget(messages: Message[], model: string, maxTokens: number): void {
+    const modelLimit    = this.getModelLimit(model);
+    const messageTokens = this.countMessageTokens(messages);
+    const totalRequired = messageTokens + maxTokens;
+
+    logger.debug("Token budget check", {
+      messageTokens,
+      maxTokens,
+      totalRequired,
+      modelLimit,
+    });
+
+    if (totalRequired > modelLimit) {
+      throw new TokenLimitError(totalRequired, modelLimit);
+    }
+  }
+
+  /**
+   * Trims the oldest messages (excluding system prompt) to fit within budget.
+   * Preserves the system message and the most recent user messages.
+   */
+  trimToFit(messages: Message[], model: string, maxTokens: number): Message[] {
+    const modelLimit  = this.getModelLimit(model);
+    const targetLimit = modelLimit - maxTokens - 100; // Safety buffer
+
+    // Always keep system message
+    const systemMessages = messages.filter((m) => m.role === "system");
+    const nonSystemMsgs  = messages.filter((m) => m.role !== "system");
+
+    let trimmed = [...nonSystemMsgs];
+
+    // Remove oldest non-system messages until we fit within budget
+    while (
+      trimmed.length > 1 &&
+      this.countMessageTokens([...systemMessages, ...trimmed]) > targetLimit
+    ) {
+      trimmed.shift(); // Remove oldest message
+    }
+
+    const result = [...systemMessages, ...trimmed];
+    logger.debug("Messages trimmed to fit token budget", {
+      originalCount: messages.length,
+      trimmedCount:  result.length,
+      tokenCount:    this.countMessageTokens(result),
+    });
+
+    return result;
+  }
+
+  /**
+   * Releases tiktoken encoder resources.
+   */
+  dispose(): void {
+    this.encoder.free();
+  }
+}

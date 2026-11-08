@@ -1,0 +1,10 @@
+import { precacheAndRoute } from "workbox-precaching";
+precacheAndRoute(self.__WB_MANIFEST || []);
+
+self.addEventListener("fetch", (event) => {
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      caches.match("/index.html").then((res) => res || fetch("/index.html"))
+    );
+  }
+});

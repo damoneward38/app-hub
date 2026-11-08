@@ -1,0 +1,7 @@
+OPENAI_API_KEY=sk-your-api-key-here
+OPENAI_ORG_ID=org-your-org-id-here
+MODEL=gpt-4o
+MAX_TOKENS=4096
+TEMPERATURE=0.7
+MAX_RETRIES=3
+LOG_LEVEL=info

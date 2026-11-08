@@ -1,0 +1,6 @@
+{
+  "name": "ANOSERA",
+  "description": "An AI-powered BLE anomaly detection platform that reveals hidden signals in real-time sensor data using TensorFlow.js.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

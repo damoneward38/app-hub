@@ -1,0 +1,8 @@
+/** @type {import('next').NextConfig} */
+module.exports = {
+  reactStrictMode: true,
+  images: { domains: ['your-cdn.com'] }, // adjust if you host icons elsewhere
+  env: {
+    MAPBOX_TOKEN: process.env.MAPBOX_TOKEN, // put your Mapbox token in .env
+  },
+};

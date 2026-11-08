@@ -1,0 +1,1105 @@
+import { Feature, PricingTier } from '../types';
+
+export const featureSetsMeta = [
+  {
+    set: 1,
+    range: '1–13',
+    title: 'Privacy & Global Compliance Core',
+    titleHe: 'פרטיות וציות גלובלי',
+    desc: 'GDPR, PIPEDA, CCPA/CPRA, and e-Privacy regulatory adherence with cryptographic consent logs and automated data subject request pipelines.',
+    category: 'Privacy & Governance',
+    badgeColor: 'emerald'
+  },
+  {
+    set: 2,
+    range: '14–26',
+    title: 'OS Hardening & Infrastructure Armor',
+    titleHe: 'הקשחת מערכות ותשתיות',
+    desc: 'Kernel security hardening, zero-trust host bastions, eBPF telemetry, immutable container runtimes, and HSM hardware protection.',
+    category: 'OS & Infrastructure',
+    badgeColor: 'blue'
+  },
+  {
+    set: 3,
+    range: '27–39',
+    title: 'Next-Gen WAF, DDoS & Edge Defense',
+    titleHe: 'הגנת רשת WAF ו-DDoS',
+    desc: 'Intelligent multi-layer traffic filtering, behavioral bot management, API schema enforcement, and sub-millisecond edge rate limiters.',
+    category: 'Network & WAF',
+    badgeColor: 'cyan'
+  },
+  {
+    set: 4,
+    range: '40–52',
+    title: 'Identity, Zero-Trust & Access Governance',
+    titleHe: 'זהות, אפס אמון ובקרת גישה',
+    desc: 'FIDO2 WebAuthn hardware passkeys, contextual risk-based session evaluation, JIT privileged access elevation, and SCIM automated provisioning.',
+    category: 'Identity & Zero-Trust',
+    badgeColor: 'purple'
+  },
+  {
+    set: 5,
+    range: '53–65',
+    title: 'Cryptography, DLP & Data Tokenization',
+    titleHe: 'הצפנה, מניעת דליפות נתונים וטוקניזציה',
+    desc: 'Format-preserving encryption (FPE), real-time PII & financial payload masking, homomorphic queries, and zero-knowledge data sentries.',
+    category: 'Cryptography & DLP',
+    badgeColor: 'amber'
+  },
+  {
+    set: 6,
+    range: '66–78',
+    title: 'Autonomous SIEM, SOC & Incident Response',
+    titleHe: 'מרכז מבצעי סייבר ומודיעין איומים',
+    desc: 'Continuous MITRE ATT&CK correlation, autonomous attack containment, forensic snapshots, automated audit evidence harvesters, and 24/7 war-room orchestration.',
+    category: 'SIEM & SOC Operations',
+    badgeColor: 'rose'
+  }
+];
+
+export const features: Feature[] = [
+  // ==================== SET 1: 1 - 13 (Privacy & Governance) ====================
+  {
+    id: 1,
+    set: 1,
+    title: 'GDPR Consent Bundle',
+    titleHe: 'צרור הסכמות חתום GDPR',
+    desc: 'Create a signed, transportable ‘yes‑I‑agree’ token with immutable cryptographic timestamping and granular purpose tracking.',
+    category: 'Privacy & Governance',
+    complianceTags: ['GDPR Art. 7', 'e-Privacy', 'ISO 27701'],
+    specs: 'ECDSA secp256k1 signed JSON-LD format with verifiable proof metadata, expiring session revokers, and multi-tenant consent auditing.',
+    apiSample: `POST /api/v1/consent/sign\n{\n  "subject_id": "usr_998471",\n  "purposes": ["analytics", "essential", "marketing_optin"],\n  "legal_basis": "consent_explicit",\n  "timestamp_utc": 1724140000\n}`,
+    verificationOutput: 'Signature valid: 0x4f8e...ba21. Cryptographic ledger block #849,201 verified on immutable local log.'
+  },
+  {
+    id: 2,
+    set: 1,
+    title: 'e‑Privacy Encrypted Mail',
+    titleHe: 'דוא״ל מוצפן בחד-פעמיות e-Privacy',
+    desc: 'Send a one‑time, forward‑only encrypted e‑mail with self-destruct timers and zero plaintext storage on intermediary relays.',
+    category: 'Privacy & Governance',
+    complianceTags: ['e-Privacy Dir', 'GDPR Art. 32', 'HIPAA 164.312'],
+    specs: 'AES-256-GCM message body payload sealed with receiver public key, ephemeral symmetric decryption keys destroyed upon read confirmation.',
+    apiSample: `POST /api/v1/mail/dispatch-secure\n{\n  "recipient": "compliance@bank.il",\n  "ttl_seconds": 3600,\n  "enforce_mfa_read": true\n}`,
+    verificationOutput: 'Payload encrypted with recipient ephemeral key. Ephemeral envelope digest: SHA-256: 9e0b8...c14. Relay purge active.'
+  },
+  {
+    id: 3,
+    set: 1,
+    title: 'PIPEDA Export API',
+    titleHe: 'ממשק ייצוא נתונים לפי תקן PIPEDA',
+    desc: 'Pull a user’s entire data set as CSV/JSON on demand with automated personal identifiable information (PII) aggregation across all data stores.',
+    category: 'Privacy & Governance',
+    complianceTags: ['PIPEDA Principle 9', 'GDPR Art. 20', 'CCPA § 1798.100'],
+    specs: 'Asynchronous streaming pipeline reading from sharded SQL/NoSQL stores, synthesizing normalized machine-readable archive.',
+    apiSample: `GET /api/v1/dsar/export?user_id=usr_998471&format=json&redact_internal_notes=true`,
+    verificationOutput: 'Stream initialized. Total records extracted: 1,420 from 9 databases. Delivered via TLS-1.3 signed download token.'
+  },
+  {
+    id: 4,
+    set: 1,
+    title: 'CCPA/CPRA Consumer Rights Gateway',
+    titleHe: 'שער מימוש זכויות צרכן CCPA/CPRA',
+    desc: 'Automate "Do Not Sell or Share My Personal Info" requests with global opt-out signal (GPC) protocol validation and downstream webhook broadcasting.',
+    category: 'Privacy & Governance',
+    complianceTags: ['CCPA/CPRA', 'GPC v1.0', 'CalOPPA'],
+    specs: 'Global Privacy Control header ingestion, zero-friction consent propagation across ad networks and CRM sync connectors.',
+    apiSample: `POST /api/v1/privacy/gpc-signal\n{\n  "visitor_token": "vis_8784",\n  "gpc_header": "1",\n  "action": "opt_out_all_sale"\n}`,
+    verificationOutput: 'GPC signal validated. 14 integrated analytics vendors notified. Opt-out ledger timestamped.'
+  },
+  {
+    id: 5,
+    set: 1,
+    title: 'HIPAA Audit Vault',
+    titleHe: 'כספת ביקורת רפואית HIPAA',
+    desc: 'Immutable, tamper-evident audit logging for every Protected Health Information (PHI) access, modification, and query execution.',
+    category: 'Privacy & Governance',
+    complianceTags: ['HIPAA § 164.312(b)', 'HITECH Act', 'NIST SP 800-66'],
+    specs: 'Write-Once-Read-Many (WORM) storage architecture with chained cryptographic hashes preventing retrospective log modification.',
+    apiSample: `POST /api/v1/audit/phi-log\n{\n  "doctor_id": "dr_481",\n  "patient_ref": "pat_9901",\n  "access_reason": "emergency_triage",\n  "fields_accessed": ["medical_history", "vitals"]\n}`,
+    verificationOutput: 'Audit record #998341 locked to WORM storage. Merkle root hash: 3a7f...28b9. Zero log-tamper anomalies detected.'
+  },
+  {
+    id: 6,
+    set: 1,
+    title: 'Cross-Border Transfer Shield',
+    titleHe: 'מגן העברות נתונים בינלאומיות',
+    desc: 'Evaluate and enforce EU Standard Contractual Clauses (SCC) and Schrems II data residency requirements with automated geo-routing safeguards.',
+    category: 'Privacy & Governance',
+    complianceTags: ['GDPR Chapter V', 'Schrems II', 'Swiss FADP'],
+    specs: 'Real-time geo-IP and server jurisdiction evaluator blocking unauthorized replication of sensitive EU/Israeli citizen data outside sovereign zones.',
+    apiSample: `POST /api/v1/transfer/evaluate\n{\n  "source_region": "eu-central-1",\n  "target_region": "us-east-1",\n  "data_classification": "pii_tier1"\n}`,
+    verificationOutput: 'Evaluation result: BLOCKED without explicit SCC supplement. Rerouted to EU-sovereign compliant enclave.'
+  },
+  {
+    id: 7,
+    set: 1,
+    title: 'DPO Automated Notification Agent',
+    titleHe: 'סוכן התרעות קצין הגנת מידע (DPO)',
+    desc: 'Instant alerting system notifying Data Protection Officers within mandatory 72-hour regulatory windows when suspected anomalies occur.',
+    category: 'Privacy & Governance',
+    complianceTags: ['GDPR Art. 33', 'ISO 27701', 'Israel Privacy Law'],
+    specs: 'Automated impact severity scoring with pre-drafted regulatory breach notifications for supervisory authorities (CNIL, ICO, PPA).',
+    apiSample: `POST /api/v1/dpo/trigger-incident\n{\n  "incident_id": "inc_7741",\n  "estimated_affected_records": 12,\n  "severity": "medium"\n}`,
+    verificationOutput: 'DPO alerted via encrypted push & PagerDuty. Regulatory countdown timer initialized: 71h:59m remaining.'
+  },
+  {
+    id: 8,
+    set: 1,
+    title: 'Consent Ledger Cryptographic Verifier',
+    titleHe: 'אימות קריפטוגרפי של פנקס הסכמות',
+    desc: 'Zero-knowledge verification system allowing third-party auditors to verify legal consent validity without exposing underlying customer PII.',
+    category: 'Privacy & Governance',
+    complianceTags: ['GDPR Art. 7', 'SOC 2 Privacy', 'eIDAS'],
+    specs: 'zk-SNARK proof generation for consent status checks in B2B data sharing agreements.',
+    apiSample: `POST /api/v1/zk/verify-consent\n{\n  "proof": "zk_proof_0x919a...32",\n  "public_input": {"purpose_hash": "0x4b7"}\n}`,
+    verificationOutput: 'ZK Proof valid! Consent verified for purpose #4b7 without decrypting identity.'
+  },
+  {
+    id: 9,
+    set: 1,
+    title: 'Right to be Forgotten Pipeline',
+    titleHe: 'צינור מחיקת מידע "הזכות להישכח"',
+    desc: 'Multi-cluster orchestrated cascade deletion removing user records across primary databases, replicas, caches, and cold-storage backups.',
+    category: 'Privacy & Governance',
+    complianceTags: ['GDPR Art. 17', 'CCPA Deletion', 'LGPD Art. 18'],
+    specs: 'Tombstone-driven distributed workflow engine with cryptographic deletion certificates generated upon completion.',
+    apiSample: `DELETE /api/v1/dsar/erase-subject\n{\n  "subject_id": "usr_998471",\n  "reason": "gdpr_erasure_request",\n  "generate_certificate": true\n}`,
+    verificationOutput: 'Deletion executed on 8 clusters. Cryptographic certificate of erasure #ER-9014 generated.'
+  },
+  {
+    id: 10,
+    set: 1,
+    title: 'Data Pseudonymization Engine',
+    titleHe: 'מנוע פסאודונימיזציה והתממת נתונים',
+    desc: 'Convert direct personal identifiers into reversibly pseudonymized tokens with separated key storage, safeguarding analytics pipelines.',
+    category: 'Privacy & Governance',
+    complianceTags: ['GDPR Art. 32(1)(a)', 'HIPAA Safe Harbor', 'NISTIR 8053'],
+    specs: 'Deterministic HMAC-SHA512 tokenization with rotating pepper keys isolated in hardware enclave.',
+    apiSample: `POST /api/v1/pseudonymize\n{\n  "attributes": {"email": "ceo@defense.gov.il", "ssn": "038472918"}\n}`,
+    verificationOutput: 'Data pseudonymized: { "email": "tok_99bf21a7...", "ssn": "tok_55e810b4..." }.'
+  },
+  {
+    id: 11,
+    set: 1,
+    title: 'DPIA Impact Assessor',
+    titleHe: 'מערכת הערכת השפעה על הפרטיות DPIA',
+    desc: 'Automated privacy risk assessment tool that scans new schema definitions and API endpoints for high-risk PII processing patterns.',
+    category: 'Privacy & Governance',
+    complianceTags: ['GDPR Art. 35', 'ISO/IEC 29134', 'NIST Privacy'],
+    specs: 'Static AST code analyzer and OpenAPI schema validator detecting unencrypted sensitive field transmissions.',
+    apiSample: `POST /api/v1/dpia/scan-schema\n{\n  "openapi_spec_url": "https://api.internal/v2/swagger.json"\n}`,
+    verificationOutput: 'DPIA Score: 98/100. 0 high risks detected, 2 low-risk recommendations applied automatically.'
+  },
+  {
+    id: 12,
+    set: 1,
+    title: 'Cookie Consent Interceptor',
+    titleHe: 'מיירט עוגיות וסקריפטים צד-ג׳',
+    desc: 'Zero-latency edge script blocking non-essential third-party tracking scripts and cookies before explicit visitor authorization.',
+    category: 'Privacy & Governance',
+    complianceTags: ['e-Privacy', 'GDPR Planet49', 'IAB TCF v2.2'],
+    specs: 'DOM MutationObserver wrapper and Content-Security-Policy (CSP) dynamic injector preventing tracking telemetry leaks.',
+    apiSample: `GET /api/v1/consent/script-guard.js?client_id=skyguard_core`,
+    verificationOutput: 'Interceptor active: 6 third-party tracker scripts queued until consent state granted.'
+  },
+  {
+    id: 13,
+    set: 1,
+    title: 'Swiss FADP Data Custodian',
+    titleHe: 'משמורן נתונים לפי החוק השוויצרי FADP',
+    desc: 'Specialized compliance controls for Swiss Federal Act on Data Protection, including cross-border data transfer registry validation.',
+    category: 'Privacy & Governance',
+    complianceTags: ['Revised Swiss FADP', 'GDPR Adequacy', 'FINMA'],
+    specs: 'Enforces explicit logging of automated individual decision-making and sensitive corporate profiling activities.',
+    apiSample: `POST /api/v1/fadp/log-decision\n{\n  "algorithm_id": "credit_risk_v4",\n  "subject_id": "usr_ch_129",\n  "decision": "approved"\n}`,
+    verificationOutput: 'FADP audit entry #CH-882 locked. Explanation payload stored in Swiss sovereign vault.'
+  },
+
+  // ==================== SET 2: 14 - 26 (OS & Infrastructure) ====================
+  {
+    id: 14,
+    set: 2,
+    title: 'SecureServerHub',
+    titleHe: 'מרכז ניהול שרתים מאובטחים',
+    desc: 'Hardened OS foundation with automated CIS Level 2 kernel tuning, dynamic firewalling, and continuous cryptographic key rotation.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['CIS Linux Benchmark Level 2', 'NIST SP 800-53', 'DISA STIG'],
+    specs: 'Automated sysctl hardening, ASLR enforcement, unprivileged eBPF disabling, and SSH root login deprecation.',
+    apiSample: `POST /api/v1/servers/harden\n{\n  "host_id": "node-prod-tlv-01",\n  "benchmark": "cis_level_2",\n  "rotate_keys": true\n}`,
+    verificationOutput: 'Node node-prod-tlv-01 hardened. 142 CIS checks verified (100% compliance). SSH keys rotated.'
+  },
+  {
+    id: 15,
+    set: 2,
+    title: 'Automated Kernel Hardening Engine',
+    titleHe: 'מנוע הקשחת ליבת מערכת ההפעלה',
+    desc: 'Live kernel patch manager and memory-protection synthesizer enforcing KASLR, stack canary validation, and control-flow integrity.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['NIST SP 800-123', 'CISA Cyber Essentials'],
+    specs: 'Live patching via kpatch with zero server downtime and zero kernel reboot overhead.',
+    apiSample: `POST /api/v1/kernel/apply-hotpatch\n{\n  "cve": "CVE-2024-1086",\n  "action": "live_patch_memory"\n}`,
+    verificationOutput: 'Hotpatch applied successfully to kernel 6.6.x. Zero downtime recorded across 24 cluster nodes.'
+  },
+  {
+    id: 16,
+    set: 2,
+    title: 'Zero-Trust Bastion Host',
+    titleHe: 'שרת גישה Bastion באפס אמון',
+    desc: 'Ephemeral bastion proxy requiring multi-factor biometrics and issuing time-bound, session-recorded interactive SSH/RDP tunnels.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['NIST SP 800-207', 'SOC 2 CC6.1', 'ISO 27001 A.9'],
+    specs: 'WebAssembly terminal viewer with full keystroke auditing, screen recording replay, and automatic session termination on suspicious input.',
+    apiSample: `POST /api/v1/bastion/request-tunnel\n{\n  "target_ip": "10.0.4.12",\n  "duration_minutes": 30,\n  "mfa_token": "fido2_verified"\n}`,
+    verificationOutput: 'Ephemeral tunnel established (Port 44291). Session recording active: #REC-4912. Keystroke telemetry monitored.'
+  },
+  {
+    id: 17,
+    set: 2,
+    title: 'Ephemeral SSH Certificate Authority',
+    titleHe: 'רשות תעודות SSH ארעיות',
+    desc: 'Eliminate permanent SSH authorized_keys files by issuing cryptographic OpenSSH certificates that expire after 15 minutes.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['PCI-DSS 4.0 Req 8', 'SOC 2 CC6.3'],
+    specs: 'Ed25519-SK hardware-signed certificates binding user identity, source IP, and target host principal.',
+    apiSample: `POST /api/v1/ssh-ca/issue\n{\n  "public_key": "ssh-ed25519 AAAAC3...",\n  "principals": ["deployer", "admin"],\n  "validity_seconds": 900\n}`,
+    verificationOutput: 'SSH Certificate issued. Serial: #990141. Expires in 15 minutes. Signature: Ed25519-SK.'
+  },
+  {
+    id: 18,
+    set: 2,
+    title: 'TLS 1.3 & Post-Quantum Gateway',
+    titleHe: 'שער TLS 1.3 והצפנה פוסט-קוונטית',
+    desc: 'Enforce modern forward-secret cipher suites with Kyber-768 hybrid post-quantum key encapsulation to defeat store-now-decrypt-later attacks.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['NIST PQC ML-KEM', 'BSI TR-02102', 'NSA CNSA 2.0'],
+    specs: 'Hybrid X25519+MLKEM768 key exchange with 0-RTT session resumption disabled to prevent replay attacks.',
+    apiSample: `GET /api/v1/edge/cipher-status`,
+    verificationOutput: 'Cipher status: TLS 1.3 / X25519Kyber768Draft00. Perfect Forward Secrecy enabled. 0-RTT disabled.'
+  },
+  {
+    id: 19,
+    set: 2,
+    title: 'Immutable Container Registry Scanner',
+    titleHe: 'סורק רישומי מכולות (Containers) קשיח',
+    desc: 'Static and dynamic container image vulnerability scanner preventing deployment of containers with high/critical CVEs or embedded secrets.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['SLSA Level 3', 'NIST SP 800-190', 'FedRAMP High'],
+    specs: 'Cosign cryptographic container signing, Software Bill of Materials (SBOM) generation (SPDX/CycloneDX).',
+    apiSample: `POST /api/v1/registry/verify-image\n{\n  "image": "registry.skyguard.internal/core-api:v2.4.1",\n  "require_sbom": true\n}`,
+    verificationOutput: 'Image verified: 0 Critical, 0 High vulnerabilities. Cosign signature matches Root of Trust. SBOM attached.'
+  },
+  {
+    id: 20,
+    set: 2,
+    title: 'eBPF Kernel Threat Sensor',
+    titleHe: 'חיישן איומים ברמת הקרנל eBPF',
+    desc: 'Deep kernel observability hook tracking unexpected syscall executions, root privilege escalation attempts, and memory injection in real time.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['MITRE ATT&CK T1068', 'NIST SP 800-94'],
+    specs: 'Zero-overhead in-kernel bytecode filter monitoring ptrace, execve, and setuid syscalls with sub-microsecond intercept.',
+    apiSample: `GET /api/v1/ebpf/alerts?severity=high`,
+    verificationOutput: 'eBPF sensor active across 128 cores. Process behavior baseline nominal. 0 unauthorized syscall executions.'
+  },
+  {
+    id: 21,
+    set: 2,
+    title: 'Host-Based IDS/IPS Daemon',
+    titleHe: 'מערכת זיהוי ומניעת חדירות למארח (HIDS)',
+    desc: 'File integrity monitoring (FIM), rootkit detection, and real-time active response blocking compromised system binaries.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['PCI-DSS Req 11.5', 'ISO 27001 A.12'],
+    specs: 'Real-time SHA-512 cryptographic hashing of /etc, /bin, /sbin with immediate kernel quarantine on deviation.',
+    apiSample: `POST /api/v1/hids/scan-integrity\n{\n  "target_path": "/usr/local/bin"\n}`,
+    verificationOutput: 'File integrity check complete: 1,842 binaries validated against golden checksum database. No tampering detected.'
+  },
+  {
+    id: 22,
+    set: 2,
+    title: 'Hardware Security Module (HSM) Vault',
+    titleHe: 'כספת חומרה מאובטחת HSM',
+    desc: 'FIPS 140-3 Level 4 certified hardware key management with isolated cryptographic coprocessors for root key generation and decryption.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['FIPS 140-3 Level 4', 'Common Criteria EAL6+'],
+    specs: 'PKCS#11 hardware abstraction layer executing RSA-4096 / Ed25519 signing operations strictly inside sealed tamper-reactive silicon.',
+    apiSample: `POST /api/v1/hsm/sign-payload\n{\n  "key_alias": "skyguard_master_root_2026",\n  "digest": "sha256_e814...a10b"\n}`,
+    verificationOutput: 'Signed inside HSM slot 0x1. Key material never exported into RAM. Hardware attestation verified.'
+  },
+  {
+    id: 23,
+    set: 2,
+    title: 'Memory-Safe Process Isolator',
+    titleHe: 'מבודד תהליכים מוגן-זיכרון',
+    desc: 'Sandbox microservices inside WebAssembly / microVM microsegmentation boundaries preventing buffer overflows and use-after-free exploits.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['CISA Memory Safety Directive', 'NSA Memory Safety Guide'],
+    specs: 'Firecracker microVM / Wasmtime virtualization spin-up in <5ms per untrusted request isolation context.',
+    apiSample: `POST /api/v1/sandbox/execute\n{\n  "payload_ref": "job_doc_parser",\n  "max_memory_mb": 64,\n  "timeout_ms": 500\n}`,
+    verificationOutput: 'Execution isolated in microVM container #vm-884. CPU time: 42ms. Process terminated and memory zeroized.'
+  },
+  {
+    id: 24,
+    set: 2,
+    title: 'Bare-Metal Microsegmentation',
+    titleHe: 'מיקרו-סגמנטציה לרשת בר-מטאל',
+    desc: 'Granular East-West network traffic segmentation between workloads with zero-trust identity tags instead of vulnerable static IP policies.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['Zero Trust Architecture (NIST SP 800-207)', 'PCI-DSS Req 1.3'],
+    specs: 'WireGuard encrypted mesh between hosts with dynamic iptables policy rules synthesized from service workload identities.',
+    apiSample: `POST /api/v1/network/apply-segmentation\n{\n  "workload": "payment-processor",\n  "allowed_inbound": ["api-gateway"],\n  "allowed_outbound": ["hsm-vault"]\n}`,
+    verificationOutput: 'East-West policies applied. All lateral movement from non-authorized pods dropped at kernel level.'
+  },
+  {
+    id: 25,
+    set: 2,
+    title: 'Air-Gapped Backup Synchronizer',
+    titleHe: 'סנכרון גיבויים מנותקי-רשת (Air-Gap)',
+    desc: 'Unidirectional data diode replication creating offline, ransomware-proof snapshot archives with cryptographic immutability guarantees.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['NIST SP 800-34', 'SOC 2 CC7.5', 'ISO 22301'],
+    specs: 'Physical and logical data diode protocol preventing reverse write/delete commands from executing against cold backup vaults.',
+    apiSample: `POST /api/v1/backup/diode-sync\n{\n  "volume_id": "vol-db-prod-primary",\n  "retention_days": 1825\n}`,
+    verificationOutput: 'Snapshot synced via unidirectional stream. Immutable lock activated for 5 years (1825 days). Deletion disallowed.'
+  },
+  {
+    id: 26,
+    set: 2,
+    title: 'System Boot Integrity & vTPM Attestation',
+    titleHe: 'אימות שלמות אתחול מערכת vTPM',
+    desc: 'Hardware Root of Trust verification validating UEFI secure boot signatures and PCR measurement registers before granting network access.',
+    category: 'OS & Infrastructure',
+    complianceTags: ['TCG TPM 2.0', 'NIST SP 800-155'],
+    specs: 'Remote attestation comparing TPM PCR[0-7] values against cryptographically sealed golden measurements.',
+    apiSample: `GET /api/v1/attestation/node-health?node_id=tlv-k8s-worker-04`,
+    verificationOutput: 'vTPM 2.0 Attestation: PASSED. Secure Boot active, kernel hash matches golden standard.'
+  },
+
+  // ==================== SET 3: 27 - 39 (Network & WAF) ====================
+  {
+    id: 27,
+    set: 3,
+    title: 'Intelligent Next-Gen WAF',
+    titleHe: 'חומת אש יישומית מהדור הבא (WAF)',
+    desc: 'Real-time inspection engine blocking OWASP Top 10 exploits, SQLi, XSS, SSRF, and zero-day payload vectors with <0.4ms latency overhead.',
+    category: 'Network & WAF',
+    complianceTags: ['OWASP Top 10 (2025)', 'PCI-DSS Req 6.4.1'],
+    specs: 'Deterministic regex engine + semantic AST parsing detecting SQL injections even when obfuscated across hex/unicode encodings.',
+    apiSample: `POST /api/v1/waf/inspect\n{\n  "path": "/login",\n  "headers": {"User-Agent": "Mozilla/5.0..."}, \n  "body": "' OR 1=1 --"\n}`,
+    verificationOutput: 'THREAT DETECTED: SQL Injection attempt (AST pattern 0x991). HTTP 403 Forbidden issued in 0.32ms.'
+  },
+  {
+    id: 28,
+    set: 3,
+    title: 'Multi-Layer L3/L4/L7 DDoS Defense',
+    titleHe: 'הגנת DDoS רב-שכבתית שכבות 3/4/7',
+    desc: 'Automated mitigation for SYN floods, UDP amplification, HTTP/2 Rapid Reset attacks, and slowloris connection-drain attacks up to 10 Tbps.',
+    category: 'Network & WAF',
+    complianceTags: ['NIST SP 800-44', 'Cloud Security Alliance (CSA)'],
+    specs: 'Anycast scrubbing centers with eBPF/XDP hardware packet dropping before socket buffers are populated.',
+    apiSample: `GET /api/v1/ddos/mitigation-status`,
+    verificationOutput: 'Current load: 24,190 req/sec. Filtered 3,410 malicious amplification packets via eBPF/XDP. Edge latency: 4ms.'
+  },
+  {
+    id: 29,
+    set: 3,
+    title: 'Behavioral Bot Management & CAPTCHA',
+    titleHe: 'ניהול בוטים התנהגותי ללא חידות מעיקות',
+    desc: 'Invisible proof-of-work and telemetry-driven bot detection distinguishing genuine human visitors from credential stuffers and web scrapers.',
+    category: 'Network & WAF',
+    complianceTags: ['OWASP Automated Threats (OAT)', 'WCAG 2.2 AA'],
+    specs: 'Biometric mouse telemetry, canvas fingerprinting entropy analysis, and client-side argon2 proof-of-work challenges.',
+    apiSample: `POST /api/v1/bot/evaluate-session\n{\n  "entropy_score": 0.94,\n  "pow_duration_ms": 18,\n  "mouse_path_variance": 0.88\n}`,
+    verificationOutput: 'Evaluation: Human (Confidence: 99.4%). Zero CAPTCHA friction presented to user.'
+  },
+  {
+    id: 30,
+    set: 3,
+    title: 'API Threat Inspector & Schema Enforcer',
+    titleHe: 'מפקח איומי ממשקי API ואכיפת סכמות',
+    desc: 'Validate all incoming REST/GraphQL request bodies against strict OpenAPI schemas, automatically stripping unexpected injected properties.',
+    category: 'Network & WAF',
+    complianceTags: ['OWASP API Security Top 10', 'ISO 27001'],
+    specs: 'Strict JSON-Schema compiler rejecting mass-assignment attacks, parameter pollution, and oversized GraphQL queries.',
+    apiSample: `POST /api/v1/api-shield/validate\n{\n  "route": "/v1/users/profile",\n  "payload": {"role": "superadmin", "bio": "Hello"}\n}`,
+    verificationOutput: 'REJECTED: Unauthorized property "role" detected (OWASP API3:2023 Broken Object Property Level Authorization).'
+  },
+  {
+    id: 31,
+    set: 3,
+    title: 'DNSSEC & Recursive Resolver Guard',
+    titleHe: 'הגנת DNSSEC ורזולוציה מוצפנת',
+    desc: 'Enforce DNS-over-HTTPS (DoH), DNS-over-TLS (DoT), and cryptographic DNSSEC signature validation to thwart DNS cache poisoning.',
+    category: 'Network & WAF',
+    complianceTags: ['RFC 8484', 'RFC 7858', 'NIST SP 800-81B'],
+    specs: 'Hardware-verified DNSSEC chain of trust validation with automated root key roll-over tracking.',
+    apiSample: `GET /api/v1/dns/verify-zone?domain=skyguard.security`,
+    verificationOutput: 'DNSSEC chain: RRSIG, DNSKEY, DS records validated from ICANN root down to domain zone. Valid.'
+  },
+  {
+    id: 32,
+    set: 3,
+    title: 'TLS Termination & JA4+ Fingerprinting',
+    titleHe: 'סיום TLS וטביעות אצבע JA4+ לפושעי סייבר',
+    desc: 'Inspect TLS handshake parameters and cipher suite negotiation patterns to classify adversary tools (cURL, Python, Burp Suite, Cobalt Strike).',
+    category: 'Network & WAF',
+    complianceTags: ['MITRE ATT&CK T1071.001', 'SANS Institute'],
+    specs: 'JA4+ TLS client hello hashing matching against known threat actor C2 profile databases in real-time.',
+    apiSample: `POST /api/v1/tls/fingerprint-inspect\n{\n  "ja4_fingerprint": "t13d1516h2_8daaf6152771_b186095e22b6"\n}`,
+    verificationOutput: 'JA4 match: Known malicious exploit scanner (Nikto / SQLmap variant). Connection terminated.'
+  },
+  {
+    id: 33,
+    set: 3,
+    title: 'Geo-Fencing & IP Reputation Engine',
+    titleHe: 'מנוע גיאו-פנסינג ומוניטין IP',
+    desc: 'Block traffic originating from sanctioned jurisdictions, Tor exit nodes, anonymous proxies, and hijacked residential VPN networks.',
+    category: 'Network & WAF',
+    complianceTags: ['OFAC Compliance', 'ITAR Regulations', 'PCI-DSS'],
+    specs: 'Sub-millisecond in-memory radix tree lookup refreshed hourly with 45+ threat feed aggregators.',
+    apiSample: `GET /api/v1/reputation/ip-check?ip=198.51.100.44`,
+    verificationOutput: 'Reputation: Tor Exit Node (Risk Score 96/100). Geolocation: Sanctioned. Ingress automatically dropped.'
+  },
+  {
+    id: 34,
+    set: 3,
+    title: 'Webhook Integrity Signer & Verifier',
+    titleHe: 'חתימה ואימות שלמות Webhook',
+    desc: 'Cryptographically sign all outbound and inbound webhooks with HMAC-SHA256 and replay-resistant nonce validation.',
+    category: 'Network & WAF',
+    complianceTags: ['RFC 8941', 'SOC 2 CC6.6'],
+    specs: 'Timestamped signature headers (X-SkyGuard-Signature, X-SkyGuard-Timestamp) with 5-minute tolerance windows.',
+    apiSample: `POST /api/v1/webhooks/sign\n{\n  "event": "user.payment_completed",\n  "payload": {"tx_id": "tx_88102"}\n}`,
+    verificationOutput: 'Header generated: X-SkyGuard-Signature: t=1724140000,v1=91fae...881. Replay defense active.'
+  },
+  {
+    id: 35,
+    set: 3,
+    title: 'HTTP/3 QUIC Acceleration Shield',
+    titleHe: 'מגן תאוצה ואבטחת HTTP/3 QUIC',
+    desc: 'Next-generation transport protocol support with integrated connection migration protection and 0-RTT anti-replay security envelopes.',
+    category: 'Network & WAF',
+    complianceTags: ['IETF RFC 9000', 'RFC 9001'],
+    specs: 'Multiplexed UDP stream isolation preventing head-of-line blocking and packet injection.',
+    apiSample: `GET /api/v1/edge/protocol-metrics`,
+    verificationOutput: 'Protocol: HTTP/3 (QUIC v1). Active streams: 1,840. Handshake time: 1.2ms.'
+  },
+  {
+    id: 36,
+    set: 3,
+    title: 'Edge Rate Limiter & Token Bucket',
+    titleHe: 'מגביל קצב בקשות בקצה (Rate Limiter)',
+    desc: 'Distributed sliding-window rate limiting engine guarding critical endpoints (/login, /checkout, /reset-password) against brute force.',
+    category: 'Network & WAF',
+    complianceTags: ['OWASP Top 10 A07:2021', 'PCI-DSS Req 8.3'],
+    specs: 'Distributed Redis sliding-log counter processing 500,000 checks/second with atomic Lua scripts.',
+    apiSample: `POST /api/v1/rate-limit/check\n{\n  "key": "ip_login_192.0.2.1",\n  "limit": 5,\n  "window_seconds": 60\n}`,
+    verificationOutput: 'Status: ALLOWED (3/5 attempts used in current 60s window). Rate headers populated.'
+  },
+  {
+    id: 37,
+    set: 3,
+    title: 'Malicious Payload Sanitizer',
+    titleHe: 'מטהר מטענים זדוניים בזמן אמת',
+    desc: 'Deep inspection and stripping of Polyglot files, SVG script injection, and embedded macro malware during multipart uploads.',
+    category: 'Network & WAF',
+    complianceTags: ['OWASP File Upload Cheat Sheet', 'NIST SP 800-53 SI-3'],
+    specs: 'ClamAV + custom YARA engine scanning file streams in memory before persisting to object storage.',
+    apiSample: `POST /api/v1/sanitize/stream-scan\n{\n  "filename": "invoice.pdf",\n  "content_type": "application/pdf"\n}`,
+    verificationOutput: 'Scan complete: Clean. Embedded JavaScript stripped, PDF linearized and safe.'
+  },
+  {
+    id: 38,
+    set: 3,
+    title: 'Shadow IT Discovery Crawler',
+    titleHe: 'סורק גילוי Shadow IT ונכסים נטושים',
+    desc: 'Continuous passive DNS and certificate transparency log monitoring detecting forgotten subdomains, dangling CNAMEs, and leaked staging environments.',
+    category: 'Network & WAF',
+    complianceTags: ['CIS Control 1 (Asset Inventory)', 'ISO 27001 A.8.1'],
+    specs: 'Monitors crt.sh and Certificate Transparency feeds with real-time alerts when new certificates are minted under your domains.',
+    apiSample: `GET /api/v1/recon/subdomains?domain=company.com`,
+    verificationOutput: 'Found 48 active subdomains. 1 dangling CNAME identified on staging-test.company.com (auto-flagged).'
+  },
+  {
+    id: 39,
+    set: 3,
+    title: 'Reverse Proxy Load-Balancing Armor',
+    titleHe: 'שריון ניתוב ואיזון עומסים (Reverse Proxy)',
+    desc: 'High-availability L7 reverse proxy with health checking, automatic circuit-breaking, and transparent SSL offloading.',
+    category: 'Network & WAF',
+    complianceTags: ['High Availability SLA 99.999%', 'SOC 2 Availability'],
+    specs: 'Rust-based async proxy routing up to 1,000,000 concurrent sockets with zero memory leakage.',
+    apiSample: `GET /api/v1/proxy/upstream-health`,
+    verificationOutput: 'Upstream cluster status: 8/8 nodes healthy. Avg response time: 2.1ms. Circuit breakers armed.'
+  },
+
+  // ==================== SET 4: 40 - 52 (Identity & Zero-Trust) ====================
+  {
+    id: 40,
+    set: 4,
+    title: 'FIDO2 / WebAuthn Hardware Keys',
+    titleHe: 'מפתחות חומרה FIDO2 ו-WebAuthn',
+    desc: 'Phishing-resistant passkey authentication using YubiKeys, Apple Touch ID, and Windows Hello cryptographic attestations.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['FIDO2 Level 3', 'NIST SP 800-63B AAL3', 'CISA MFA Guidance'],
+    specs: 'WebAuthn level 3 registration and assertion with origin binding and user presence verification.',
+    apiSample: `POST /api/v1/auth/webauthn/verify-assertion\n{\n  "credential_id": "cred_8819",\n  "client_data_json": "eyJ0eXBlIj...",\n  "signature": "3045022100..."\n}`,
+    verificationOutput: 'Hardware signature valid. Origin domain matched. User authenticated with AAL3 assurance.'
+  },
+  {
+    id: 41,
+    set: 4,
+    title: 'Adaptive Contextual MFA',
+    titleHe: 'אימות רב-שלבי מבוסס הקשר וסיכון (MFA)',
+    desc: 'Dynamically escalate authentication challenges when impossible travel, unusual time zones, or suspicious device footprints are detected.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['NIST SP 800-63B', 'PCI-DSS Req 8.4'],
+    specs: 'Velocity calculation between consecutive logins (e.g. TLV to NYC in 15 minutes triggers mandatory biometric challenge).',
+    apiSample: `POST /api/v1/auth/evaluate-risk\n{\n  "user_id": "usr_7712",\n  "current_ip": "203.0.113.19",\n  "last_login_city": "Tel Aviv"\n}`,
+    verificationOutput: 'Impossible travel detected (Speed: 3,400 km/h). Session challenge escalated to FIDO2 Biometric.'
+  },
+  {
+    id: 42,
+    set: 4,
+    title: 'Continuous Risk-Based Session Evaluator',
+    titleHe: 'הערכת סיכוני סשן רציפה בזמן אמת',
+    desc: 'Continuously assess active user sessions every 30 seconds, instantly revoking OAuth tokens if device security posture drops.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['CAEP (Continuous Access Evaluation Profile)', 'Shared Signals (SSF)'],
+    specs: 'OpenID CAEP event listener immediately revoking refresh tokens upon malware detection or password changes.',
+    apiSample: `POST /api/v1/caep/emit-event\n{\n  "event_type": "device_compliance_change",\n  "user_id": "usr_7712",\n  "new_status": "jailbroken"\n}`,
+    verificationOutput: 'CAEP event broadcasted. 4 active OAuth sessions terminated across all devices in <100ms.'
+  },
+  {
+    id: 43,
+    set: 4,
+    title: 'Just-In-Time (JIT) Privileged Access',
+    titleHe: 'הרשאות מנהל בזמן אמת (JIT Privileges)',
+    desc: 'Eliminate permanent admin accounts by granting temporary, peer-approved root or database privileges that expire automatically.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['SOC 2 CC6.2', 'ISO 27001 A.9.2.3', 'CIS Control 5'],
+    specs: 'Slack/Teams approval workflow generating 60-minute time-locked IAM role assume tokens.',
+    apiSample: `POST /api/v1/jit/request-access\n{\n  "role": "production_db_admin",\n  "duration_minutes": 60,\n  "ticket_ref": "JIRA-4819",\n  "approver": "sec_lead@skyguard.security"\n}`,
+    verificationOutput: 'JIT Elevation approved by sec_lead. Temporary IAM credentials issued. Auto-revoke scheduled at +60m.'
+  },
+  {
+    id: 44,
+    set: 4,
+    title: 'SCIM Automated User Provisioning',
+    titleHe: 'הקצאה וביטול משתמשים אוטומטי SCIM 2.0',
+    desc: 'Synchronize employee onboarding and instant deprovisioning across Okta, Microsoft Entra ID, Google Workspace, and internal apps.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['RFC 7643', 'RFC 7644', 'SOC 2 CC6.1'],
+    specs: 'Full SCIM 2.0 endpoint handling /Users and /Groups with atomic schema validation.',
+    apiSample: `POST /scim/v2/Users\n{\n  "userName": "yoni@defense.gov.il",\n  "active": true,\n  "name": {"familyName": "Cohen", "givenName": "Yoni"}\n}`,
+    verificationOutput: 'SCIM user usr_99184 created. 12 role groups synchronized. MFA requirement enforced on first login.'
+  },
+  {
+    id: 45,
+    set: 4,
+    title: 'OIDC & SAML 2.0 Single Sign-On Gateway',
+    titleHe: 'שער כניסה אחודה OIDC ו-SAML 2.0',
+    desc: 'Enterprise-grade identity federation supporting Okta, Ping Identity, Azure AD, and Shibboleth with cryptographic assertion validation.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['SAML 2.0 Core', 'OpenID Connect Core 1.0'],
+    specs: 'XML Signature validation with SHA-256 and strict clock skew checking (<180 seconds).',
+    apiSample: `POST /api/v1/sso/saml/acs\n{\n  "SAMLResponse": "PHNhbWxwOlJlc3BvbnNl..."\n}`,
+    verificationOutput: 'SAML Assertion validated. IdP entity ID: https://sts.windows.net/... User session generated.'
+  },
+  {
+    id: 46,
+    set: 4,
+    title: 'Role-Based Access Control (RBAC) Matrix',
+    titleHe: 'מטריצת בקרת גישה מבוססת תפקידים RBAC',
+    desc: 'Fine-grained hierarchical permissions modeling supporting inherited roles, resource scopes, and tenant boundary isolation.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['NIST SP 800-162', 'ISO 27001 A.9'],
+    specs: 'In-memory graph authorization engine evaluating multi-level permission inheritance in <0.1ms.',
+    apiSample: `POST /api/v1/rbac/evaluate\n{\n  "user_id": "usr_4401",\n  "permission": "billing:invoice:export",\n  "resource_id": "inv_2026_01"\n}`,
+    verificationOutput: 'Evaluation: ALLOWED via inherited role "FinanceManager" on tenant "acme_corp".'
+  },
+  {
+    id: 47,
+    set: 4,
+    title: 'Least-Privilege Policy Synthesizer',
+    titleHe: 'מסנתז מדיניות הרשאות מינימליות',
+    desc: 'Analyze historical access logs to detect unused permissions and automatically synthesize tightened, least-privilege IAM policies.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['CIS Benchmark IAM', 'AWS/GCP Security Best Practices'],
+    specs: 'Statistical access clustering recommending removal of privileges inactive for >30 consecutive days.',
+    apiSample: `GET /api/v1/iam/least-privilege-report?role=developer`,
+    verificationOutput: 'Analysis complete: 8 unused AWS/GCP permissions identified. Generated tightened JSON policy reducing attack surface by 62%.'
+  },
+  {
+    id: 48,
+    set: 4,
+    title: 'Stale Credential & API Key Hunter',
+    titleHe: 'צייד מפתחות API וסיסמאות ישנות',
+    desc: 'Automated daemon scanning source repositories, CI/CD pipelines, and internal configs for unrotated API keys and legacy passwords.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['PCI-DSS Req 8.6', 'NIST SP 800-53 IA-5'],
+    specs: 'Entropy analysis + regex scanning across git commit history with immediate automated key revocation on detection.',
+    apiSample: `POST /api/v1/credentials/scan-repo\n{\n  "repo_url": "https://github.com/internal/core-service"\n}`,
+    verificationOutput: 'Scan finished: 1,489 commits scanned. 0 active leaks found. 2 dormant test keys marked for decommission.'
+  },
+  {
+    id: 49,
+    set: 4,
+    title: 'Passwordless Passkey Gateway',
+    titleHe: 'שער התחברות ללא סיסמאות Passkeys',
+    desc: 'Eliminate credentials entirely through synchronized multi-device passkeys backed by biometric hardware secure enclaves.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['FIDO Alliance Passkeys Standard', 'CISA Passwordless Whitepaper'],
+    specs: 'iCloud Keychain / Google Password Manager synchronized passkey support with ECDSA P-256 signature verification.',
+    apiSample: `POST /api/v1/passkeys/register-challenge\n{\n  "user_email": "cto@cyber.co.il"\n}`,
+    verificationOutput: 'Challenge generated. Device attestation: Apple Secure Enclave. Passkey successfully registered.'
+  },
+  {
+    id: 50,
+    set: 4,
+    title: 'Device Posture & Health Attestation',
+    titleHe: 'אימות בריאות ורמת אבטחת מכשיר הקצה',
+    desc: 'Verify that connecting laptops and mobile devices have full disk encryption, active EDR agents, and OS updates before permitting access.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['NIST SP 800-207 Zero Trust', 'DoD Zero Trust Strategy'],
+    specs: 'Agentless mTLS handshake checking device compliance certificates issued by CrowdStrike, SentinelOne, or Microsoft Intune.',
+    apiSample: `POST /api/v1/posture/verify\n{\n  "device_id": "macbook-pro-m3-441",\n  "disk_encrypted": true,\n  "edr_active": true,\n  "os_version": "macOS 15.3"\n}`,
+    verificationOutput: 'Posture score: 100/100 (Compliant). Access token issued with 8-hour validity.'
+  },
+  {
+    id: 51,
+    set: 4,
+    title: 'Service Account Secret Rotator',
+    titleHe: 'רוטציה אוטומטית לחשבונות שירות ומערכת',
+    desc: 'Zero-downtime dual-key secret rotation for database connection strings, third-party API tokens, and JWT signing keys.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['SOC 2 CC6.3', 'PCI-DSS Req 3.6'],
+    specs: 'Grace-period key rotation storing [CurrentKey, NextKey, PreviousKey] ensuring zero dropped production requests.',
+    apiSample: `POST /api/v1/secrets/rotate\n{\n  "secret_name": "postgres_db_app_user",\n  "grace_period_hours": 24\n}`,
+    verificationOutput: 'Secret rotated. New credentials propagated to Kubernetes secrets. Zero downtime logged.'
+  },
+  {
+    id: 52,
+    set: 4,
+    title: 'Multi-Tenant Partitioning Isolation',
+    titleHe: 'בידוד קשיח בין דיירים (Multi-Tenant)',
+    desc: 'Row-Level Security (RLS) enforcement ensuring absolute cryptographic and logical segregation between enterprise customer datasets.',
+    category: 'Identity & Zero-Trust',
+    complianceTags: ['SOC 2 Common Criteria 6.1', 'ISO 27017 Cloud Security'],
+    specs: 'PostgreSQL Row Level Security (RLS) policies locked to current_setting("app.current_tenant_id") on every connection pool session.',
+    apiSample: `POST /api/v1/tenants/query-isolated\n{\n  "tenant_id": "tnt_bank_leumi",\n  "query": "SELECT * FROM transactions"\n}`,
+    verificationOutput: 'RLS Filter enforced: tenant_id = tnt_bank_leumi. Zero cross-tenant data leakage possible.'
+  },
+
+  // ==================== SET 5: 53 - 65 (Cryptography & DLP) ====================
+  {
+    id: 53,
+    set: 5,
+    title: 'Enterprise Data Loss Prevention (DLP) Sensor',
+    titleHe: 'חיישן ארגוני למניעת דליפת מידע (DLP)',
+    desc: 'Real-time inspection of clipboard, outbound HTTP, email attachments, and git pushes to intercept leaked PII, credit cards, and secrets.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['PCI-DSS 4.0 Req 3', 'HIPAA § 164.312', 'GDPR Art. 32'],
+    specs: 'Luhn algorithm validation + regex + machine learning classifiers detecting credit card numbers, Israeli Teudat Zehut, SSNs, and private keys.',
+    apiSample: `POST /api/v1/dlp/inspect-text\n{\n  "content": "Customer ID: 039481942, Card: 4532-8819-4412-9901"\n}`,
+    verificationOutput: 'ALERT: 1 Israeli ID & 1 Visa Card detected. Outbound message redacted: Card: 4532-****-****-9901.'
+  },
+  {
+    id: 54,
+    set: 5,
+    title: 'Format-Preserving Encryption (FPE)',
+    titleHe: 'הצפנה משמרת-פורמט (FPE)',
+    desc: 'Encrypt credit card numbers and personal IDs while preserving length, character set, and format so legacy systems operate seamlessly.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['NIST SP 800-38G (FF1 Mode)', 'PCI-DSS Tokenization'],
+    specs: 'NIST-approved FF1 Feistel network encryption using AES-256 underlying cipher.',
+    apiSample: `POST /api/v1/fpe/encrypt\n{\n  "plaintext": "4532881944129901",\n  "tweak": "acct_8891"\n}`,
+    verificationOutput: 'Ciphertext: 4920194810294812 (Valid 16-digit format preserved, decryptable only with authorized key).'
+  },
+  {
+    id: 55,
+    set: 5,
+    title: 'Dynamic Tokenization Engine',
+    titleHe: 'מנוע טוקניזציה דינמית בזמן אמת',
+    desc: 'Replace sensitive data with mathematically non-reversible surrogate tokens stored in a PCI Level 1 certified token vault.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['PCI-DSS Scoping Guidance', 'HIPAA De-identification'],
+    specs: 'High-throughput crypto vault mapping UUIDv4 tokens to AES-256-GCM encrypted records with 100,000 ops/sec.',
+    apiSample: `POST /api/v1/tokens/tokenize\n{\n  "raw_data": "4000-1234-5678-9010",\n  "data_type": "credit_card"\n}`,
+    verificationOutput: 'Token generated: tok_cc_8819a7e0. Database stores only token; PCI audit scope reduced by 90%.'
+  },
+  {
+    id: 56,
+    set: 5,
+    title: 'PII & Financial Data Masking Filter',
+    titleHe: 'מסנן הסתרת נתונים פיננסיים ו-PII',
+    desc: 'On-the-fly masking of database query results and logging streams, displaying only the last 4 digits to unauthorized viewers.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['PCI-DSS Req 3.3', 'SOC 2 Privacy Criteria'],
+    specs: 'Dynamic SQL proxy altering SELECT projections based on viewer role and session authorization level.',
+    apiSample: `GET /api/v1/customers/usr_9918?role=support_tier1`,
+    verificationOutput: 'Response: { "name": "David L***", "phone": "+972-5*-***-8819", "card_last4": "9901" }.'
+  },
+  {
+    id: 57,
+    set: 5,
+    title: 'End-to-End Encrypted File Transfer',
+    titleHe: 'העברת קבצים מוצפנת מקצה-לקצה',
+    desc: 'Zero-knowledge secure file drop allowing clients to upload confidential documents with client-side browser encryption.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['GDPR Art. 32', 'HIPAA Security Rule', 'ISO 27001 A.13.2'],
+    specs: 'Web Crypto API AES-256-GCM streaming encryption in browser before chunked upload to S3-compatible storage.',
+    apiSample: `POST /api/v1/drop/upload-chunk\n{\n  "envelope_id": "env_4481",\n  "chunk_index": 0,\n  "ciphertext_base64": "vA8f1a..."\n}`,
+    verificationOutput: 'Encrypted chunk stored. Server holds zero decryption keys (Pure Zero-Knowledge Architecture).'
+  },
+  {
+    id: 58,
+    set: 5,
+    title: 'Hardware-Backed Secret Manager',
+    titleHe: 'מנהל סודות מבוסס חומרה ו-KMS',
+    desc: 'Centralized enterprise secret management with dynamic injection into containers and envelope encryption via AWS KMS / Google Cloud KMS.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['SOC 2 CC6.1', 'NIST SP 800-57'],
+    specs: 'Envelope encryption where Data Encryption Keys (DEKs) are generated locally and wrapped with Key Encryption Keys (KEKs).',
+    apiSample: `POST /api/v1/secrets/fetch\n{\n  "secret_path": "prod/payment_gateway_api_key",\n  "app_role_id": "role_k8s_payments"\n}`,
+    verificationOutput: 'Secret decrypted in memory with KMS KEK. Audit trail logged to CloudTrail / Cloud Audit.'
+  },
+  {
+    id: 59,
+    set: 5,
+    title: 'Database Field-Level Encryption',
+    titleHe: 'הצפנה ברמת השדה במסד הנתונים',
+    desc: 'Transparent cryptographic protection for specific database columns (passwords, medical records, bank accounts) before disk write.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['HIPAA § 164.312(a)(2)(iv)', 'PCI-DSS Req 3.4'],
+    specs: 'Client-Side Field-Level Encryption (CSFLE) supporting deterministic and randomized encryption modes.',
+    apiSample: `POST /api/v1/db/encrypt-record\n{\n  "table": "patients",\n  "fields": {"diagnosis": "Hypertension Tier 2"}\n}`,
+    verificationOutput: 'Encrypted with patient-specific key. Disk sees only ciphertext: 0x99e1a8...44b1.'
+  },
+  {
+    id: 60,
+    set: 5,
+    title: 'Cryptographic Key Lifecycle Custodian',
+    titleHe: 'משמורן מחזור חיי מפתחות הצפנה',
+    desc: 'Automate NIST SP 800-57 key lifecycle states: generation, distribution, active use, deprecation, revocation, and cryptographic destruction.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['NIST SP 800-57 Part 1', 'ISO 27001 A.10.1'],
+    specs: 'Cryptographic key metadata database tracking cryptoperiod expiration dates and triggering automated rollover.',
+    apiSample: `POST /api/v1/kms/lifecycle-action\n{\n  "key_id": "key_2025_rsa4096",\n  "action": "transition_to_deactivated"\n}`,
+    verificationOutput: 'Key key_2025_rsa4096 deactivated. New operations routed to active key key_2026_post_quantum.'
+  },
+  {
+    id: 61,
+    set: 5,
+    title: 'Automated Watermarking & Anti-Leak',
+    titleHe: 'סימון מים דיגיטלי סמוי ומניעת הדלפות',
+    desc: 'Inject invisible, steganographic and visible forensic watermarks into exported PDFs, images, and documents tracing leaked files to source viewers.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['Trade Secret Protection', 'ISO 27001 A.8.2'],
+    specs: 'Zero-width Unicode steganography in text and high-frequency pixel modulation in exported graphics.',
+    apiSample: `POST /api/v1/watermark/embed\n{\n  "document_id": "doc_classified_financials",\n  "viewer_email": "analyst@bank.il"\n}`,
+    verificationOutput: 'Forensic watermark embedded: Stego-ID #W-9918. Any screen grab or leak will reveal analyst@bank.il.'
+  },
+  {
+    id: 62,
+    set: 5,
+    title: 'Clipboard & Screenshot Data Sentry',
+    titleHe: 'זקיף לוח העתקה וצילומי מסך באפליקציות',
+    desc: 'Prevent unauthorized copying of confidential customer records into personal clipboards or unmanaged screen-capture tools.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['FINRA Compliance', 'HIPAA Workstation Security'],
+    specs: 'HTML5 Clipboard API interceptor and CSS screen protection overlays clearing clipboard buffers after 30 seconds.',
+    apiSample: `POST /api/v1/sentry/protect-view\n{\n  "session_id": "sess_8819",\n  "disable_print": true,\n  "auto_clear_clipboard_sec": 30\n}`,
+    verificationOutput: 'Protections active on viewport. Print CSS disabled, clipboard self-clearing timer set.'
+  },
+  {
+    id: 63,
+    set: 5,
+    title: 'Secure Enclave Multiparty Computation (MPC)',
+    titleHe: 'חישוב רב-משתתפים מאובטח (MPC)',
+    desc: 'Perform collaborative data analysis and fraud checks across competing banks/enterprises without ever revealing individual raw customer records.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['GDPR Recital 26', 'NIST Privacy Framework'],
+    specs: 'Shamir Secret Sharing and Yao Garbled Circuits executing in Intel SGX / AMD SEV confidential computing enclaves.',
+    apiSample: `POST /api/v1/mpc/compute-fraud-score\n{\n  "party_a_share": "0x49a...",\n  "party_b_share": "0x81b...",\n  "model": "cross_bank_blacklist_check"\n}`,
+    verificationOutput: 'MPC calculation completed inside Intel SGX. Result: "Match Found". Raw identities remained encrypted.'
+  },
+  {
+    id: 64,
+    set: 5,
+    title: 'Homomorphic Search Engine',
+    titleHe: 'מנוע חיפוש הומומורפי על נתונים מוצפנים',
+    desc: 'Search encrypted databases for keywords and ranges without the database server ever decrypting the underlying data records.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['Fully Homomorphic Encryption (FHE)', 'DARPA D驗'],
+    specs: 'BFV/CKKS homomorphic encryption scheme evaluating encrypted polynomial search filters in ciphertext space.',
+    apiSample: `POST /api/v1/fhe/search\n{\n  "encrypted_query": "ct_poly_9981a",\n  "index_table": "enc_medical_records"\n}`,
+    verificationOutput: 'FHE evaluation complete: 4 matching encrypted record indices returned without database knowing search query.'
+  },
+  {
+    id: 65,
+    set: 5,
+    title: 'Data Lineage & Provenance Tracker',
+    titleHe: 'מעקב מקור ומסלול חיים של נתונים (Lineage)',
+    desc: 'Full graph visualization and immutable tracking of where sensitive data was created, transformed, exported, and stored.',
+    category: 'Cryptography & DLP',
+    complianceTags: ['BCBS 239 Risk Data Aggregation', 'GDPR Accountability'],
+    specs: 'Graph database (OpenLineage standard) recording every ETL pipeline transition and database write.',
+    apiSample: `GET /api/v1/lineage/trace?dataset=customer_credit_scores`,
+    verificationOutput: 'Lineage trace: Originated at CRM -> Transformed in Airflow DAG #88 -> Stored in S3 (Encrypted) -> Synced to DWH.'
+  },
+
+  // ==================== SET 6: 66 - 78 (SIEM & SOC Operations) ====================
+  {
+    id: 66,
+    set: 6,
+    title: 'Real-Time SIEM & Log Aggregator',
+    titleHe: 'מערכת ניהול אירועי אבטחה SIEM בזמן אמת',
+    desc: 'Ingest and index 100,000+ events per second from firewalls, servers, Kubernetes, and cloud providers with sub-second alert correlation.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['PCI-DSS Req 10', 'ISO 27001 A.12.4', 'SOC 2 CC7.2'],
+    specs: 'Distributed columnar indexing engine with streaming Sigma rule evaluation and auto-parsing for 150+ log formats.',
+    apiSample: `POST /api/v1/siem/ingest\n{\n  "source": "k8s-ingress",\n  "events_count": 500,\n  "batch_id": "batch_99810"\n}`,
+    verificationOutput: '500 events parsed & indexed in 18ms. 0 alert threshold triggers. Merkle digest generated.'
+  },
+  {
+    id: 67,
+    set: 6,
+    title: 'MITRE ATT&CK Automated Mapper',
+    titleHe: 'מיפוי אוטומטי למטריצת MITRE ATT&CK',
+    desc: 'Map every detected telemetry anomaly directly to specific MITRE tactics (Initial Access, Lateral Movement, Exfiltration, Persistence).',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['MITRE ATT&CK v15', 'NIST Cybersecurity Framework (CSF)'],
+    specs: 'Dynamic threat graph tagging attack paths with ATT&CK Technique IDs (e.g., T1059.001 PowerShell, T1078 Valid Accounts).',
+    apiSample: `GET /api/v1/soc/incident/inc_9918/mitre-matrix`,
+    verificationOutput: 'Incident mapped: Tactic: Lateral Movement (T1021.002 SMB/Windows Admin Shares). Risk Score: 88 (High).'
+  },
+  {
+    id: 68,
+    set: 6,
+    title: 'Threat Intelligence Feed Ingestion',
+    titleHe: 'הזנת מודיעין איומים גלובלי STIX/TAXII',
+    desc: 'Continuously ingest global IOCs (Indicators of Compromise) via STIX/TAXII 2.1 feeds from MISP, AlienVault, and national cyber directorates.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['STIX 2.1 / TAXII 2.1', 'INCD (Israel National Cyber Directorate)'],
+    specs: 'Automatic correlation of incoming edge IPs and file hashes against 12,000,000+ active known malicious IOC records.',
+    apiSample: `POST /api/v1/intel/sync-feed\n{\n  "feed_name": "incd_israel_cyber_alerts",\n  "format": "stix21"\n}`,
+    verificationOutput: 'Synced 1,420 new IP IOCs & 890 SHA-256 malware hashes. Edge firewalls automatically armed.'
+  },
+  {
+    id: 69,
+    set: 6,
+    title: 'Autonomous Incident Response Orchestrator',
+    titleHe: 'מתזמן תגובה לאירועים אוטומטי (SOAR)',
+    desc: 'Execute automated SOAR playbooks to isolate infected hosts, revoke compromised tokens, and block malicious IPs in <2 seconds.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['NIST SP 800-61 Rev 2', 'ISO 27035'],
+    specs: 'Event-driven workflow engine with dual execution mode (Full Auto or Human-in-the-Loop Confirmation).',
+    apiSample: `POST /api/v1/soar/playbook/run\n{\n  "playbook": "ransomware_isolate_and_snapshot",\n  "target_node": "tlv-worker-08"\n}`,
+    verificationOutput: 'Playbook executed in 1.4s: 1. Host network isolated via eBPF; 2. Memory snapshot preserved; 3. SOC alerted.'
+  },
+  {
+    id: 70,
+    set: 6,
+    title: 'Forensic Snapshot & Timeline Recorder',
+    titleHe: 'הקלטת ציר זמן פורנזי וצילומי זיכרון RAM',
+    desc: 'Capture volatile RAM memory dumps, active process trees, and open network sockets the millisecond an intrusion is suspected.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['ISO/IEC 27037 Digital Evidence', 'NIST SP 800-86'],
+    specs: 'LiME (Linux Memory Extractor) driver interface generating cryptographically hashed memory images for court admissibility.',
+    apiSample: `POST /api/v1/forensics/capture-evidence\n{\n  "node_id": "db-prod-cluster-02",\n  "case_ref": "CASE-2026-081"\n}`,
+    verificationOutput: 'Forensic image created: /evidence/mem_dump_081.raw (SHA-256: e3b0c4...b987). Chain of custody secured.'
+  },
+  {
+    id: 71,
+    set: 6,
+    title: 'Red-Team Attack Simulation Engine (BAS)',
+    titleHe: 'מנוע סימולציית תקיפות צוות אדום (BAS)',
+    desc: 'Safely simulate ransomware lateral movement, password spraying, and cloud privilege escalations to test security defenses.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['NIST SP 800-115', 'CREST Accreditation Standards'],
+    specs: 'Breach and Attack Simulation (BAS) agent testing 300+ atomic red-team procedures in controlled isolated sandbox.',
+    apiSample: `POST /api/v1/bas/run-simulation\n{\n  "technique": "T1110_brute_force_kerberos",\n  "target_env": "staging_cluster"\n}`,
+    verificationOutput: 'Simulation complete: 3/3 attack phases detected and blocked by SIEM rule #481. Defense score: 100%.'
+  },
+  {
+    id: 72,
+    set: 6,
+    title: 'Honeypot & Deception Decoy Network',
+    titleHe: 'רשת מלכודות דבש (Honeypots) והטעיה',
+    desc: 'Deploy synthetic database servers, fake API keys, and canary tokens that trigger high-severity alarms the moment an intruder touches them.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['MITRE Engage Framework', 'Defense in Depth'],
+    specs: 'Low-interaction & high-interaction deception nodes mimicking vulnerable databases and SSH servers with zero production risk.',
+    apiSample: `POST /api/v1/deception/deploy-canary\n{\n  "canary_type": "fake_aws_key",\n  "planted_location": "/etc/backup_credentials"\n}`,
+    verificationOutput: 'Canary key deployed. Any API call to this token triggers immediate P1 Critical Alarm and IP ban.'
+  },
+  {
+    id: 73,
+    set: 6,
+    title: 'Phishing Resilience & Social Engineering Shield',
+    titleHe: 'מגן עמידות בפני פישינג והנדסה חברתית',
+    desc: 'Automated lookalike domain monitoring (typosquatting), brand impersonation scrapers, and employee security training metrics.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['NIST CSF PR.AT-1', 'ISO 27001 A.7.2.2'],
+    specs: 'Levenshtein distance algorithm scanning daily WHOIS/DNS registrations for permutations of your corporate domains.',
+    apiSample: `GET /api/v1/brand-guard/typosquat-scan?brand=skyguard`,
+    verificationOutput: 'Scanned 14,000 new TLD registrations: Found 2 fraudulent lookalike domains (skygu4rd.com, skyguard-login.net). Takedown notices sent.'
+  },
+  {
+    id: 74,
+    set: 6,
+    title: 'SOC 2 Type II Evidence Harvester',
+    titleHe: 'קוצר ראיות אוטומטי לתקן SOC 2 Type II',
+    desc: 'Continuous automation collecting cryptographic snapshots of access controls, PR approvals, backup tests, and change management tickets.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['AICPA SOC 2 (Security, Availability, Confidentiality)'],
+    specs: 'Direct API connectors to GitHub, AWS, GCP, Jira, and Slack aggregating continuous evidence for external auditors.',
+    apiSample: `POST /api/v1/compliance/harvest-evidence\n{\n  "standard": "soc2_type_2",\n  "audit_period": "2026-Q1"\n}`,
+    verificationOutput: 'Harvested 842 compliance artifacts. Trust Services Criteria CC1.1-CC9.2 at 100% compliance. Auditor export ready.'
+  },
+  {
+    id: 75,
+    set: 6,
+    title: 'ISO/IEC 27001 Compliance Auditor',
+    titleHe: 'מבקר ציות אוטומטי לתקן ISO 27001',
+    desc: 'Automated gap analysis against ISO/IEC 27001:2022 Annex A controls (93 controls across Organizational, People, Physical, and Technological).',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['ISO/IEC 27001:2022', 'ISO 27002'],
+    specs: 'Real-time Statement of Applicability (SoA) dashboard with automated control status tracking and risk treatment plans.',
+    apiSample: `GET /api/v1/compliance/iso27001/status`,
+    verificationOutput: 'ISO 27001:2022 Status: 93/93 Annex A controls implemented and verified. Zero open non-conformities.'
+  },
+  {
+    id: 76,
+    set: 6,
+    title: 'CIS Benchmark Compliance Scanner',
+    titleHe: 'סורק עמידה בתקני CIS Benchmarks',
+    desc: 'Scan cloud configurations (AWS, Azure, GCP, Kubernetes) against CIS Benchmarks with one-click automated remediation scripts.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['CIS Foundations Benchmark v3.0', 'CIS Kubernetes v1.8'],
+    specs: 'Policy-as-Code engine evaluating Terraform/OpenTofu state files and live cloud APIs against 180+ hardening rules.',
+    apiSample: `POST /api/v1/cis/scan-cloud\n{\n  "provider": "gcp",\n  "project_id": "skyguard-prod-621"\n}`,
+    verificationOutput: 'CIS GCP Benchmark score: 99.4%. 1 minor finding (S3 Bucket Logging) auto-remediated via Terraform fix.'
+  },
+  {
+    id: 77,
+    set: 6,
+    title: 'Executive Threat Intelligence Briefing',
+    titleHe: 'תדריך מודיעין איומים להנהלה בכירה',
+    desc: 'Synthesize complex SIEM telemetry and dark web reconnaissance into executive-ready risk posture summaries and boardroom metrics.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['NIST CSF ID.RA-1', 'Gartner Cybersecurity Governance'],
+    specs: 'Calculates Financial Value-at-Risk (VaR) reduction, breach probability indices, and peer industry security benchmark comparisons.',
+    apiSample: `GET /api/v1/executive/briefing-summary?period=monthly`,
+    verificationOutput: 'Executive Brief generated: Cyber Risk Rating: A+ (99/100). Estimated Value-at-Risk Reduction: $14.2M.'
+  },
+  {
+    id: 78,
+    set: 6,
+    title: '24/7 War-Room Collaboration Bridge',
+    titleHe: 'גשר חדר מלחמה סייבר 24/7 ושליטה',
+    desc: 'Real-time secure command bridge unifying incident commanders, security researchers, legal counsel, and PR teams during major incidents.',
+    category: 'SIEM & SOC Operations',
+    complianceTags: ['ISO 22301 Business Continuity', 'NIST SP 800-61'],
+    specs: 'End-to-end encrypted incident channel with integrated action item trackers, evidence locks, and media release sign-off gates.',
+    apiSample: `POST /api/v1/war-room/create-session\n{\n  "incident_id": "inc_2026_09",\n  "classification": "critical_triage"\n}`,
+    verificationOutput: 'War room #WR-2026-09 initialized. 6 stakeholders connected via encrypted audio & data channel. Timeline locked.'
+  }
+];
+
+export const pricingTiers: PricingTier[] = [
+  {
+    id: 'basic',
+    name: 'Basic',
+    tagline: 'Essential compliance & privacy foundation for small teams and startups.',
+    priceMonthly: 49,
+    priceAnnual: 39,
+    users: '1 user',
+    featuresSummary: '30 core features',
+    includedFeatureCount: 30,
+    perks: [
+      'Sets 1 & 2 full access (Privacy & OS Hardening)',
+      'GDPR Consent Bundle & PIPEDA export',
+      'Encrypted one-time email gateway',
+      'Standard CIS OS kernel hardening',
+      'Community & email support (24h response)',
+      'Weekly compliance audit exports'
+    ],
+    ctaText: 'Start Basic Trial'
+  },
+  {
+    id: 'pro',
+    name: 'Pro',
+    tagline: 'Comprehensive network armor & zero-trust identity for growing businesses.',
+    priceMonthly: 149,
+    priceAnnual: 119,
+    highlighted: true,
+    users: '5 users',
+    featuresSummary: '60 core features + WAF & Zero-Trust',
+    includedFeatureCount: 60,
+    perks: [
+      'Sets 1 through 4 full access (60 complete modules)',
+      'Intelligent Next-Gen WAF & L3/L4/L7 DDoS Defense',
+      'FIDO2 Hardware Passkeys & Adaptive Contextual MFA',
+      'eBPF Kernel Threat Sensors & Host IDS/IPS',
+      'SCIM 2.0 user provisioning & SSO integration',
+      'Priority 4-hour SLA support & live alerting'
+    ],
+    ctaText: 'Start Pro Trial'
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    tagline: 'The complete sovereign cybersecurity & autonomous SIEM defense stack.',
+    priceMonthly: 899,
+    priceAnnual: 749,
+    isCustom: true,
+    users: 'Unlimited users',
+    featuresSummary: 'All 78 features + Autonomous SIEM & 24/7 SOC',
+    includedFeatureCount: 78,
+    perks: [
+      'All 78 cybersecurity & compliance features unlocked',
+      'Autonomous SIEM, SOAR, & MITRE ATT&CK correlation',
+      'Hardware Security Module (HSM) & FPE Tokenization',
+      'Deception honeypots & red-team attack simulator (BAS)',
+      '5-Year 99.999% SLA guarantee & dedicated Security Engineer',
+      'SOC 2 Type II & ISO 27001 automated evidence harvester'
+    ],
+    ctaText: 'Contact Enterprise Sales'
+  }
+];
+
+export const whiteLabelInfo = {
+  headline: 'White‑Label Enterprise Platform Licensing',
+  headlineHe: 'רישוי פלטפורמת White-Label ארגונית מותאמת אישית',
+  subheading: 'Deploy the full 78-feature SkyGuard cybersecurity stack under your company name, custom domain, branding, and sovereign cloud infrastructure.',
+  basePriceRange: '$3–$5 million',
+  enterprisePriceRange: '$15–$25 million',
+  addonPriceRange: '$99–$299/year',
+  slaYears: 5,
+  slaUptime: '99.999%',
+  highlights: [
+    {
+      title: 'Full 78-Feature Source & Binary Stack',
+      desc: 'Complete proprietary codebase access with custom build pipelines, Docker/Kubernetes helm charts, and microservice mesh.'
+    },
+    {
+      title: '5-Year SLA & Dedicated Account Manager',
+      desc: 'Guaranteed 99.999% uptime SLA backed by 24/7 tier-3 cyber engineering team and dedicated technical account lead.'
+    },
+    {
+      title: 'Complete Visual & Domain Customization',
+      desc: 'Custom logos, color schemes, localized languages (Hebrew, English, German, French, etc.), email templates, and private CNAME domain.'
+    },
+    {
+      title: 'Sovereign Multi-Cloud or On-Prem Deployment',
+      desc: 'Run on isolated AWS, GCP, Azure instances or on air-gapped bare metal in your local sovereign data center.'
+    }
+  ],
+  addons: [
+    { id: 'custom_threat_feed', name: 'Custom Regional Threat Feed Connector', price: '$199/yr', desc: 'Sync private national and defense sector threat feeds directly into your white-labeled SIEM.' },
+    { id: 'branded_mobile_app', name: 'Branded iOS & Android Authenticator App', price: '$299/yr', desc: 'Publish a custom-branded FIDO2 authenticator app on Apple App Store & Google Play.' },
+    { id: 'custom_compliance_framework', name: 'Bespoke National Regulatory Pack', price: '$249/yr', desc: 'Custom compliance mappings for regional regulations (e.g., Saudi NCA, Singapore MAS, UAE NESA).' },
+    { id: 'hardware_token_custom', name: 'Custom Hardware Token Laser Branding', price: '$99/yr', desc: 'Custom-engraved FIDO2 USB-C hardware security keys delivered to your workforce.' }
+  ]
+};

@@ -1,0 +1,10 @@
+import { useEffect } from "react";
+
+export default function Notification() {
+  useEffect(() => {
+    // Register for push (FCM) – you’ll need a service‑worker & firebase config
+    // This is a placeholder – implement FCM init here.
+    console.log("Notification service placeholder");
+  }, []);
+  return null;
+}

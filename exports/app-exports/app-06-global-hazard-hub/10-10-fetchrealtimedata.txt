@@ -1,0 +1,4 @@
+export async function fetchRealtimeData() {
+  const res = await fetch("/api/events");
+  return res.json();
+}

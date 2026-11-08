@@ -1,0 +1,45 @@
+env-hazard/
+│
+├─ docker-compose.yml          # dev stack
+├─ README.md
+├─ .env.example
+├─ package.json                # root dev‑tool
+├─ next.config.js
+├─ Dockerfile (frontend)
+│
+├─ server/                     # Node API + Kafka consumer
+│   ├─ Dockerfile
+│   ├─ index.js                # Express + prediction endpoint
+│   ├─ consumer.js             # Kafka → Mongo
+│   ├─ ml/
+│   │   └─ predictor.js
+│   ├─ routes/
+│   │   └─ api.js
+│   └─ package.json
+│
+├─ notify/                     # Cloud‑function style push service
+│   ├─ Dockerfile
+│   ├─ index.js
+│   └─ package.json
+│
+└─ frontend/                   # Next.js PWA
+    ├─ Dockerfile
+    ├─ package.json
+    ├─ pages/
+    │   ├─ index.tsx           # home – globe
+    │   ├─ _app.tsx
+    │   └─ api/
+    │       └─ events.ts
+    ├─ components/
+    │   ├─ GlobeMap.tsx
+    │   ├─ NavBar.tsx
+    │   ├─ Sidebar.tsx
+    │   └─ Notification.tsx
+    ├─ lib/
+    │   └─ api.ts
+    ├─ styles/
+    │   └─ globals.css
+    └─ public/
+        ├─ icons/
+        │   └─ marker.svg
+        └─ sw.js

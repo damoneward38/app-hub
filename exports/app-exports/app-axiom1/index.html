@@ -1729,7 +1729,7 @@
             },
 
             // ── AI CHAT LOGIC ──
-            sendAI() {
+            async sendAI() {
                 const input = document.getElementById('ai-input');
                 const chat = document.getElementById('ai-chat');
                 if (!input || !chat || input.value.trim() === '') return;
@@ -1745,30 +1745,36 @@
                 `;
                 chat.scrollTop = chat.scrollHeight;
 
-                // Simulate AI response
-                let aiReply = "I am AXIOM's AI Core, designed to assist you with all platform functionalities. How can I help further?";
-                if (userMessage.toLowerCase().includes('what is axiom')) {
-                    aiReply = "AXIOM is a futuristic, war-proof browser platform. It features a secure browser, an integrated AI, encrypted storage (Vault), a global mesh network, advanced security protocols, and a suite of powerful applications like DABAR and QuantumLearn.";
-                } else if (userMessage.toLowerCase().includes('all features')) {
-                    aiReply = "AXIOM offers a war-proof browser, AI Core, encrypted Vault, global Mesh Net, Zero Trust Security, Deep Space network exploration, DABAR AI platform, QuantumLearn lab, MENAHEL AI infrastructure, secure Payments, BONESCAN medical AI, and comprehensive System Settings.";
-                } else if (userMessage.toLowerCase().includes('war-proof browser')) {
-                    aiReply = "The AXIOM browser is war-proof because it connects through Tor, a global mesh network, and satellite fallback. It also features P2P connectivity and offline caching, ensuring access even when traditional internet infrastructure fails.";
-                } else if (userMessage.toLowerCase().includes('plans') || userMessage.toLowerCase().includes('pricing')) {
-                    aiReply = "AXIOM offers three subscription tiers: Navigator ($29/mo), Commander ($99/mo), and Sovereign ($299/mo). Each tier provides increasing levels of access and features, including war-proof mode, all apps, and dedicated nodes.";
-                } else if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
-                    aiReply = "Greetings, Commander. Ready for your next mission?";
-                } else if (userMessage.toLowerCase().includes('thank you') || userMessage.toLowerCase().includes('thanks')) {
-                    aiReply = "You are most welcome, Commander. My purpose is to serve.";
+                // Real local Ollama (llama3.2) through the App Hub bridge
+                const bubble = document.createElement('div');
+                bubble.style.cssText = 'align-self:flex-start; background:rgba(0,245,255,0.1); border-radius:12px; padding:8px 12px; max-width:80%; font-size:0.75rem; color:var(--cyan); white-space:pre-wrap;';
+                bubble.textContent = '🧠 AXIOM AI: …';
+                chat.appendChild(bubble);
+                chat.scrollTop = chat.scrollHeight;
+                try {
+                    const messages = [
+                        { role: 'system', content: "You are AXIOM's AI Core. Be concise and helpful about AXIOM: war-proof browser, AI Core, encrypted Vault, mesh network, Zero Trust, DABAR, QuantumLearn, MENAHEL, payments, BONESCAN, and settings." },
+                        { role: 'user', content: userMessage }
+                    ];
+                    let full = '';
+                    if (window.OllamaAI && window.OllamaAI.stream) {
+                        full = await window.OllamaAI.stream(messages, (_token, text) => {
+                            bubble.textContent = '🧠 AXIOM AI: ' + text;
+                            chat.scrollTop = chat.scrollHeight;
+                        }, { model: 'llama3.2' });
+                    } else {
+                        const res = await fetch('http://localhost:8780/api/ai/chat', {
+                            method: 'POST', headers: { 'content-type': 'application/json' },
+                            body: JSON.stringify({ messages, stream: false, model: 'llama3.2' })
+                        });
+                        const data = await res.json();
+                        if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+                        full = (data.message && data.message.content) || '';
+                    }
+                    bubble.textContent = '🧠 AXIOM AI: ' + (full || '(empty response)');
+                } catch (error) {
+                    bubble.textContent = '🧠 AXIOM AI offline: ' + (error.message || error);
                 }
-
-                setTimeout(() => {
-                    chat.innerHTML += `
-                        <div style="align-self:flex-start; background:rgba(0,245,255,0.1); border-radius:12px; padding:8px 12px; max-width:80%; font-size:0.75rem; color:var(--cyan);">
-                            🧠 AXIOM AI: ${aiReply}
-                        </div>
-                    `;
-                    chat.scrollTop = chat.scrollHeight;
-                }, 600);
 
                 chat.scrollTop = chat.scrollHeight;
             },

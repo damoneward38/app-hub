@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #050508;
+  --color-accent-p: #7c3aed;
+  --color-accent-c: #06b6d4;
+  --color-accent-a: #f59e0b;
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(124, 58, 237, 0.2);
+  
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-[#e8e0ff] font-sans antialiased overflow-hidden;
+  }
+}
+
+@layer components {
+  .atmosphere {
+    @apply fixed inset-0 pointer-events-none z-0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+  }
+
+  .grid-overlay {
+    @apply fixed inset-0 pointer-events-none z-[1];
+    background-image: 
+      linear-gradient(rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .panel {
+    @apply bg-glass backdrop-blur-md border border-glass-border rounded-xl p-4 transition-all duration-300;
+  }
+
+  .panel-title {
+    @apply font-mono text-[10px] uppercase tracking-[0.2em] text-accent-c mb-3 border-b border-accent-c/20 pb-1.5;
+  }
+
+  .spec-label {
+    @apply text-[9px] text-[#e8e0ff]/50 uppercase tracking-wider block;
+  }
+
+  .spec-value {
+    @apply text-sm font-mono text-white block mt-0.5;
+  }
+
+  .feed-item {
+    @apply font-mono text-[10px] py-1.5 border-b border-white/5 last:border-0;
+  }
+
+  .feed-ts {
+    @apply text-accent-p mr-2;
+  }
+
+  .feed-msg {
+    @apply text-white/80;
+  }
+
+  .feed-msg-warning {
+    @apply text-accent-a font-bold;
+  }
+}
+
+/* Custom Scrollbar for the feed */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-accent-p/30 rounded-full hover:bg-accent-p/50;
+}

@@ -1,0 +1,33 @@
+import express from 'express';
+import { Server } from 'socket.io';
+import http from 'http';
+import { forecastRoute } from './routes/api';
+import { predictor } from './ml/predictor';
+
+const app = express();
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, { cors: { origin: "*" } });
+
+app.use(express.json());
+app.use('/api', forecastRoute);
+
+// -------------- Socket.io --------------
+
+io.on('connection', (socket) => {
+  console.log('🔗 New client', socket.id);
+
+  // Push real‑time sensor data
+  setInterval(async () => {
+    const data = await fetchSensorData(); // NOAA+custom
+    socket.emit('realtime', data);
+  }, 10000);
+});
+
+async function fetchSensorData() {
+  // In prod call NOAA API or ELK logs
+  return { temp: 27.3, pH: 8.2, salinity: 35 };
+}
+
+httpServer.listen(process.env.PORT || 3001, () =>
+  console.log('🚀 Server listening on 3001')
+);

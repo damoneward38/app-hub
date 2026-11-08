@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Hazard Hub — Environmental Sensor Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0b0e17;--card:#111827;--border:#1e293b;--accent:#3b82f6;--red:#ef4444;--orange:#f59e0b;--green:#22c55e;--cyan:#06b6d4;--text:#e2e8f0;--muted:#64748b;--glass:rgba(17,24,39,.85)}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow:hidden}
+.app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:56px 1fr;height:100vh}
+.topbar{grid-column:1/-1;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:1000}
+.topbar h1{font-size:17px;font-weight:700;color:#fff}
+.topbar h1 span{color:var(--cyan);font-weight:400}
+.topbar .env-badge{margin-left:12px;padding:4px 10px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:12px;font-size:11px;color:var(--red);font-weight:600}
+.topbar .live-dot{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--green)}
+.topbar .live-dot .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sidebar{background:var(--card);border-right:1px solid var(--border);padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.sidebar .nav-item{padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;color:var(--muted)}
+.sidebar .nav-item:hover,.sidebar .nav-item.active{background:rgba(59,130,246,.12);color:var(--accent)}
+.sidebar .nav-item.active{border-left:3px solid var(--accent)}
+.sidebar .section-label{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);padding:12px 14px 4px;font-weight:600}
+.content{position:relative;overflow:hidden}
+#map{width:100%;height:100%;z-index:1}
+.map-overlay{position:absolute;top:16px;right:16px;z-index:999;display:flex;flex-direction:column;gap:10px}
+.widget{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:220px}
+.widget .wtitle{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;font-weight:600}
+.widget .wvalue{font-size:28px;font-weight:700;color:#fff;font-family:'Courier New',monospace}
+.widget .wlabel{font-size:11px;color:var(--muted);margin-top:2px}
+.sensor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.sensor-card{background:rgba(255,255,255,.05);border-radius:8px;padding:10px;text-align:center}
+.sensor-card .sv{font-size:18px;font-weight:700;font-family:'Courier New',monospace}
+.sensor-card .sl{font-size:10px;color:var(--muted);margin-top:2px}
+.risk-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;color:#fff;position:absolute;top:16px;left:16px;z-index:999}
+.risk-badge.high{background:var(--red);box-shadow:0 0 15px rgba(239,68,68,.5)}
+.risk-badge.medium{background:var(--orange);box-shadow:0 0 15px rgba(245,158,11,.5)}
+.risk-badge.low{background:var(--green);box-shadow:0 0 15px rgba(34,197,94,.5)}
+.alert-panel{position:absolute;bottom:16px;left:280px;right:16px;z-index:999;display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.alert-chip{flex-shrink:0;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:8px;padding:8px 14px;display:flex;align-items:center;gap:8px;font-size:12px}
+.alert-chip .atype{font-weight:600;color:#fff}
+.alert-chip .adetail{color:var(--muted)}
+.alert-chip .atime{color:rgba(255,255,255,.3);font-size:10px}
+.hazard-marker{border:2px solid;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.sidebar .stat-block{background:rgba(255,255,255,.04);border-radius:8px;padding:12px;margin-top:4px}
+.sidebar .stat-block .sb-label{font-size:10px;color:var(--muted);text-transform:uppercase}
+.sidebar .stat-block .sb-value{font-size:22px;font-weight:700;color:#fff;margin-top:2px;font-family:'Courier New',monospace}
+.leaflet-container{background:var(--bg)!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <h1>Global Hazard <span>Hub</span></h1>
+    <div class="env-badge">GLOBAL MONITORING</div>
+    <div class="live-dot"><div class="dot"></div> Live</div>
+  </header>
+
+  <nav class="sidebar">
+    <div class="nav-item active">🗺️ Globe View</div>
+    <div class="nav-item">📊 Dashboard</div>
+    <div class="nav-item">📡 Sensor Data</div>
+    <div class="nav-item">🔔 Alerts</div>
+    <div class="nav-item">📱 AR Viewer</div>
+
+    <div class="section-label">System Stats</div>
+    <div class="stat-block">
+      <div class="sb-label">Active Sensors</div>
+      <div class="sb-value" id="sensorCount">247</div>
+    </div>
+    <div class="stat-block">
+      <div class="sb-label">Events Today</div>
+      <div class="sb-value" id="eventCount">1,842</div>
+    </div>
+    <div class="stat-block">
+      <div class="sb-label">Risk Level</div>
+      <div class="sb-value" id="riskLevel" style="color:var(--orange)">MODERATE</div>
+    </div>
+
+    <div class="section-label">Data Pipeline</div>
+    <div class="stat-block">
+      <div class="sb-label">MQTT → Kafka</div>
+      <div class="sb-value" style="color:var(--green);font-size:14px">✓ Active</div>
+    </div>
+    <div class="stat-block">
+      <div class="sb-label">ML Predictor</div>
+      <div class="sb-value" style="color:var(--green);font-size:14px">✓ Running</div>
+    </div>
+
+    <div class="section-label">Latest Sensor Reading</div>
+    <div class="sensor-grid" id="sensorGrid">
+      <div class="sensor-card"><div class="sv" style="color:var(--red)">27.3</div><div class="sl">Temp °C</div></div>
+      <div class="sensor-card"><div class="sv" style="color:var(--cyan)">8.2</div><div class="sl">pH</div></div>
+      <div class="sensor-card"><div class="sv" style="color:var(--accent)">35.0</div><div class="sl">Salinity</div></div>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div id="riskBadge" class="risk-badge medium">Risk: 42%</div>
+    <div id="map"></div>
+
+    <div class="map-overlay">
+      <div class="widget">
+        <div class="wtitle">Real-time Environment</div>
+        <div class="wvalue" id="envTemp">27.3°C</div>
+        <div class="wlabel">Temperature</div>
+      </div>
+      <div class="widget">
+        <div class="wtitle">Ocean pH</div>
+        <div class="wvalue" id="envPH">8.2</div>
+        <div class="wlabel">Acidity Index</div>
+      </div>
+      <div class="widget">
+        <div class="wtitle">Salinity</div>
+        <div class="wvalue" id="envSal">35 PSU</div>
+        <div class="wlabel">Practical Salinity Units</div>
+      </div>
+      <div class="widget">
+        <div class="wtitle">AI Risk Assessment</div>
+        <div class="wvalue" id="aiRisk">42%</div>
+        <div class="wlabel">Predicted Hazard Risk</div>
+      </div>
+    </div>
+
+    <div class="alert-panel" id="alertPanel"></div>
+  </div>
+</div>
+
+<script>
+// Initialize Leaflet map
+const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
+L.control.zoom({ position: 'topright' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap © CARTO',
+  subdomains: 'abcd', maxZoom: 19
+}).addTo(map);
+
+// Simulated hazard events
+const hazardTypes = ['earthquake','tornado','hurricane','flood','wildfire','tsunami'];
+const hazardColors = {earthquake:'#ef4444',tornado:'#f59e0b',hurricane:'#3b82f6',flood:'#06b6d4',wildfire:'#f97316',tsunami:'#8b5cf6'};
+const hazardIcons = {earthquake:'🌍',tornado:'🌪️',hurricane:'🌀',flood:'🌊',wildfire:'🔥',tsunami:'🌊'};
+
+function generateHazardEvents(n) {
+  const events = [];
+  for (let i = 0; i < n; i++) {
+    const type = hazardTypes[Math.floor(Math.random() * hazardTypes.length)];
+    events.push({
+      id: 'evt-' + i,
+      type: type,
+      lat: (Math.random() * 140) - 70,
+      lon: (Math.random() * 360) - 180,
+      magnitude: (Math.random() * 8 + 1).toFixed(1),
+      timestamp: Date.now() - Math.floor(Math.random() * 300000),
+      pressure: (Math.random() * 50 + 980).toFixed(1),
+      wind: Math.floor(Math.random() * 200)
+    });
+  }
+  return events;
+}
+
+let hazardEvents = generateHazardEvents(200);
+let markers = [];
+
+function renderMarkers() {
+  markers.forEach(m => map.removeLayer(m.marker));
+  markers = [];
+  hazardEvents.forEach(evt => {
+    const color = hazardColors[evt.type] || '#fff';
+    const size = Math.max(10, evt.magnitude * 3);
+    const icon = L.divIcon({
+      className: 'hazard-marker',
+      html: hazardIcons[evt.type] || '⚠️',
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2]
+    });
+    const marker = L.marker([evt.lat, evt.lon], { icon }).addTo(map);
+    marker.bindPopup(
+      '<div style="color:#1e293b;font-family:system-ui">' +
+      '<b style="font-size:14px">' + hazardIcons[evt.type] + ' ' + evt.type.toUpperCase() + '</b><br>' +
+      '<span style="color:#64748b;font-size:12px">ID: ' + evt.id + '</span><br>' +
+      '<div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:12px">' +
+      '<div><b>Magnitude:</b> ' + evt.magnitude + '</div>' +
+      '<div><b>Pressure:</b> ' + evt.pressure + ' hPa</div>' +
+      '<div><b>Wind:</b> ' + evt.wind + ' km/h</div>' +
+      '<div><b>Coords:</b> ' + evt.lat.toFixed(2) + ', ' + evt.lon.toFixed(2) + '</div>' +
+      '</div></div>'
+    );
+    markers.push({ marker, evt });
+  });
+}
+renderMarkers();
+
+// Fetch events from API (with fallback)
+async function fetchEvents() {
+  try {
+    const res = await fetch('/api/events?limit=200');
+    if (res.ok) {
+      hazardEvents = await res.json();
+    } else { throw new Error('API unavailable'); }
+  } catch (e) {
+    // Simulate new events
+    hazardEvents = generateHazardEvents(200);
+    // Slightly move some markers
+    hazardEvents.forEach(evt => {
+      evt.lat += (Math.random() - .5) * .5;
+      evt.lon += (Math.random() - .5) * .5;
+    });
+  }
+  renderMarkers();
+  updateStats();
+}
+
+// Simulated sensor data stream (noaa + custom sensors)
+function fetchSensorData() {
+  return { temp: (25 + Math.random() * 6).toFixed(1), pH: (7.5 + Math.random() * 1.5).toFixed(1), salinity: (32 + Math.random() * 6).toFixed(1) };
+}
+
+let currentRisk = 42;
+function updateSensorData() {
+  const data = fetchSensorData();
+  document.getElementById('envTemp').textContent = data.temp + '°C';
+  document.getElementById('envPH').textContent = data.pH;
+  document.getElementById('envSal').textContent = data.salinity + ' PSU';
+  document.getElementById('sensorGrid').innerHTML =
+    '<div class="sensor-card"><div class="sv" style="color:var(--red)">' + data.temp + '</div><div class="sl">Temp °C</div></div>' +
+    '<div class="sensor-card"><div class="sv" style="color:var(--cyan)">' + data.pH + '</div><div class="sl">pH</div></div>' +
+    '<div class="sensor-card"><div class="sv" style="color:var(--accent)">' + data.salinity + '</div><div class="sl">Salinity</div></div>';
+  // Simulate AI risk prediction
+  const risk = Math.floor(Math.random() * 30 + 30);
+  currentRisk = risk;
+  document.getElementById('aiRisk').textContent = risk + '%';
+  const badge = document.getElementById('riskBadge');
+  const riskClass = risk > 75 ? 'high' : risk > 50 ? 'medium' : 'low';
+  badge.className = 'risk-badge ' + riskClass;
+  badge.textContent = 'Risk: ' + risk + '%';
+  document.getElementById('riskLevel').textContent = risk > 75 ? 'CRITICAL' : risk > 50 ? 'MODERATE' : 'LOW';
+  document.getElementById('riskLevel').style.color = risk > 75 ? 'var(--red)' : risk > 50 ? 'var(--orange)' : 'var(--green)';
+}
+
+function updateStats() {
+  document.getElementById('sensorCount').textContent = Math.floor(200 + Math.random() * 100);
+  const count = parseInt(document.getElementById('eventCount').textContent.replace(',','')) || 1842;
+  document.getElementById('eventCount').textContent = (count + Math.floor(Math.random() * 20)).toLocaleString();
+}
+
+// Push alerts (simulated)
+const alertTypes = ['earthquake','tornado','hurricane','flood','wildfire'];
+function pushAlert() {
+  const type = alertTypes[Math.floor(Math.random() * alertTypes.length)];
+  const panel = document.getElementById('alertPanel');
+  const chip = document.createElement('div');
+  chip.className = 'alert-chip';
+  chip.innerHTML = '<span style="font-size:16px">' + hazardIcons[type] + '</span>' +
+    '<div><div class="atype">' + type.toUpperCase() + '</div><div class="adetail">Magnitude ' + (Math.random()*8+1).toFixed(1) + '</div></div>' +
+    '<div class="atime">just now</div>';
+  panel.prepend(chip);
+  if (panel.children.length > 5) panel.removeChild(panel.lastChild);
+  setTimeout(() => { if (chip.parentNode) chip.remove(); }, 15000);
+}
+
+// Initial alerts
+setTimeout(() => pushAlert(), 1000);
+setTimeout(() => pushAlert(), 3000);
+setTimeout(() => pushAlert(), 5500);
+
+// Periodic updates
+setInterval(fetchEvents, 15000);
+setInterval(updateSensorData, 10000);
+setInterval(updateStats, 5000);
+setInterval(pushAlert, 12000);
+updateSensorData();
+
+// Sidebar nav interaction
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

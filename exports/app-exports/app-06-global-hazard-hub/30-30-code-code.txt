@@ -1,0 +1,11 @@
+Sensor (IoT device)          Edge Gateway          Cloud
+    |                          |                      |
+    | 1. MQTT (NTP stamped)    | 2. MQTT → Kafka     |   3. Kafka (topic: hazards)
+    |                          | 3. Store in Mongo   |   4. Kafka Streams + TF‑Serving
+    |                          | 4. Forward as record                      |
+    |                          | 5. Cache in Redis  |   5. Routing @ Firebase Cloud Messaging
+    |                          | 6. Publish to WebSocket API                      |
+    |                          | 7. Long‑poll / SSE                                           |
+    |                          | 8. Push to browsers                                     |
+    |                          | 9. Push to mobile clients                               |
+    |                          |10. Store in ClickHouse for history                    |

@@ -1,0 +1,21 @@
+import type { AppProps } from "next/app";
+import { ThemeProvider, createTheme } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import "../styles/globals.css";
+
+const theme = createTheme({
+  palette: { mode: "dark" },
+  direction: "ltr",
+});
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
+}

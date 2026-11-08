@@ -1,0 +1,35 @@
+// notify-service.js
+const express = require('express');
+const admin = require('firebase-admin');
+const bodyParser = require('body-parser');
+const { PubSub } = require('@google-cloud/pubsub');
+
+const app = express();
+app.use(bodyParser.json());
+
+admin.initializeApp({
+  credential: admin.credential.cert(require('./fcm-service.json')),
+});
+
+const pubsub = new PubSub();
+const topic = pubsub.topic('global-hazard');
+
+app.post('/notify', async (req, res) => {
+  const { id, type, lat, lon, confidence, timeToEvent } = req.body;
+
+  const message = {
+    data: JSON.stringify({
+      id, type, lat, lon, confidence, timeToEvent
+    })
+  };
+
+  // 1. Send to FCM (every mobile is on topic “global-hazard”)
+  await admin.messaging().sendToTopic('global-hazard', message);
+
+  // 2. Publish to Pub/Sub for WebSocket back‑end
+  await topic.publishMessage(message);
+
+  res.json({ status: 'sent', id });
+});
+
+app.listen(5001, () => console.log('Notify service listening on 5001'));

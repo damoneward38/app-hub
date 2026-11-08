@@ -1,0 +1,14 @@
+neural-engine/
+├── src/
+│   ├── engine/
+│   │   ├── NeuralEngine.ts       # Core engine class
+│   │   ├── StreamHandler.ts      # Streaming response handler
+│   │   └── TokenManager.ts       # Token counting & management
+│   ├── types/
+│   │   └── index.ts              # Type definitions
+│   ├── utils/
+│   │   ├── retry.ts              # Retry logic with backoff
+│   │   └── logger.ts             # Structured logger
+│   └── index.ts                  # Entry point
+├── .env.example
+└── package.json

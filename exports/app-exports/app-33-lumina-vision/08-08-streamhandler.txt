@@ -1,0 +1,85 @@
+import OpenAI from "openai";
+import { logger } from "../utils/logger";
+
+// ─── Stream Event Callbacks ────────────────────────────────────────────────────
+export interface StreamCallbacks {
+  onToken?:    (token: string) => void;           // Called for each token chunk
+  onComplete?: (fullContent: string) => void;     // Called when stream ends
+  onError?:    (error: Error) => void;             // Called on stream error
+}
+
+// ─── Stream Result ─────────────────────────────────────────────────────────────
+export interface StreamResult {
+  content:          string;
+  completionTokens: number;
+  finishReason:     string;
+}
+
+/**
+ * Handles GPT-4o streaming responses with real-time token callbacks.
+ * Aggregates chunks into a full response and tracks token usage.
+ */
+export class StreamHandler {
+  /**
+   * Processes a streaming chat completion, invoking callbacks as tokens arrive.
+   * Returns the fully assembled content once the stream is complete.
+   */
+  async processStream(
+    stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>,
+    callbacks: StreamCallbacks = {}
+  ): Promise<StreamResult> {
+    let fullContent      = "";
+    let completionTokens = 0;
+    let finishReason     = "null";
+
+    try {
+      for await (const chunk of stream) {
+        const delta  = chunk.choices[0]?.delta;
+        const choice = chunk.choices[0];
+
+        // Extract text content from delta
+        if (delta?.content) {
+          fullContent += delta.content;
+          completionTokens++;
+
+          // Fire token callback for real-time UI updates
+          callbacks.onToken?.(delta.content);
+        }
+
+        // Capture finish reason from the final chunk
+        if (choice?.finish_reason) {
+          finishReason = choice.finish_reason;
+        }
+      }
+
+      // Fire completion callback with full assembled content
+      callbacks.onComplete?.(fullContent);
+
+      logger.debug("Stream completed", {
+        tokens: completionTokens,
+        finishReason,
+        contentLength: fullContent.length,
+      });
+
+      return { content: fullContent, completionTokens, finishReason };
+    } catch (error) {
+      const err = error instanceof Error ? error : new Error(String(error));
+      logger.error("Stream processing error", { error: err.message });
+      callbacks.onError?.(err);
+      throw err;
+    }
+  }
+
+  /**
+   * Converts a stream to an async generator, yielding tokens one by one.
+   * Useful for piping to HTTP response streams (SSE, WebSockets).
+   */
+  async *toGenerator(
+    stream: AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>
+  ): AsyncGenerator<string> {
+    for await (const chunk of stream) {
+      const token = chunk.choices[0]?.delta?.content;
+      if (token) yield token;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+root/
+ ├─ public/
+ │    └─ favicon.ico
+ ├─ src/
+ │    ├─ pages/
+ │    │   ├─ index.tsx        # Home / Dashboard
+ │    │   ├─ map.tsx          # Full‑screen map page
+ │    │   ├─ collect.tsx      # Data logging UI
+ │    │   ├─ impact.tsx       # Predictions page
+ │    │   └─ policy.tsx       # Alerts & announcements
+ │    ├─ components/
+ │    │   ├─ NavBar.tsx
+ │    │   ├─ Sidebar.tsx
+ │    │   ├─ MapBox.tsx
+ │    │   ├─ AIOverlay.tsx
+ │    │   └─ ARViewer.tsx
+ │    ├─ styles/
+ │    │   └─ globals.css
+ │    ├─ hooks/
+ │    │   ├─ useRealtime.ts
+ │    │   └─ useCollect.ts
+ │    ├─ lib/
+ │    │   ├─ api.ts          # fetch wrapper
+ │    │   └─ ml.ts           # TensorFlow.js helper
+ │    ├─ assets/
+ │    │   └─ loading.gif
+ │    ├─ types/
+ │    │   └─ index.d.ts
+ │    ├─ middleware/
+ │    │   └─ auth.ts
+ │    └─ app.tsx
+ ├─ server/
+ │    ├─ index.ts           # Express + Socket.io
+ │    ├─ models/
+ │    │   └─ species.ts
+ │    ├─ routes/
+ │    │   └─ api.ts
+ │    └─ ml/
+ │         └─ predictor.js  # Node + TensorFlow.js inference
+ ├─ next.config.js
+ ├─ package.json
+ └─ tsconfig.json

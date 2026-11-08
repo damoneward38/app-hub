@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SkyGuard - Redirecting...</title>
+    <script type="text/javascript">
+      // GitHub Pages Single Page Application redirect script
+      // Preserves sub-path routing and query parameters across GitHub Pages
+      var pathSegmentsToKeep = 1;
+
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #0f172a; color: #94a3b8;">
+    <h2>Redirecting to SkyGuard Cyber Platform...</h2>
+    <p>Please wait while we route you securely.</p>
+  </body>
+</html>

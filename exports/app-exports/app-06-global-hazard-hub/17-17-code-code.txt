@@ -1,0 +1,5 @@
+model_config_list: 
+  - config:
+      name: env_pred
+      base_path: "/models/env_pred"
+      model_platform: tensorflow

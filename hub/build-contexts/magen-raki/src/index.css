@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #0a0a14;
+    color: #f1f5f9;
+    min-height: 100vh;
+  }
+  
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Immersive UI Background & Canvas Utilities */
+.bg-immersive {
+  background-color: #0a0a14;
+  background: radial-gradient(circle at 50% -20%, #1a1a3a 0%, #0a0a14 70%);
+}
+
+.bg-dot-grid {
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+}
+
+.bg-radial-shield {
+  background: radial-gradient(circle at 50% 15%, rgba(79, 70, 229, 0.18), transparent 60%),
+              radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.08), transparent 50%);
+}
+
+/* Immersive Neon & Silicon Glows */
+.glow-chip-sm {
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+}
+
+.glow-chip-lg {
+  box-shadow: 0 0 60px rgba(79, 70, 229, 0.6);
+}
+
+.glow-shield {
+  box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.35);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 30px -8px rgba(16, 185, 129, 0.35);
+}
+
+.glow-crimson {
+  box-shadow: 0 0 30px -8px rgba(239, 68, 68, 0.35);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a14;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e1e38;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #313158;
+}
+

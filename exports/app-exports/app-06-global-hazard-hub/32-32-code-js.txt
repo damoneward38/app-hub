@@ -1,0 +1,33 @@
+// edge-gateway.js
+const mqtt = require('mqtt');
+const { Kafka } = require('kafkajs');
+const Redis = require('ioredis');
+
+const mClient = mqtt.connect('mqtt://broker.local');
+const kafka = new Kafka({ brokers: ['kafka:9092'] });
+const producer = kafka.producer();
+const redis = new Redis(); // default local
+
+(async () => {
+  await producer.connect();
+
+  mClient.on('message', async (topic, message) => {
+    if (topic !== 'devices/hazard') return;    // ignore unrelated
+
+    const payload = JSON.parse(message.toString());
+    const eventId = payload.id + '-' + payload.timestamp; // dedupe
+
+    // 1. Write to Kafka
+    await producer.send({
+      topic: 'hazard-events',
+      messages: [{ key: eventId, value: JSON.stringify(payload) }]
+    });
+
+    // 2. Push to RedisTimeSeries (fast read for near‑real‑time)
+    await redis.tadd('hazard', payload.timestamp, JSON.stringify(payload));
+
+    // 3. Forward lightweight copy to WebSocket clients via topic (could be implemented elsewhere)
+  });
+
+  mClient.subscribe('devices/hazard');
+})();

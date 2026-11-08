@@ -1,0 +1,38 @@
+import { useEffect, useState } from 'react';
+import * as tf from '@tensorflow/tfjs';
+import { predictRisk } from '../../server/ml/predictor';
+
+export default function AIOverlay() {
+  const [risk, setRisk] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Dummy feature vector: temperature, pH, salinity (you'll replace with real data)
+    const featureVector = [27.3, 8.1, 35];
+    const predict = async () => {
+      const model = await predictRisk();
+      const prediction = model.predict(tf.tensor2d([featureVector]));
+      setRisk(prediction.dataSync()[0]);
+    };
+    predict();
+  }, []);
+
+  if (risk === null) return null;
+
+  const color = risk > 0.75 ? 'red' : risk > 0.5 ? 'orange' : 'green';
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        background: color,
+        color: '#fff',
+        padding: '5px 10px',
+        borderRadius: 4,
+        fontWeight: 'bold',
+      }}
+    >
+      Risk: {(risk * 100).toFixed(0)}%
+    </div>
+  );
+}

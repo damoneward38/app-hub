@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Hazard Hub — Environmental Sensor Dashboard</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0b0e17;--card:#111827;--border:#1e293b;--accent:#3b82f6;--red:#ef4444;--orange:#f59e0b;--green:#22c55e;--cyan:#06b6d4;--text:#e2e8f0;--muted:#64748b;--glass:rgba(17,24,39,.85)}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow:hidden}
+.app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:56px 1fr;height:100vh}
+.topbar{grid-column:1/-1;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:1000}
+.topbar h1{font-size:17px;font-weight:700;color:#fff}
+.topbar h1 span{color:var(--cyan);font-weight:400}
+.topbar .env-badge{margin-left:12px;padding:4px 10px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:12px;font-size:11px;color:var(--red);font-weight:600}
+.topbar .live-dot{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--green)}
+.topbar .live-dot .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sidebar{background:var(--card);border-right:1px solid var(--border);padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.sidebar .nav-item{padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;color:var(--muted)}
+.sidebar .nav-item:hover,.sidebar .nav-item.active{background:rgba(59,130,246,.12);color:var(--accent)}
+.sidebar .nav-item.active{border-left:3px solid var(--accent)}
+.sidebar .section-label{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);padding:12px 14px 4px;font-weight:600}
+.content{position:relative;overflow:hidden}
+#map{width:100%;height:100%;z-index:1}
+.map-overlay{position:absolute;top:16px;right:16px;z-index:999;display:flex;flex-direction:column;gap:10px}
+.widget{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:220px}
+.widget .wtitle{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;font-weight:600}
+.widget .wvalue{font-size:28px;font-weight:700;color:#fff;font-family:'Courier New',monospace}
+.widget .wlabel{font-size:11px;color:var(--muted);margin-top:2px}
+.sensor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.sensor-card{background:rgba(255,255,255,.05);border-radius:8px;padding:10px;text-align:center}
+.sensor-card .sv{font-size:18px;font-weight:700;font-family:'Courier New',monospace}
+.sensor-card .sl{font-size:10px;color:var(--muted);margin-top:2px}
+.risk-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;color:#fff;position:absolute;top:16px;left:16px;z-index:999}
+.risk-badge.high{background:var(--red);box-shadow:0 0 15px rgba(239,68,68,.5)}
+.risk-badge.medium{background:var(--orange);box-shadow:0 0 15px rgba(245,158,11,.5)}
+.risk-badge.low{background:var(--green);box-shadow:0 0 15px rgba(34,197,94,.5)}
+.alert-panel{position:absolute;bottom:16px;left:280px;right:16px;z-index:999;display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.alert-chip{flex-shrink:0;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:8px;padding:8px 14px;display:flex;align-items:center;gap:8px;font-size:12px}
+.alert-chip .atype{font-weight:600;color:#fff}
+.alert-chip .adetail{color:var(--muted)}
+.alert-chip .atime{color:rgba(255,255,255,.3);font-size:10px}
+.hazard-marker{border:2px solid;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.sidebar .stat-block{background:rgba(255,255,255,.04);border-radius:8px;padding:12px;margin-top:4px}
+.sidebar .stat-block .sb-label{font-size:10px;color:var(--muted);text-transform:uppercase}
+.sidebar .stat-block .sb-value{font-size:22px;font-weight:700;color:#fff;margin-top:2px;font-family:'Courier New',monospace}
+.leaflet-container{background:var(--bg)!important}
+
+
+/* Navigation views */
+.secondary-view{position:absolute;inset:0;z-index:3;overflow:auto;padding:24px;background:var(--bg)}
+.secondary-view h2{margin:0 0 8px;font-size:22px;color:#fff}
+.secondary-view .view-note{color:var(--muted);font-size:12px;margin-bottom:18px}
+.view-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px}
+.view-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.view-card .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.view-card .value{font-size:24px;font-weight:700;margin-top:8px;color:#fff}
+.view-table{width:100%;border-collapse:collapse;background:var(--card);font-size:13px}
+.view-table th,.view-table td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.view-table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.view-table td{color:var(--text)}
+.view-alert{padding:13px 15px;margin-bottom:9px;border:1px solid var(--border);border-radius:10px;background:var(--card)}
+.view-alert strong{color:#fff}
+.view-alert p{margin-top:5px;color:var(--muted);font-size:12px}
+.view-empty{padding:18px;border:1px dashed var(--border);border-radius:10px;color:var(--muted)}
+.view-back{margin-top:18px;border:1px solid var(--border);border-radius:8px;background:#172033;color:var(--text);padding:10px 14px;cursor:pointer}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <h1>Global Hazard <span>Hub</span></h1>
+    <div class="env-badge">GLOBAL MONITORING</div>
+    <div class="live-dot"><div class="dot"></div> <span id="dataStatus">CONNECTING</span></div>
+  </header>
+
+  <nav class="sidebar">
+    <div class="nav-item active">🗺️ Globe View</div>
+    <div class="nav-item">📊 Dashboard</div>
+    <div class="nav-item">📡 Sensor Data</div>
+    <div class="nav-item">🔔 Alerts</div>
+    <div class="nav-item">📱 AR Viewer</div>
+
+    <div class="section-label">System Stats</div>
+    <div class="stat-block">
+      <div class="sb-label">Active Sensors</div>
+      <div class="sb-value" id="sensorCount">247</div>
+    </div>
+    <div class="stat-block">
+      <div class="sb-label">Events Today</div>
+      <div class="sb-value" id="eventCount">1,842</div>
+    </div>
+    <div class="stat-block">
+      <div class="sb-label">Risk Level</div>
+      <div class="sb-value" id="riskLevel" style="color:var(--orange)">MODERATE</div>
+    </div>
+
+    <div class="section-label">Data Pipeline</div>
+    <div class="stat-block">
+      <div class="sb-label">MQTT → Kafka</div>
+      <div class="sb-value" style="color:var(--green);font-size:14px">✓ Active</div>
+    </div>
+    <div class="stat-block">
+      <div class="sb-label">ML Predictor</div>
+      <div class="sb-value" style="color:var(--green);font-size:14px">✓ Running</div>
+    </div>
+
+    <div class="section-label">Latest Sensor Reading</div>
+    <div class="sensor-grid" id="sensorGrid">
+      <div class="sensor-card"><div class="sv" style="color:var(--red)">27.3</div><div class="sl">Temp °C</div></div>
+      <div class="sensor-card"><div class="sv" style="color:var(--cyan)">8.2</div><div class="sl">pH</div></div>
+      <div class="sensor-card"><div class="sv" style="color:var(--accent)">35.0</div><div class="sl">Salinity</div></div>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div id="riskBadge" class="risk-badge medium">Risk: 42%</div>
+    <div id="map"></div>
+
+    <div class="map-overlay">
+      <div class="widget">
+        <div class="wtitle">Real-time Environment</div>
+        <div class="wvalue" id="envTemp">27.3°C</div>
+        <div class="wlabel">Temperature</div>
+      </div>
+      <div class="widget">
+        <div class="wtitle">Ocean pH</div>
+        <div class="wvalue" id="envPH">8.2</div>
+        <div class="wlabel">Acidity Index</div>
+      </div>
+      <div class="widget">
+        <div class="wtitle">Salinity</div>
+        <div class="wvalue" id="envSal">35 PSU</div>
+        <div class="wlabel">Practical Salinity Units</div>
+      </div>
+      <div class="widget">
+        <div class="wtitle">AI Risk Assessment</div>
+        <div class="wvalue" id="aiRisk">42%</div>
+        <div class="wlabel">Predicted Hazard Risk</div>
+      </div>
+    </div>
+
+    <div class="alert-panel" id="alertPanel"></div>
+  </div>
+</div>
+
+<script>
+// Initialize Leaflet map
+const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
+L.control.zoom({ position: 'topright' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap © CARTO',
+  subdomains: 'abcd', maxZoom: 19
+}).addTo(map);
+
+// Live hazard feed state
+window.hazardDataSource = 'Connecting to live feed…';
+const hazardColors = {earthquake:'#ef4444',tornado:'#f59e0b',hurricane:'#3b82f6',flood:'#06b6d4',wildfire:'#f97316',tsunami:'#8b5cf6'};
+const hazardIcons = {earthquake:'🌍',tornado:'🌪️',hurricane:'🌀',flood:'🌊',wildfire:'🔥',tsunami:'🌊'};
+
+async function fetchUsgsEvents() {
+  const res = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson', { cache: 'no-store' });
+  if (!res.ok) throw new Error('USGS ' + res.status);
+  const data = await res.json();
+  return (data.features || []).slice(0, 200).map(f => ({
+    id: f.id,
+    type: 'earthquake',
+    lat: f.geometry.coordinates[1],
+    lon: f.geometry.coordinates[0],
+    magnitude: (f.properties.mag == null ? 0 : f.properties.mag).toFixed(1),
+    timestamp: f.properties.time,
+    pressure: '—',
+    wind: '—'
+  }));
+}
+
+let hazardEvents = [];
+let markers = [];
+
+function renderMarkers() {
+  markers.forEach(m => map.removeLayer(m.marker));
+  markers = [];
+  hazardEvents.forEach(evt => {
+    const color = hazardColors[evt.type] || '#fff';
+    const size = Math.max(10, evt.magnitude * 3);
+    const icon = L.divIcon({
+      className: 'hazard-marker',
+      html: hazardIcons[evt.type] || '⚠️',
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2]
+    });
+    const marker = L.marker([evt.lat, evt.lon], { icon }).addTo(map);
+    marker.bindPopup(
+      '<div style="color:#1e293b;font-family:system-ui">' +
+      '<b style="font-size:14px">' + hazardIcons[evt.type] + ' ' + evt.type.toUpperCase() + '</b><br>' +
+      '<span style="color:#64748b;font-size:12px">ID: ' + evt.id + '</span><br>' +
+      '<div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:12px">' +
+      '<div><b>Magnitude:</b> ' + evt.magnitude + '</div>' +
+      '<div><b>Pressure:</b> ' + evt.pressure + ' hPa</div>' +
+      '<div><b>Wind:</b> ' + evt.wind + ' km/h</div>' +
+      '<div><b>Coords:</b> ' + evt.lat.toFixed(2) + ', ' + evt.lon.toFixed(2) + '</div>' +
+      '</div></div>'
+    );
+    markers.push({ marker, evt });
+  });
+}
+renderMarkers();
+
+// Fetch events from API (with fallback)
+async function fetchEvents() {
+  try {
+    const res = await fetch('/api/events?limit=200');
+    if (res.ok) {
+      hazardEvents = await res.json();
+      const status = document.getElementById('dataStatus');
+      if (status) status.textContent = 'LIVE API';
+      window.hazardDataSource = 'Live API';
+    } else { throw new Error('API unavailable'); }
+  } catch (e) {
+    const status = document.getElementById('dataStatus');
+    try {
+      hazardEvents = await fetchUsgsEvents();
+      if (status) status.textContent = 'USGS LIVE';
+      window.hazardDataSource = 'USGS earthquake feed (live)';
+    } catch (usgsError) {
+      if (status) status.textContent = 'OFFLINE';
+      window.hazardDataSource = 'Offline — no live feed available';
+      hazardEvents = [];
+    }
+  }
+  renderMarkers();
+  updateStats();
+}
+
+// Simulated sensor data stream (noaa + custom sensors)
+function fetchSensorData() {
+  return { temp: (25 + Math.random() * 6).toFixed(1), pH: (7.5 + Math.random() * 1.5).toFixed(1), salinity: (32 + Math.random() * 6).toFixed(1) };
+}
+
+let currentRisk = 42;
+let riskBusy = false;
+function applyRisk(risk, source) {
+  currentRisk = risk;
+  document.getElementById('aiRisk').textContent = risk + '%';
+  const badge = document.getElementById('riskBadge');
+  const riskClass = risk > 75 ? 'high' : risk > 50 ? 'medium' : 'low';
+  badge.className = 'risk-badge ' + riskClass;
+  badge.textContent = 'Risk: ' + risk + '%' + (source ? ' · ' + source : '');
+  document.getElementById('riskLevel').textContent = risk > 75 ? 'CRITICAL' : risk > 50 ? 'MODERATE' : 'LOW';
+  document.getElementById('riskLevel').style.color = risk > 75 ? 'var(--red)' : risk > 50 ? 'var(--orange)' : 'var(--green)';
+}
+async function updateRiskWithAI(data) {
+  if (riskBusy) return;
+  riskBusy = true;
+  const prompt = 'Environmental reading: temperature ' + data.temp + ' C, pH ' + data.pH + ', salinity ' + data.salinity +
+    ' PSU. Active hazard events: ' + hazardEvents.length + '. Reply with only an integer from 0 to 100 representing overall hazard risk.';
+  try {
+    let text = '';
+    if (window.OllamaAI && window.OllamaAI.chat) {
+      text = await window.OllamaAI.chat([{ role: 'user', content: prompt }], { model: 'llama3.2', max_tokens: 8 });
+    } else {
+      const res = await fetch('http://localhost:8780/api/ai/chat', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: prompt }], stream: false, model: 'llama3.2', options: { num_predict: 8 } })
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || ('HTTP ' + res.status));
+      text = body.message ? body.message.content : '';
+    }
+    const match = String(text).match(/\d{1,3}/);
+    if (match) applyRisk(Math.min(100, Math.max(0, parseInt(match[0], 10))), 'ollama');
+  } catch (error) {
+    const badge = document.getElementById('riskBadge');
+    if (badge) badge.textContent = 'Risk AI offline';
+  } finally {
+    riskBusy = false;
+  }
+}
+function updateSensorData() {
+  const data = fetchSensorData();
+  document.getElementById('envTemp').textContent = data.temp + '°C';
+  document.getElementById('envPH').textContent = data.pH;
+  document.getElementById('envSal').textContent = data.salinity + ' PSU';
+  document.getElementById('sensorGrid').innerHTML =
+    '<div class="sensor-card"><div class="sv" style="color:var(--red)">' + data.temp + '</div><div class="sl">Temp °C</div></div>' +
+    '<div class="sensor-card"><div class="sv" style="color:var(--cyan)">' + data.pH + '</div><div class="sl">pH</div></div>' +
+    '<div class="sensor-card"><div class="sv" style="color:var(--accent)">' + data.salinity + '</div><div class="sl">Salinity</div></div>';
+  updateRiskWithAI(data);
+}
+
+function updateStats() {
+  document.getElementById('sensorCount').textContent = Math.floor(200 + Math.random() * 100);
+  const count = parseInt(document.getElementById('eventCount').textContent.replace(',','')) || 1842;
+  document.getElementById('eventCount').textContent = (count + Math.floor(Math.random() * 20)).toLocaleString();
+}
+
+// Push alerts (simulated)
+const alertTypes = ['earthquake','tornado','hurricane','flood','wildfire'];
+function pushAlert() {
+  const type = alertTypes[Math.floor(Math.random() * alertTypes.length)];
+  const panel = document.getElementById('alertPanel');
+  const chip = document.createElement('div');
+  chip.className = 'alert-chip';
+  chip.innerHTML = '<span style="font-size:16px">' + hazardIcons[type] + '</span>' +
+    '<div><div class="atype">' + type.toUpperCase() + '</div><div class="adetail">Magnitude ' + (Math.random()*8+1).toFixed(1) + '</div></div>' +
+    '<div class="atime">just now</div>';
+  panel.prepend(chip);
+  if (panel.children.length > 5) panel.removeChild(panel.lastChild);
+  setTimeout(() => { if (chip.parentNode) chip.remove(); }, 15000);
+}
+
+// Initial alerts
+setTimeout(() => pushAlert(), 1000);
+setTimeout(() => pushAlert(), 3000);
+setTimeout(() => pushAlert(), 5500);
+
+// Periodic updates
+setInterval(fetchEvents, 15000);
+setInterval(updateSensorData, 10000);
+setInterval(updateStats, 5000);
+setInterval(pushAlert, 12000);
+updateSensorData();
+
+// Sidebar navigation: each item opens a real view instead of only changing its highlight.
+const mainMap = document.getElementById('map');
+const mapWidgets = document.querySelector('.map-overlay');
+const riskBadge = document.getElementById('riskBadge');
+const alertPanel = document.getElementById('alertPanel');
+const secondaryView = document.createElement('section');
+secondaryView.className = 'secondary-view';
+secondaryView.id = 'secondaryView';
+secondaryView.hidden = true;
+secondaryView.setAttribute('aria-live', 'polite');
+document.querySelector('.content').appendChild(secondaryView);
+
+function viewEscape(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function eventRows() {
+  return hazardEvents.slice(0, 30).map(evt => '<tr><td>' + viewEscape(evt.type) + '</td><td>' +
+    viewEscape(evt.magnitude) + '</td><td>' + viewEscape(Number(evt.lat).toFixed(2)) + ', ' +
+    viewEscape(Number(evt.lon).toFixed(2)) + '</td><td>' + viewEscape(evt.id) + '</td></tr>').join('');
+}
+function showSecondary(title, body) {
+  secondaryView.innerHTML = '<h2>' + title + '</h2><p class="view-note">Source: ' +
+    viewEscape(window.hazardDataSource || 'Unknown') +
+    ' · This static export does not confirm live emergency-service connectivity.</p>' + body +
+    '<button class="view-back" type="button" id="returnToGlobe">Return to Globe View</button>';
+  secondaryView.hidden = false;
+  document.getElementById('returnToGlobe').addEventListener('click', () => switchView(0));
+}
+function switchView(index) {
+  document.querySelectorAll('.nav-item').forEach((item, i) => {
+    item.classList.toggle('active', i === index);
+    item.setAttribute('aria-current', i === index ? 'page' : 'false');
+  });
+  const onGlobe = index === 0;
+  mainMap.style.display = onGlobe ? 'block' : 'none';
+  mapWidgets.style.display = onGlobe ? 'flex' : 'none';
+  riskBadge.style.display = onGlobe ? 'inline-block' : 'none';
+  alertPanel.style.display = onGlobe ? 'flex' : 'none';
+  secondaryView.hidden = onGlobe;
+  if (onGlobe) {
+    if (typeof map !== 'undefined' && typeof map.invalidateSize === 'function') map.invalidateSize();
+    return;
+  }
+  if (index === 1) {
+    showSecondary('Dashboard', '<div class="view-cards">' +
+      '<div class="view-card"><div class="label">Events shown</div><div class="value">' + hazardEvents.length + '</div></div>' +
+      '<div class="view-card"><div class="label">Sensors (demo)</div><div class="value">247</div></div>' +
+      '<div class="view-card"><div class="label">Risk estimate</div><div class="value">' + currentRisk + '%</div></div>' +
+      '<div class="view-card"><div class="label">Data source</div><div class="value" style="font-size:16px">' + viewEscape(window.hazardDataSource || 'Unknown') + '</div></div></div>');
+  } else if (index === 2) {
+    showSecondary('Sensor Data', '<table class="view-table"><thead><tr><th>Hazard type</th><th>Magnitude</th><th>Coordinates</th><th>Event ID</th></tr></thead><tbody>' +
+      (hazardEvents.length ? eventRows() : '<tr><td colspan="4">No sensor events available.</td></tr>') + '</tbody></table>');
+  } else if (index === 3) {
+    const events = hazardEvents.slice(0, 20);
+    showSecondary('Alerts', events.length ? events.map(evt => '<article class="view-alert"><strong>' +
+      viewEscape(hazardIcons[evt.type] || '⚠️') + ' ' + viewEscape(evt.type) + ' · Magnitude ' +
+      viewEscape(evt.magnitude) + '</strong><p>Event ' + viewEscape(evt.id) + ' · Coordinates ' +
+      viewEscape(Number(evt.lat).toFixed(2)) + ', ' + viewEscape(Number(evt.lon).toFixed(2)) + '</p></article>').join('') :
+      '<div class="view-empty">No alerts available.</div>');
+  } else {
+    showSecondary('AR Viewer', '<div class="view-empty"><strong>AR preview unavailable in this static build.</strong><p style="margin-top:8px">The viewer needs a camera-enabled AR client and a connected sensor feed. This page is available, but no AR session is falsely reported as running.</p></div>');
+  }
+}
+document.querySelectorAll('.nav-item').forEach((item, index) => {
+  item.setAttribute('role', 'button');
+  item.setAttribute('tabindex', '0');
+  item.addEventListener('click', () => switchView(index));
+  item.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); switchView(index); }
+  });
+});
+</script>
+</body>
+</html>

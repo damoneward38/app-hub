@@ -1,0 +1,14 @@
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import Link from "next/link";
+
+export default function NavBar() {
+  return (
+    <AppBar position="fixed" sx={{ background: "#111" }}>
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          תצוגה אקיפה
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+}

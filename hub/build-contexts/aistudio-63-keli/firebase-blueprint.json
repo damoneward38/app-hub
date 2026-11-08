@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and role management",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "healer", "observer"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "Session": {
+      "title": "Healing Session",
+      "description": "Record of a healing session performed by a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "protocolName": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "duration": { "type": "number", "description": "Duration in seconds" },
+        "o2Level": { "type": "number" },
+        "frequencies": { "type": "array", "items": { "type": "number" } }
+      },
+      "required": ["userId", "startTime", "duration"]
+    },
+    "Protocol": {
+      "title": "Custom Protocol",
+      "description": "User-defined healing protocols",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "freqs": { "type": "array", "items": { "type": "number" } },
+        "o2": { "type": "number" },
+        "duration": { "type": "number" },
+        "desc": { "type": "string" }
+      },
+      "required": ["userId", "name", "freqs"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data"
+    },
+    "/sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "History of healing sessions"
+    },
+    "/protocols/{protocolId}": {
+      "schema": "Protocol",
+      "description": "Public or shared healing protocols"
+    },
+    "/admins/{adminId}": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" }
+        }
+      },
+      "description": "List of authorized administrator UIDs"
+    }
+  }
+}

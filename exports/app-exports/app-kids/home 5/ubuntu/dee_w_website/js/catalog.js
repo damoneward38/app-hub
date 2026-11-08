@@ -109,14 +109,30 @@ function filterBooks(category) {
 
 // Handle read button click
 function readStory(storyId) {
-    alert('Story #' + storyId + ' - Read functionality coming soon!');
-    // In a full implementation, this would navigate to the story reader page
-    // window.location.href = 'story-reader.html?id=' + storyId;
+    window.location.href = 'story-reader.html?id=' + encodeURIComponent(storyId);
 }
 
 // Handle buy button click
 function buyStory(storyId, storyTitle) {
-    alert('Adding "' + storyTitle + '" to your cart!\n\nE-commerce functionality coming soon!');
-    // In a full implementation, this would add the item to a shopping cart
-    // addToCart(storyId, storyTitle);
+    addToCart(storyId);
+    const proceed = confirm('"' + storyTitle + '" was added to your cart.\n\nGo to the cart now?');
+    if (proceed) window.location.href = 'cart.html';
+}
+
+function addToCart(storyId) {
+    const key = 'ge_cart';
+    let items = [];
+    try {
+        const parsed = JSON.parse(localStorage.getItem(key));
+        if (Array.isArray(parsed)) items = parsed;
+    } catch {
+        items = [];
+    }
+    const existing = items.find(item => item.id === storyId);
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        items.push({ id: storyId, qty: 1 });
+    }
+    localStorage.setItem(key, JSON.stringify(items));
 }

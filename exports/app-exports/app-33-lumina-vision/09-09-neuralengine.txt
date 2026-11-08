@@ -1,0 +1,295 @@
+import OpenAI from "openai";
+import {
+  EngineConfig,
+  EngineConfigSchema,
+  EngineResponse,
+  Message,
+  NeuralEngineError,
+  RateLimitError,
+  AuthenticationError,
+} from "../types";
+import { TokenManager } from "./TokenManager";
+import { StreamHandler, StreamCallbacks } from "./StreamHandler";
+import { withRetry } from "../utils/retry";
+import { logger } from "../utils/logger";
+
+// ─── Neural Engine ─────────────────────────────────────────────────────────────
+export class NeuralEngine {
+  private readonly client:        OpenAI;
+  private readonly config:        EngineConfig;
+  private readonly tokenManager:  TokenManager;
+  private readonly streamHandler: StreamHandler;
+
+  // Conversation memory (maintains multi-turn context)
+  private conversationHistory: Message[] = [];
+
+  constructor(config: Partial<EngineConfig> = {}) {
+    // Validate and apply defaults to configuration
+    this.config = EngineConfigSchema.parse(config);
+
+    // Initialize OpenAI client with API key from env
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) throw new AuthenticationError();
+
+    this.client = new OpenAI({
+      apiKey,
+      organization: process.env.OPENAI_ORG_ID,
+      timeout:      this.config.timeout,
+      maxRetries:   0, // We handle retries ourselves
+    });
+
+    this.tokenManager  = new TokenManager();
+    this.streamHandler = new StreamHandler();
+
+    // Seed with system prompt if configured
+    if (this.config.systemPrompt) {
+      this.conversationHistory.push({
+        role:    "system",
+        content: this.config.systemPrompt,
+      });
+    }
+
+    logger.info("NeuralEngine initialized", {
+      model:       this.config.model,
+      maxTokens:   this.config.maxTokens,
+      temperature: this.config.temperature,
+      streaming:   this.config.stream,
+    });
+  }
+
+  // ─── Public API ──────────────────────────────────────────────────────────────
+
+  /**
+   * Sends a message to GPT-4o and returns a structured response.
+   * Automatically manages conversation history and handles retries.
+   */
+  async chat(userMessage: string, callbacks?: StreamCallbacks): Promise<EngineResponse> {
+    const startTime = Date.now();
+
+    // Add user message to conversation history
+    const userMsg: Message = { role: "user", content: userMessage };
+    this.conversationHistory.push(userMsg);
+
+    // Trim history if it exceeds token budget (preserves system prompt)
+    const trimmedMessages = this.tokenManager.trimToFit(
+      this.conversationHistory,
+      this.config.model,
+      this.config.maxTokens
+    );
+
+    logger.info("Processing chat request", {
+      model:          this.config.model,
+      historyLength:  trimmedMessages.length,
+      promptTokens:   this.tokenManager.countMessageTokens(trimmedMessages),
+    });
+
+    try {
+      const response = await withRetry(
+        () => this.executeRequest(trimmedMessages, callbacks),
+        { maxRetries: this.config.maxRetries }
+      );
+
+      // Persist assistant reply in conversation history
+      this.conversationHistory.push({
+        role:    "assistant",
+        content: response.content,
+      });
+
+      const latencyMs = Date.now() - startTime;
+      logger.info("Chat request completed", {
+        id:          response.id,
+        latencyMs,
+        totalTokens: response.usage.totalTokens,
+        finishReason: response.finishReason,
+      });
+
+      return { ...response, latencyMs, timestamp: new Date() };
+    } catch (error) {
+      // Remove the failed user message from history to prevent corruption
+      this.conversationHistory.pop();
+      throw error;
+    }
+  }
+
+  /**
+   * Sends a one-shot prompt without maintaining conversation history.
+   * Ideal for single-turn tasks like summarization, classification, etc.
+   */
+  async complete(
+    prompt: string,
+    systemPrompt?: string,
+    callbacks?: StreamCallbacks
+  ): Promise<EngineResponse> {
+    const messages: Message[] = [];
+
+    if (systemPrompt) {
+      messages.push({ role: "system", content: systemPrompt });
+    }
+    messages.push({ role: "user", content: prompt });
+
+    const startTime  = Date.now();
+    const response   = await withRetry(
+      () => this.executeRequest(messages, callbacks),
+      { maxRetries: this.config.maxRetries }
+    );
+    const latencyMs  = Date.now() - startTime;
+
+    logger.info("Completion request finished", { latencyMs, model: this.config.model });
+    return { ...response, latencyMs, timestamp: new Date() };
+  }
+
+  /**
+   * Clears conversation history, optionally preserving the system prompt.
+   */
+  clearHistory(keepSystemPrompt = true): void {
+    if (keepSystemPrompt) {
+      this.conversationHistory = this.conversationHistory.filter(
+        (m) => m.role === "system"
+      );
+    } else {
+      this.conversationHistory = [];
+    }
+    logger.info("Conversation history cleared", { keepSystemPrompt });
+  }
+
+  /**
+   * Returns a read-only snapshot of the current conversation history.
+   */
+  getHistory(): Readonly<Message[]> {
+    return Object.freeze([...this.conversationHistory]);
+  }
+
+  /**
+   * Returns current token usage for the conversation history.
+   */
+  getTokenUsage(): { used: number; limit: number; remaining: number } {
+    const used      = this.tokenManager.countMessageTokens(this.conversationHistory);
+    const limit     = this.tokenManager.getModelLimit(this.config.model);
+    const remaining = limit - used - this.config.maxTokens;
+    return { used, limit, remaining };
+  }
+
+  /**
+   * Releases all resources (tiktoken encoder).
+   */
+  dispose(): void {
+    this.tokenManager.dispose();
+    logger.info("NeuralEngine disposed");
+  }
+
+  // ─── Private Methods ─────────────────────────────────────────────────────────
+
+  /**
+   * Executes the actual OpenAI API call.
+   * Handles both streaming and non-streaming modes.
+   */
+  private async executeRequest(
+    messages: Message[],
+    callbacks?: StreamCallbacks
+  ): Promise<Omit<EngineResponse, "latencyMs" | "timestamp">> {
+    const baseParams: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming = {
+      model:             this.config.model,
+      messages:          messages as OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+      max_tokens:        this.config.maxTokens,
+      temperature:       this.config.temperature,
+      top_p:             this.config.topP,
+      frequency_penalty: this.config.frequencyPenalty,
+      presence_penalty:  this.config.presencePenalty,
+    };
+
+    try {
+      // ── Streaming Mode ───────────────────────────────────────────────────────
+      if (this.config.stream) {
+        const stream = await this.client.chat.completions.create({
+          ...baseParams,
+          stream: true,
+        });
+
+        const result = await this.streamHandler.processStream(stream, callbacks);
+
+        return {
+          id:           `stream-${Date.now()}`,
+          content:      result.content,
+          model:        this.config.model,
+          finishReason: result.finishReason as EngineResponse["finishReason"],
+          usage: {
+            promptTokens:     this.tokenManager.countMessageTokens(messages),
+            completionTokens: result.completionTokens,
+            totalTokens:
+              this.tokenManager.countMessageTokens(messages) + result.completionTokens,
+          },
+          latencyMs: 0,
+          timestamp: new Date(),
+        };
+      }
+
+      // ── Non-Streaming Mode ───────────────────────────────────────────────────
+      const response = await this.client.chat.completions.create(baseParams);
+      const choice   = response.choices[0];
+
+      if (!choice?.message?.content) {
+        throw new NeuralEngineError(
+          "Empty response from API",
+          "EMPTY_RESPONSE",
+          500,
+          true
+        );
+      }
+
+      return {
+        id:           response.id,
+        content:      choice.message.content,
+        model:        response.model,
+        finishReason: (choice.finish_reason as EngineResponse["finishReason"]) ?? "null",
+        usage: {
+          promptTokens:     response.usage?.prompt_tokens     ?? 0,
+          completionTokens: response.usage?.completion_tokens ?? 0,
+          totalTokens:      response.usage?.total_tokens      ?? 0,
+        },
+        latencyMs: 0,
+        timestamp: new Date(),
+      };
+    } catch (error: unknown) {
+      throw this.mapOpenAIError(error);
+    }
+  }
+
+  /**
+   * Maps OpenAI SDK errors to typed NeuralEngineError instances.
+   */
+  private mapOpenAIError(error: unknown): NeuralEngineError {
+    if (error instanceof NeuralEngineError) return error;
+
+    if (error instanceof OpenAI.APIError) {
+      logger.error("OpenAI API Error", {
+        status:  error.status,
+        message: error.message,
+        code:    error.code,
+      });
+
+      switch (error.status) {
+        case 401:
+          return new AuthenticationError();
+        case 429: {
+          // Parse retry-after header if available
+          const retryAfter = error.headers?.["retry-after"]
+            ? parseInt(error.headers["retry-after"], 10)
+            : undefined;
+          return new RateLimitError(retryAfter);
+        }
+        case 400:
+          return new NeuralEngineError(error.message, "BAD_REQUEST",   400, false);
+        case 500:
+        case 502:
+        case 503:
+          return new NeuralEngineError(error.message, "SERVER_ERROR",  error.status, true);
+        default:
+          return new NeuralEngineError(error.message, "API_ERROR",     error.status, false);
+      }
+    }
+
+    // Unknown error
+    const message = error instanceof Error ? error.message : String(error);
+    return new NeuralEngineError(message, "UNKNOWN_ERROR", undefined, false);
+  }
+}

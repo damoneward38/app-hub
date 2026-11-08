@@ -1,0 +1,20 @@
+// sensor-lib.js
+const mqtt = require('mqtt');
+const client = mqtt.connect('mqtt://gateway.local', { clean: true });
+
+const publishEvent = (payload) => {
+  // Attach NTP timestamp if not present
+  if (!payload.timestamp) payload.timestamp = Date.now();
+
+  client.publish('devices/hazard', JSON.stringify(payload), { qos: 1 });
+};
+
+// Example sensor data
+publishEvent({
+  id: 'sensor-12',
+  type: 'earthquake',
+  lat: 32.123,
+  lon: 34.567,
+  magnitude: 6.2,
+  pressure: 1008
+});
